@@ -7,34 +7,40 @@ import CTAButton from "@/components/CTAButton";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Learn about the Forest Avenue Business Improvement District—our mission, history, and how we work to strengthen the Forest Avenue commercial corridor in Staten Island.",
+    "The Forest Avenue BID's mission is to cultivate strong bonds between local businesses and the community we serve on Staten Island.",
 };
 
+// Source: forestavenuebid.com/about/ — verbatim copy
 const bidFaqs = [
   {
     question: "What is a Business Improvement District (BID)?",
+    // Source: forestavenuebid.com/about/ — "What is a BID?" section
     answer:
-      "A Business Improvement District (BID) is a public-private partnership in which property and business owners elect to make a collective contribution to the maintenance, development, and promotion of their commercial district. BIDs are authorized by New York State law and governed by an elected board of directors made up of property owners, commercial tenants, and community representatives.",
+      "BIDs create vibrant, clean, and safe districts. They deliver services and improvements above and beyond those typically provided by the City. These services can include street cleaning and maintenance, public safety and hospitality, marketing and events, capital improvements, beautification, advocacy, and business development. BIDs help to brand their districts and market small businesses on their corridor. They facilitate networking among merchants, host community events, and advocate for improvements to the district. BIDs also serve as a liaison between local businesses and stakeholders and the City government. In doing so, BIDs provide a collective voice for the neighborhood and help inform City policy based on their unique local knowledge.",
   },
   {
-    question: "How is the Forest Avenue BID funded?",
+    question: "Who is the Forest Avenue BID for?",
+    // Source: forestavenuebid.com/about/ — "Our Operations" section
     answer:
-      "The BID is funded primarily through a special assessment levied on commercial properties within the district boundary. Assessment amounts are based on property size and type. These funds are supplemented by grants from the City of New York, NYC Small Business Services, and private foundations. The BID is a 501(c)(6) nonprofit organization.",
+      "The Forest Ave BID serves merchants and property owners from Hart Blvd to Broadway who choose to be part of a collaborative effort to provide services and sponsor special events. All services provided by the BID are the result of investment by the merchants and property owners within the BID.",
   },
   {
-    question: "What is the BID's service area?",
+    question: "What services does the BID provide?",
+    // Source: forestavenuebid.com/about/ — "Our Operations" list
     answer:
-      "The Forest Avenue BID serves the commercial strip along Forest Avenue on Staten Island's North Shore. The district runs approximately from Jewett Avenue to Bard Avenue, encompassing more than 200 businesses across a vibrant mix of retail, food service, professional services, and community institutions.",
+      "BID services include: Sidewalk and Gutter Litter Removal Service, Graffiti Removal, New Trash Receptacles, Advertising and Banners, Holiday Lights, Special Events, and Community Development.",
   },
   {
-    question: "Who governs the BID?",
+    question: "How is the Forest Avenue BID organized?",
+    // Source: forestavenuebid.com/about/ — "About the BID" section
     answer:
-      "The BID is governed by a volunteer Board of Directors elected by district stakeholders—including property owners, commercial tenants, and public members. Day-to-day operations are managed by an Executive Director who works under the direction of the Board. Annual meetings are open to all stakeholders in the district.",
+      "The Forest Avenue District Management Association is a NYS registered 501(c)(3) not for profit organization. It is governed by a volunteer Board of Directors and a professional Executive Director.",
   },
   {
-    question: "How can my business benefit from the BID?",
+    question: "How can I get involved?",
+    // Source: forestavenuebid.com/about/ — "Interested?" section
     answer:
-      "BID member businesses benefit from district-wide marketing and events, technical assistance and grant navigation, streetscape improvements, enhanced sanitation and beautification, and a collective voice on policy issues affecting the corridor. Contact us to learn more about programs available to Forest Avenue businesses.",
+      "Are you a business owner or property owner between Hart Blvd and Broadway and want to get involved in the Forest Ave BID? Get in touch with us — we'd love to hear from you.",
   },
 ];
 
@@ -42,104 +48,97 @@ export default function AboutPage() {
   return (
     <>
       <Hero
-        eyebrow="Who we are"
-        title="About the Forest Avenue BID"
-        subtitle="We're a public-private partnership dedicated to making Forest Avenue one of Staten Island's most vibrant commercial corridors."
+        eyebrow="About us"
+        title="About the BID"
+        subtitle="The Forest Avenue Business Improvement District — serving the corridor from Hart Blvd to Broadway, Staten Island."
       />
 
-      {/* Mission section */}
+      {/* Mission — Source: forestavenuebid.com/about/ */}
       <section className="section-padding bg-white" aria-labelledby="mission-heading">
         <div className="container-wide">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 items-start">
             <div>
               <SectionHeading
                 eyebrow="Our mission"
-                title="Building a stronger Forest Avenue, block by block"
+                title="Our Mission"
               />
+              {/* Source: forestavenuebid.com/about/ — verbatim */}
               <div className="mt-6 space-y-4 text-[var(--muted)] leading-relaxed">
                 <p>
-                  The Forest Avenue Business Improvement District was established
-                  to support the economic vitality and physical character of
-                  Staten Island's Forest Avenue commercial corridor. We are a
-                  community-driven organization that works alongside property
-                  owners, business operators, residents, and city agencies to
-                  create a cleaner, safer, and more welcoming neighborhood for
-                  everyone.
+                  Our mission is to cultivate strong bonds between local businesses
+                  and the community we serve. Through mutual support, we strive to
+                  foster a thriving local economy by encouraging community members
+                  to patronize our businesses and utilize the goods and services
+                  they offer. We firmly believe that the prosperity of our
+                  commercial district relies on the unwavering support of our
+                  community.
                 </p>
-                <p>
-                  Our work spans three core areas: <strong className="text-[var(--text)]">small business support</strong>,{" "}
-                  <strong className="text-[var(--text)]">commercial revitalization</strong>, and{" "}
-                  <strong className="text-[var(--text)]">community programming</strong>. Through these
-                  efforts we invest in the people, places, and programs that
-                  define Forest Avenue's character and strengthen its future.
-                </p>
-                <p>
-                  Forest Avenue has long been the commercial heart of Staten
-                  Island's North Shore—a place where immigrant entrepreneurs
-                  built businesses, families found everything they needed, and
-                  community relationships were formed. The BID exists to honor
-                  and build on that legacy.
+                {/* Source: forestavenuebid.com/about/ */}
+                <p className="text-sm">
+                  The Forest Avenue District Management Association is a NYS
+                  registered{" "}
+                  <strong className="text-[var(--text)]">501(c)(3) not for profit organization</strong>.
                 </p>
               </div>
               <div className="mt-8 flex gap-4 flex-wrap">
-                <CTAButton href="/services">Our programs & services</CTAButton>
-                <CTAButton href="/contact" variant="outline">Contact us</CTAButton>
+                <CTAButton href="/services">Our services</CTAButton>
+                <CTAButton href="/contact" variant="outline">Get in touch</CTAButton>
               </div>
             </div>
 
-            {/* Value pillars */}
-            <div className="space-y-5">
-              {[
-                {
-                  num: "01",
-                  title: "Community First",
-                  body: "Every program we run and every dollar we spend is in service of the people and businesses that make Forest Avenue home.",
-                },
-                {
-                  num: "02",
-                  title: "Collaboration",
-                  body: "We work in partnership with local government, community organizations, business associations, and residents to multiply our impact.",
-                },
-                {
-                  num: "03",
-                  title: "Economic Vitality",
-                  body: "A thriving commercial district means good jobs, strong businesses, and a tax base that supports the entire community.",
-                },
-                {
-                  num: "04",
-                  title: "Accessible & Welcoming",
-                  body: "Forest Avenue should be a place where all of Staten Island's diverse communities feel welcome to shop, dine, work, and gather.",
-                },
-              ].map((v) => (
-                <div
-                  key={v.num}
-                  className="flex gap-5 p-6 rounded-2xl border border-[var(--border)] bg-[var(--bg)]"
-                >
-                  <span className="font-headline font-black text-3xl text-[var(--brand-secondary)] flex-shrink-0 leading-none">
-                    {v.num}
-                  </span>
-                  <div>
-                    <h3 className="font-headline font-bold text-lg text-[var(--brand-primary)]">
-                      {v.title}
-                    </h3>
-                    <p className="text-sm text-[var(--muted)] mt-1 leading-relaxed">
-                      {v.body}
-                    </p>
-                  </div>
-                </div>
-              ))}
+            {/* Operations — Source: forestavenuebid.com/about/ */}
+            <div>
+              <SectionHeading eyebrow="Our operations" title="How we operate" />
+              {/* Source: forestavenuebid.com/about/ — verbatim */}
+              <p className="mt-4 text-[var(--muted)] leading-relaxed text-sm">
+                The Forest Ave merchants and property owners, from Hart Blvd to
+                Broadway, choose to be part of a collaborative effort to provide
+                services and sponsor special events. This is what unites them as a
+                Business Improvement District. All services provided by the BID
+                are the result of investment by the merchants and property owners
+                within the BID.
+              </p>
+              {/* Source: forestavenuebid.com/about/ — "Some of these services include" list */}
+              <ul className="mt-5 space-y-2.5" role="list">
+                {[
+                  "Sidewalk and Gutter Litter Removal Service",
+                  "Graffiti Removal",
+                  "New Trash Receptacles",
+                  "Advertising and Banners",
+                  "Holiday Lights",
+                  "Special Events",
+                  "Community Development",
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-3">
+                    <svg
+                      className="w-5 h-5 text-[var(--brand-secondary)] flex-shrink-0 mt-0.5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      aria-hidden="true"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M5 13l4 4L19 7"
+                      />
+                    </svg>
+                    <span className="text-sm text-[var(--muted)]">{item}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </div>
       </section>
 
-      {/* What is a BID + FAQ */}
+      {/* What is a BID FAQ — Source: forestavenuebid.com/about/ */}
       <section className="section-padding bg-[var(--bg)]" aria-labelledby="faq-heading">
         <div className="container-narrow">
           <SectionHeading
             eyebrow="BID 101"
-            title="What is a Business Improvement District?"
-            description="New to the concept? Here's what you need to know about how BIDs work and what makes ours tick."
+            title="What is a BID?"
           />
           <div className="mt-10">
             <AccessibleAccordion items={bidFaqs} id="bid-faq" />
@@ -147,37 +146,17 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* How we operate */}
-      <section className="section-padding bg-white" aria-labelledby="operations-heading">
-        <div className="container-wide max-w-4xl">
+      {/* CTA — Source: forestavenuebid.com/about/ — "Interested?" section */}
+      <section className="section-padding bg-white" aria-labelledby="cta-heading">
+        <div className="container-wide max-w-2xl text-center mx-auto">
           <SectionHeading
-            eyebrow="Operations"
-            title="How the BID operates"
-            description="Transparency and accountability are central to everything we do."
+            eyebrow="Interested?"
+            title="Want to get involved?"
+            description="Are you a business owner or property owner between Hart Blvd and Broadway and want to get involved in the Forest Ave BID?"
+            center
           />
-          <div className="mt-10 prose max-w-none text-[var(--muted)]">
-            <p>
-              The Forest Avenue BID operates under a annually approved work plan
-              and budget that is reviewed by the Board of Directors and submitted
-              to the NYC Department of Small Business Services (SBS). Our
-              financial records are subject to independent audit, and annual
-              reports are made available to district stakeholders.
-            </p>
-            <p>
-              Board meetings are held monthly and are open to all district
-              stakeholders. Major program decisions are made collectively by the
-              full Board. The Executive Director manages day-to-day operations,
-              vendor relationships, and program delivery under Board direction.
-            </p>
-            <p>
-              We collaborate closely with NYC SBS, the Staten Island Borough
-              President's office, our local City Council representatives, and the
-              community board to ensure BID programs align with broader
-              neighborhood priorities.
-            </p>
-          </div>
           <div className="mt-8">
-            <CTAButton href="/team" variant="outline">Meet the board of directors</CTAButton>
+            <CTAButton href="/contact">Get in touch</CTAButton>
           </div>
         </div>
       </section>

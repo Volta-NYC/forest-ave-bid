@@ -3,244 +3,236 @@ import Hero from "@/components/Hero";
 import SectionHeading from "@/components/SectionHeading";
 
 export const metadata: Metadata = {
-  title: "Board of Directors",
+  title: "Our Team",
   description:
-    "Meet the Forest Avenue BID's volunteer Board of Directors—business owners, property owners, and community leaders who guide the district's programs and priorities.",
+    "Meet the Forest Avenue BID's Board of Directors — business owners, property owners, city officials, and local leaders who guide the district.",
 };
+
+// Source: forestavenuebid.com/team/
+// Roles and affiliations are verbatim from the real site.
+const boardIntro =
+  "Our Board is comprised of individuals with a deep love, involvement, and understanding of the Forest Ave BID community. We have a variety of stakeholders; from business owners, property owners, employees, City officials, and local leaders.";
 
 interface BoardMember {
   name: string;
   role: string;
-  title?: string;
-  bio?: string;
+  affiliation: string;
+  isOfficer?: boolean;
+  isPublicOfficial?: boolean;
+  isEmeritus?: boolean;
 }
 
-const board: BoardMember[] = [
-  {
-    name: "Maria Gonzalez",
-    role: "Chair",
-    title: "Owner, Gonzalez Realty Group",
-    bio: "Maria has been a property owner on Forest Avenue for over 25 years. She has served on the BID board since its inception and has championed the district's façade improvement and beautification programs.",
-  },
-  {
-    name: "James Trombetta",
-    role: "Vice Chair",
-    title: "Owner, All-Star Auto Repair",
-    bio: "James has operated All-Star Auto Repair on Forest Avenue since 1998. He serves as Vice Chair and leads the BID's small business advocacy committee.",
-  },
-  {
-    name: "Patricia Chen",
-    role: "Treasurer",
-    title: "Partner, Chen & Associates CPAs",
-    bio: "Patricia brings 20 years of nonprofit financial management to her role as Treasurer. She oversees the BID's annual budget, audit process, and financial reporting.",
-  },
-  {
-    name: "Rev. Anthony Williams",
-    role: "Secretary",
-    title: "Pastor, North Shore Community Church",
-    bio: "Reverend Williams has been a community anchor on the North Shore for over 15 years. As Secretary, he ensures the BID's programs remain inclusive and reflect the needs of all residents.",
-  },
-  {
-    name: "Sofia Petrosino",
-    role: "Director",
-    title: "Owner, Angelina's Bakery",
-    bio: "Sofia's family has operated Angelina's Bakery on Forest Avenue for three decades. She co-chairs the BID's events committee and is the driving force behind the Annual Street Fair.",
-  },
-  {
-    name: "David Park",
-    role: "Director",
-    title: "Property Owner & Developer",
-    bio: "David owns several commercial properties in the district. He leads the BID's commercial revitalization committee and has been instrumental in attracting new tenants to vacant storefronts.",
-  },
-  {
-    name: "Linda Okafor",
-    role: "Director",
-    title: "Owner, Children's Boutique",
-    bio: "Linda opened Children's Boutique on Forest Avenue in 2015. She serves on the marketing and communications committee and manages the BID's social media presence.",
-  },
-  {
-    name: "Robert Sanchez",
-    role: "Director",
-    title: "Public Member, Community Board 1 Liaison",
-    bio: "Robert serves as the BID's liaison to Community Board 1 and represents residential stakeholders on the board. He has lived in the Forest Avenue area for over 30 years.",
-  },
-  {
-    name: "Karen Liu",
-    role: "Ex-Officio",
-    title: "Executive Director, Forest Avenue BID",
-    bio: "Karen joined as the BID's first full-time Executive Director in 2018. She holds a master's degree in urban planning from NYU and previously worked at NYC Small Business Services.",
-  },
+// Source: forestavenuebid.com/team/
+const boardMembers: BoardMember[] = [
+  // Officers
+  { name: "Megan Coppola", role: "Chair", affiliation: "Owner of Beans and Leaves Cafe", isOfficer: true },
+  { name: "Kim Beckett", role: "Vice Chair", affiliation: "Owner of Burrito Bar", isOfficer: true },
+  { name: "Gary LiGreci", role: "Treasurer", affiliation: "Owner of LiGreci's Staaten", isOfficer: true },
+  { name: "Laura Volsario", role: "Secretary", affiliation: "Owner of Gateway Arms Realty", isOfficer: true },
+  // Directors
+  { name: "Donald Bentson", role: "Board Member", affiliation: "Owner of Bentson & Company" },
+  { name: "Jean Daggan", role: "Board Member", affiliation: "Property Owner" },
+  { name: "Rachel Fundaro", role: "Board Member", affiliation: "Paralegal at Thompson Law, PLLC" },
+  { name: "Andrea S. Morse, Esq.", role: "Board Member", affiliation: "Owner of Law Office of Andrea Morse" },
+  { name: "Eddie Donovan", role: "Board Member", affiliation: "Owner of Duffy's" },
+  { name: "Christina Saez", role: "Board Member", affiliation: "Manager of Panini Grill" },
+  // Emeritus
+  { name: "Vincent D'Antuono", role: "Board Member Emeritus", affiliation: "Owner of Pastosa Ravioli & Cheese Inc.", isEmeritus: true },
+  // Public officials
+  { name: "Vito Fossella", role: "Borough President", affiliation: "Borough President of Staten Island", isPublicOfficial: true },
+  { name: "Kamilliah Hanks", role: "Councilwoman", affiliation: "Councilwoman", isPublicOfficial: true },
+  { name: "Brad Lander", role: "Comptroller", affiliation: "NYC Comptroller", isPublicOfficial: true },
+  { name: "Eric Adams", role: "NYC Mayor", affiliation: "NYC Mayor", isPublicOfficial: true },
 ];
 
-const roleColors: Record<string, { bg: string; text: string }> = {
-  Chair: { bg: "bg-[#2c541d]", text: "text-white" },
-  "Vice Chair": { bg: "bg-[#3a6e26]", text: "text-white" },
-  Treasurer: { bg: "bg-[#74a84a]/20", text: "text-[#2c541d]" },
-  Secretary: { bg: "bg-[#74a84a]/20", text: "text-[#2c541d]" },
-  Director: { bg: "bg-[var(--bg)]", text: "text-[var(--muted)]" },
-  "Ex-Officio": { bg: "bg-[var(--bg)]", text: "text-[var(--muted)]" },
-};
+// Source: forestavenuebid.com/team/
+const staffMembers = [
+  { name: "Nina Flores", title: "Executive Director" },
+];
 
-function RoleBadge({ role }: { role: string }) {
-  const c = roleColors[role] ?? roleColors["Director"];
-  return (
-    <span
-      className={`inline-block px-2.5 py-0.5 text-xs font-semibold rounded-full border border-transparent ${c.bg} ${c.text}`}
-    >
-      {role}
-    </span>
-  );
+function initials(name: string) {
+  return name
+    .replace(/,.*/, "") // strip suffix like ", Esq."
+    .split(" ")
+    .filter(Boolean)
+    .map((n) => n[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
 }
 
+const roleBg: Record<string, string> = {
+  Chair: "bg-[var(--brand-primary)] text-white",
+  "Vice Chair": "bg-[var(--brand-primary)]/80 text-white",
+  Treasurer: "bg-[var(--brand-secondary)]/20 text-[var(--brand-primary)]",
+  Secretary: "bg-[var(--brand-secondary)]/20 text-[var(--brand-primary)]",
+  "Board Member": "bg-[var(--bg)] text-[var(--muted)]",
+  "Board Member Emeritus": "bg-[var(--bg)] text-[var(--muted)] italic",
+};
+
 export default function TeamPage() {
-  const officers = board.filter((m) =>
-    ["Chair", "Vice Chair", "Treasurer", "Secretary"].includes(m.role)
-  );
-  const directors = board.filter((m) => m.role === "Director");
-  const exOfficio = board.filter((m) => m.role === "Ex-Officio");
+  const officers = boardMembers.filter((m) => m.isOfficer);
+  const directors = boardMembers.filter((m) => !m.isOfficer && !m.isPublicOfficial && !m.isEmeritus);
+  const emeritus = boardMembers.filter((m) => m.isEmeritus);
+  const publicOfficials = boardMembers.filter((m) => m.isPublicOfficial);
 
   return (
     <>
       <Hero
         eyebrow="Leadership"
-        title="Board of Directors"
-        subtitle="Our volunteer board is made up of business owners, property owners, and community leaders who give their time to advance Forest Avenue's mission."
+        title="Our Team"
+        subtitle={boardIntro}
       />
 
-      <section className="section-padding bg-white" aria-labelledby="officers-heading">
+      {/* Staff */}
+      <section className="pt-16 pb-8 bg-white" aria-labelledby="staff-heading">
         <div className="container-wide">
-          {/* Officers */}
+          <SectionHeading eyebrow="Staff" title="BID Staff" />
+          <div className="mt-8 flex flex-wrap gap-5">
+            {/* Source: forestavenuebid.com/team/ */}
+            {staffMembers.map((s) => (
+              <div
+                key={s.name}
+                className="flex items-center gap-4 p-6 rounded-2xl border border-[var(--border)] bg-[var(--bg)] min-w-[260px]"
+              >
+                <div
+                  className="w-12 h-12 rounded-full flex-shrink-0 flex items-center justify-center font-headline font-bold text-base text-white"
+                  style={{ background: "var(--brand-primary)" }}
+                  aria-hidden="true"
+                >
+                  {initials(s.name)}
+                </div>
+                <div>
+                  <p className="font-headline font-bold text-lg text-[var(--brand-primary)]">
+                    {s.name}
+                  </p>
+                  <p className="text-sm text-[var(--muted)]">{s.title}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Officers */}
+      <section className="py-12 bg-white" aria-labelledby="officers-heading">
+        <div className="container-wide">
           <SectionHeading
             eyebrow="Officers"
-            title="Executive Committee"
-            description="Elected officers who lead the BID's governance and operations."
+            title="Board of Directors — Executive Committee"
           />
+          {/* Source: forestavenuebid.com/team/ */}
           <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {officers.map((member) => (
+            {officers.map((m) => (
               <div
-                key={member.name}
+                key={m.name}
                 className="bg-[var(--bg)] rounded-2xl border border-[var(--border)] p-6 flex flex-col gap-3"
               >
-                {/* Avatar placeholder */}
                 <div
                   className="w-14 h-14 rounded-full flex items-center justify-center font-headline font-black text-xl text-white"
                   style={{ background: "var(--brand-primary)" }}
                   aria-hidden="true"
                 >
-                  {member.name.split(" ").map((n) => n[0]).join("")}
+                  {initials(m.name)}
                 </div>
+                <span className={`self-start text-xs font-semibold px-2.5 py-0.5 rounded-full border border-transparent ${roleBg[m.role] ?? roleBg["Board Member"]}`}>
+                  {m.role}
+                </span>
                 <div>
-                  <RoleBadge role={member.role} />
-                  <h3 className="mt-2 font-headline font-bold text-lg text-[var(--brand-primary)] leading-tight">
-                    {member.name}
+                  <h3 className="font-headline font-bold text-lg text-[var(--brand-primary)] leading-tight">
+                    {m.name}
                   </h3>
-                  {member.title && (
-                    <p className="text-xs text-[var(--muted)] mt-0.5">{member.title}</p>
-                  )}
+                  <p className="text-xs text-[var(--muted)] mt-0.5">{m.affiliation}</p>
                 </div>
-                {member.bio && (
-                  <p className="text-sm text-[var(--muted)] leading-relaxed">
-                    {member.bio}
-                  </p>
-                )}
               </div>
             ))}
           </div>
+        </div>
+      </section>
 
-          {/* Directors */}
-          <div className="mt-16">
-            <SectionHeading
-              eyebrow="Directors"
-              title="Board Members"
-              description="Elected directors representing property owners, commercial tenants, and the broader community."
-            />
-            <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {directors.map((member) => (
+      {/* Directors */}
+      <section className="py-12 bg-[var(--bg)]" aria-labelledby="directors-heading">
+        <div className="container-wide">
+          <SectionHeading eyebrow="Directors" title="Board Members" />
+          {/* Source: forestavenuebid.com/team/ */}
+          <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {directors.map((m) => (
+              <div
+                key={m.name}
+                className="bg-white rounded-2xl border border-[var(--border)] p-5 flex gap-4"
+              >
                 <div
-                  key={member.name}
-                  className="bg-white rounded-2xl border border-[var(--border)] p-6 flex gap-5"
+                  className="w-11 h-11 rounded-full flex-shrink-0 flex items-center justify-center font-headline font-bold text-sm text-white"
+                  style={{ background: "var(--brand-secondary)" }}
+                  aria-hidden="true"
                 >
-                  <div
-                    className="w-12 h-12 rounded-full flex-shrink-0 flex items-center justify-center font-headline font-bold text-base text-white"
-                    style={{ background: "var(--brand-secondary)" }}
-                    aria-hidden="true"
-                  >
-                    {member.name.split(" ").map((n) => n[0]).join("")}
-                  </div>
-                  <div className="min-w-0">
-                    <h3 className="font-headline font-bold text-base text-[var(--brand-primary)] leading-tight truncate">
-                      {member.name}
-                    </h3>
-                    {member.title && (
-                      <p className="text-xs text-[var(--muted)] mt-0.5">{member.title}</p>
-                    )}
-                    {member.bio && (
-                      <p className="text-sm text-[var(--muted)] mt-2 leading-relaxed">
-                        {member.bio}
-                      </p>
-                    )}
-                  </div>
+                  {initials(m.name)}
                 </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Staff */}
-          {exOfficio.length > 0 && (
-            <div className="mt-16">
-              <SectionHeading eyebrow="Staff" title="BID Staff" />
-              <div className="mt-8 max-w-xl">
-                {exOfficio.map((member) => (
-                  <div
-                    key={member.name}
-                    className="bg-[var(--bg)] rounded-2xl border border-[var(--border)] p-6 flex gap-5"
-                  >
-                    <div
-                      className="w-12 h-12 rounded-full flex-shrink-0 flex items-center justify-center font-headline font-bold text-base text-white"
-                      style={{ background: "var(--brand-accent)" }}
-                      aria-hidden="true"
-                    >
-                      {member.name.split(" ").map((n) => n[0]).join("")}
-                    </div>
-                    <div>
-                      <h3 className="font-headline font-bold text-base text-[var(--brand-primary)]">
-                        {member.name}
-                      </h3>
-                      {member.title && (
-                        <p className="text-xs text-[var(--muted)] mt-0.5">{member.title}</p>
-                      )}
-                      {member.bio && (
-                        <p className="text-sm text-[var(--muted)] mt-2 leading-relaxed">
-                          {member.bio}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                ))}
+                <div>
+                  <h3 className="font-headline font-bold text-base text-[var(--brand-primary)] leading-tight">
+                    {m.name}
+                  </h3>
+                  <p className="text-xs text-[var(--muted)] mt-0.5">{m.affiliation}</p>
+                </div>
               </div>
-            </div>
-          )}
+            ))}
 
-          {/* Join the board CTA */}
-          <div
-            className="mt-16 p-10 rounded-3xl text-center"
-            style={{ background: "var(--brand-primary)" }}
-          >
-            <h2 className="font-headline font-black text-3xl text-white">
-              Interested in serving on the board?
-            </h2>
-            <p className="mt-3 text-white/80 max-w-xl mx-auto leading-relaxed">
-              Board seats are elected annually at the BID's annual meeting. If
-              you're a Forest Avenue property owner, commercial tenant, or
-              community member who wants to help shape the district's future,
-              we'd love to hear from you.
-            </p>
-            <a
-              href="/contact"
-              className="mt-6 inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold text-sm bg-white text-[var(--brand-primary)] hover:bg-[var(--bg)] transition-colors"
-            >
-              Get in touch
-            </a>
+            {/* Emeritus */}
+            {emeritus.map((m) => (
+              <div
+                key={m.name}
+                className="bg-white rounded-2xl border border-[var(--border)] p-5 flex gap-4 opacity-80"
+              >
+                <div
+                  className="w-11 h-11 rounded-full flex-shrink-0 flex items-center justify-center font-headline font-bold text-sm text-white"
+                  style={{ background: "var(--muted)" }}
+                  aria-hidden="true"
+                >
+                  {initials(m.name)}
+                </div>
+                <div>
+                  <h3 className="font-headline font-bold text-base text-[var(--brand-primary)] leading-tight">
+                    {m.name}
+                  </h3>
+                  <p className="text-xs text-[var(--muted)] mt-0.5">{m.affiliation}</p>
+                  <span className="inline-block mt-1 text-xs text-[var(--muted)] italic">Board Member Emeritus</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Public officials */}
+      <section className="py-12 bg-white" aria-labelledby="officials-heading">
+        <div className="container-wide">
+          <SectionHeading
+            eyebrow="Government"
+            title="City & Borough Officials"
+            description="The BID works in partnership with elected officials and government offices who serve the Forest Avenue corridor and Staten Island's North Shore."
+          />
+          {/* Source: forestavenuebid.com/team/ */}
+          <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {publicOfficials.map((m) => (
+              <div
+                key={m.name}
+                className="bg-[var(--bg)] rounded-2xl border border-[var(--border)] p-5 flex gap-4"
+              >
+                <div
+                  className="w-11 h-11 rounded-full flex-shrink-0 flex items-center justify-center font-headline font-bold text-sm text-[var(--brand-primary)]"
+                  style={{ background: "var(--brand-secondary)", opacity: 0.3 }}
+                  aria-hidden="true"
+                >
+                  {initials(m.name)}
+                </div>
+                <div>
+                  <h3 className="font-headline font-bold text-sm text-[var(--brand-primary)] leading-tight">
+                    {m.name}
+                  </h3>
+                  <p className="text-xs text-[var(--muted)] mt-0.5">{m.role}</p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>

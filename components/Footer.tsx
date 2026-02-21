@@ -1,5 +1,15 @@
 import Link from "next/link";
 
+// Source: forestavenuebid.com/contact/
+const CONTACT = {
+  address: "686 Forest Ave, Staten Island, NY 10310",
+  phone: "718-816-4775",
+  email: "forestavebid@gmail.com",
+  facebook: "https://www.facebook.com/ForestAveBID/",
+  instagram: "https://www.instagram.com/forestavebid/",
+  youtube: "https://youtube.com/@forestavenuebid",
+};
+
 const footerNav = [
   {
     heading: "Explore",
@@ -13,7 +23,7 @@ const footerNav = [
   {
     heading: "Organization",
     links: [
-      { href: "/team", label: "Board of Directors" },
+      { href: "/team", label: "Our Team" },
       { href: "/contact", label: "Contact Us" },
     ],
   },
@@ -44,12 +54,13 @@ export default function Footer() {
             </span>
           </Link>
           <p className="text-white/75 text-sm leading-relaxed max-w-xs">
-            Supporting local businesses and building a vibrant community along
-            Staten Island's Forest Avenue corridor.
+            Supporting local businesses and building community along Forest
+            Avenue — from Hart Blvd to Broadway, Staten Island, NY.
           </p>
+          {/* Social links — Source: forestavenuebid.com/contact/ */}
           <div className="mt-5 flex gap-3">
             <a
-              href="https://www.facebook.com"
+              href={CONTACT.facebook}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Facebook (opens in new tab)"
@@ -60,7 +71,7 @@ export default function Footer() {
               </svg>
             </a>
             <a
-              href="https://www.instagram.com"
+              href={CONTACT.instagram}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Instagram (opens in new tab)"
@@ -71,14 +82,14 @@ export default function Footer() {
               </svg>
             </a>
             <a
-              href="https://twitter.com"
+              href={CONTACT.youtube}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="X / Twitter (opens in new tab)"
+              aria-label="YouTube (opens in new tab)"
               className="w-9 h-9 rounded-lg bg-white/15 flex items-center justify-center hover:bg-white/30 transition-colors"
             >
               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                <path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
               </svg>
             </a>
           </div>
@@ -105,27 +116,27 @@ export default function Footer() {
           </nav>
         ))}
 
-        {/* Contact column */}
+        {/* Contact — Source: forestavenuebid.com/contact/ */}
         <div>
           <h3 className="font-headline font-semibold text-sm uppercase tracking-widest text-white/50 mb-4">
             Contact
           </h3>
           <address className="not-italic space-y-2.5 text-sm text-white/80">
-            <p>1247 Forest Ave, 2nd Floor<br />Staten Island, NY 10310</p>
+            <p>{CONTACT.address}</p>
             <p>
               <a
-                href="tel:+17185550100"
+                href={`tel:${CONTACT.phone.replace(/\D/g, "")}`}
                 className="hover:text-white transition-colors"
               >
-                (718) 555-0100
+                {CONTACT.phone}
               </a>
             </p>
             <p>
               <a
-                href="mailto:info@forestavenuebid.com"
+                href={`mailto:${CONTACT.email}`}
                 className="hover:text-white transition-colors"
               >
-                info@forestavenuebid.com
+                {CONTACT.email}
               </a>
             </p>
           </address>

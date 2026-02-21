@@ -6,7 +6,7 @@ import path from "path";
 import type { Event } from "@/lib/types";
 
 export type { Event } from "@/lib/types";
-export { formatEventDate, formatMonthDay } from "@/lib/types";
+export { formatEventDate, formatMonthDay, isUpcoming } from "@/lib/types";
 
 const eventsDir = path.join(process.cwd(), "content", "events");
 

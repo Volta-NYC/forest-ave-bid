@@ -11,17 +11,22 @@ export interface Event {
   body: string;
   tags: string[];
   type: string;
-  image: string;
+  sourceUrl?: string;
+  participants?: string[];
+  participatingBusinesses?: string[];
 }
 
 export interface Business {
   name: string;
   slug: string;
   category: string;
-  address: string;
-  phone: string;
-  website: string;
-  description: string;
+  address?: string;
+  phone?: string;
+  website?: string;
+  description?: string;
+  // NOTE: Only fields present on the official source are populated.
+  // Full directory (~153 businesses) lives in Canva embeds on forestavenuebid.com/our-businesses/
+  // See scripts/README-business-import.md for the import pipeline.
 }
 
 // ── Pure date utilities (no Node.js APIs) ─────────────────────────
@@ -49,4 +54,12 @@ export function formatMonthDay(dateStr: string): { month: string; day: string } 
     month: d.toLocaleDateString("en-US", { month: "short" }),
     day: String(d.getDate()),
   };
+}
+
+/** Returns true if the event date is today or in the future. */
+export function isUpcoming(dateStr: string): boolean {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const eventDate = new Date(dateStr + "T00:00:00");
+  return eventDate >= today;
 }

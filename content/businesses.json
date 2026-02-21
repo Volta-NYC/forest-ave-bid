@@ -1,137 +1,110 @@
 [
   {
-    "name": "Forest Avenue Pharmacy",
-    "slug": "forest-avenue-pharmacy",
-    "category": "Health & Wellness",
-    "address": "1247 Forest Ave, Staten Island, NY 10310",
-    "phone": "(718) 555-0121",
-    "website": "https://example.com",
-    "description": "Your neighborhood pharmacy serving Forest Avenue for over 20 years. Prescription services, immunizations, and health consultations."
+    "name": "Beans and Leaves Cafe",
+    "slug": "beans-and-leaves-cafe",
+    "category": "Restaurants & Cafes",
+    "address": "",
+    "phone": "",
+    "website": "",
+    "description": ""
   },
   {
-    "name": "La Bella Trattoria",
-    "slug": "la-bella-trattoria",
+    "name": "Burrito Bar and Restaurant",
+    "slug": "burrito-bar-and-restaurant",
+    "category": "Restaurants & Cafes",
+    "address": "",
+    "phone": "",
+    "website": "",
+    "description": ""
+  },
+  {
+    "name": "LiGreci's Staaten",
+    "slug": "ligrecis-staaten",
     "category": "Restaurants & Dining",
-    "address": "1312 Forest Ave, Staten Island, NY 10310",
-    "phone": "(718) 555-0188",
+    "address": "",
+    "phone": "",
     "website": "",
-    "description": "Authentic Italian cuisine crafted with family recipes. From house-made pasta to wood-fired pizzas, dine in or take out."
+    "description": "One of the corridor's longest-standing establishments. Venue for the Forest Ave BID 20th Anniversary Gala."
   },
   {
-    "name": "Forest Ave Hardware",
-    "slug": "forest-ave-hardware",
-    "category": "Home & Hardware",
-    "address": "1189 Forest Ave, Staten Island, NY 10310",
-    "phone": "(718) 555-0144",
+    "name": "Gateway Arms Realty",
+    "slug": "gateway-arms-realty",
+    "category": "Real Estate",
+    "address": "",
+    "phone": "",
     "website": "",
-    "description": "Full-service hardware store with a knowledgeable staff. Tools, paint, plumbing supplies, and expert advice for every project."
+    "description": ""
   },
   {
-    "name": "Sunrise Diner",
-    "slug": "sunrise-diner",
-    "category": "Restaurants & Dining",
-    "address": "1350 Forest Ave, Staten Island, NY 10310",
-    "phone": "(718) 555-0165",
-    "website": "",
-    "description": "A Forest Avenue institution since 1978. Breakfast served all day, homemade soups, and the best coffee on the North Shore."
-  },
-  {
-    "name": "North Shore Barbers",
-    "slug": "north-shore-barbers",
-    "category": "Beauty & Personal Care",
-    "address": "1224 Forest Ave, Staten Island, NY 10310",
-    "phone": "(718) 555-0177",
-    "website": "",
-    "description": "Classic cuts and modern styles for men and boys. Walk-ins welcome. Open seven days a week."
-  },
-  {
-    "name": "Green Thumb Florist",
-    "slug": "green-thumb-florist",
-    "category": "Retail & Gifts",
-    "address": "1278 Forest Ave, Staten Island, NY 10310",
-    "phone": "(718) 555-0133",
-    "website": "https://example.com",
-    "description": "Fresh-cut flowers, custom arrangements, and plants for every occasion. Same-day delivery available throughout Staten Island."
-  },
-  {
-    "name": "Forest Ave Dry Cleaners",
-    "slug": "forest-ave-dry-cleaners",
-    "category": "Services",
-    "address": "1201 Forest Ave, Staten Island, NY 10310",
-    "phone": "(718) 555-0199",
-    "website": "",
-    "description": "Expert garment care with same-day service available. Alterations, leather cleaning, and wedding gown preservation."
-  },
-  {
-    "name": "Island Books & Gifts",
-    "slug": "island-books-gifts",
-    "category": "Retail & Gifts",
-    "address": "1330 Forest Ave, Staten Island, NY 10310",
-    "phone": "(718) 555-0112",
-    "website": "",
-    "description": "Independent bookstore specializing in local Staten Island authors, children's books, and thoughtful gifts. Story time every Saturday morning."
-  },
-  {
-    "name": "Forest Avenue Dental",
-    "slug": "forest-avenue-dental",
-    "category": "Health & Wellness",
-    "address": "1265 Forest Ave, Staten Island, NY 10310",
-    "phone": "(718) 555-0155",
-    "website": "https://example.com",
-    "description": "Comprehensive family and cosmetic dentistry in a comfortable, welcoming environment. Accepting new patients."
-  },
-  {
-    "name": "Café Verdi",
-    "slug": "cafe-verdi",
-    "category": "Restaurants & Dining",
-    "address": "1295 Forest Ave, Staten Island, NY 10310",
-    "phone": "(718) 555-0142",
-    "website": "https://example.com",
-    "description": "Specialty coffee, fresh pastries, and light lunch fare. A cozy neighborhood café with free Wi-Fi and community seating."
-  },
-  {
-    "name": "All-Star Auto Repair",
-    "slug": "all-star-auto-repair",
-    "category": "Automotive",
-    "address": "1158 Forest Ave, Staten Island, NY 10310",
-    "phone": "(718) 555-0178",
-    "website": "",
-    "description": "Full-service auto repair and maintenance. ASE-certified mechanics, honest estimates, and a comfortable waiting area."
-  },
-  {
-    "name": "Westside Insurance Group",
-    "slug": "westside-insurance-group",
+    "name": "Bentson & Company",
+    "slug": "bentson-and-company",
     "category": "Professional Services",
-    "address": "1340 Forest Ave, Staten Island, NY 10310",
-    "phone": "(718) 555-0160",
-    "website": "https://example.com",
-    "description": "Personal and commercial insurance solutions. Home, auto, life, and business coverage from a team that knows the community."
+    "address": "",
+    "phone": "",
+    "website": "",
+    "description": ""
   },
   {
-    "name": "Angelina's Bakery",
-    "slug": "angelinas-bakery",
+    "name": "Thompson Law, PLLC",
+    "slug": "thompson-law-pllc",
+    "category": "Legal Services",
+    "address": "",
+    "phone": "",
+    "website": "",
+    "description": ""
+  },
+  {
+    "name": "Law Office of Andrea Morse",
+    "slug": "law-office-of-andrea-morse",
+    "category": "Legal Services",
+    "address": "",
+    "phone": "",
+    "website": "",
+    "description": ""
+  },
+  {
+    "name": "Duffy's",
+    "slug": "duffys",
     "category": "Restaurants & Dining",
-    "address": "1215 Forest Ave, Staten Island, NY 10310",
-    "phone": "(718) 555-0191",
+    "address": "",
+    "phone": "",
     "website": "",
-    "description": "Handmade Italian pastries, custom cakes, and fresh bread baked daily. A family tradition for over three decades on Forest Avenue."
+    "description": ""
   },
   {
-    "name": "StateSide Realty",
-    "slug": "stateside-realty",
-    "category": "Professional Services",
-    "address": "1302 Forest Ave, Staten Island, NY 10310",
-    "phone": "(718) 555-0185",
-    "website": "https://example.com",
-    "description": "Residential and commercial real estate serving Staten Island. Buying, selling, and renting—our agents know every block of the borough."
+    "name": "Panini Grill",
+    "slug": "panini-grill",
+    "category": "Restaurants & Cafes",
+    "address": "",
+    "phone": "",
+    "website": "",
+    "description": ""
   },
   {
-    "name": "Children's Boutique",
-    "slug": "childrens-boutique",
-    "category": "Retail & Gifts",
-    "address": "1258 Forest Ave, Staten Island, NY 10310",
-    "phone": "(718) 555-0126",
+    "name": "Pastosa Ravioli & Cheese Inc.",
+    "slug": "pastosa-ravioli-and-cheese",
+    "category": "Specialty Food",
+    "address": "",
+    "phone": "",
     "website": "",
-    "description": "Curated children's clothing, toys, and accessories. Newborn through size 14. Perfect for gifts, back-to-school, and everyday."
+    "description": ""
+  },
+  {
+    "name": "On Your Mark Cafe",
+    "slug": "on-your-mark-cafe",
+    "category": "Restaurants & Cafes",
+    "address": "",
+    "phone": "",
+    "website": "",
+    "description": ""
+  },
+  {
+    "name": "Spotlight Theatre",
+    "slug": "spotlight-theatre",
+    "category": "Arts & Entertainment",
+    "address": "",
+    "phone": "",
+    "website": "",
+    "description": ""
   }
 ]

@@ -13,15 +13,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/contact`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
   ];
 
-  // Dynamic event routes
-  // In a real app, import getAllEvents() here
-  // For static generation compatibility, we'll keep this simple
+  // Event slugs — sourced from content/events/*.json (real site events only)
   const eventSlugs = [
-    "spring-corridor-cleanup-2025",
-    "small-business-saturday-2024",
-    "holiday-market-2024",
-    "forest-avenue-street-fair-2025",
-    "business-owners-town-hall-2025",
+    "st-patricks-day-parade-2024",
+    "20th-anniversary-gala-2024",
+    "spring-stroll-2024",
+    "trick-or-treat-for-all-2024",
   ];
 
   const eventRoutes: MetadataRoute.Sitemap = eventSlugs.map((slug) => ({

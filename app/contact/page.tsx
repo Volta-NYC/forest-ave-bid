@@ -6,9 +6,10 @@ import ContactForm from "@/components/ContactForm";
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Get in touch with the Forest Avenue BID. We're here to answer questions, connect businesses with resources, and support the Forest Avenue community.",
+    "Get in touch with the Forest Avenue BID. Email us at forestavebid@gmail.com or call 718-816-4775.",
 };
 
+// Source: forestavenuebid.com/contact/
 const contactInfo = [
   {
     icon: (
@@ -17,9 +18,10 @@ const contactInfo = [
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
       </svg>
     ),
-    label: "Office",
-    value: "1247 Forest Ave, 2nd Floor\nStaten Island, NY 10310",
-    href: "https://maps.google.com/?q=1247+Forest+Ave+Staten+Island+NY+10310",
+    label: "Address",
+    // Source: forestavenuebid.com/contact/
+    value: "686 Forest Ave\nStaten Island, NY 10310",
+    href: "https://maps.google.com/?q=686+Forest+Ave+Staten+Island+NY+10310",
     external: true,
   },
   {
@@ -29,8 +31,9 @@ const contactInfo = [
       </svg>
     ),
     label: "Phone",
-    value: "(718) 555-0100",
-    href: "tel:+17185550100",
+    // Source: forestavenuebid.com/contact/
+    value: "718-816-4775",
+    href: "tel:7188164775",
     external: false,
   },
   {
@@ -40,20 +43,24 @@ const contactInfo = [
       </svg>
     ),
     label: "Email",
-    value: "info@forestavenuebid.com",
-    href: "mailto:info@forestavenuebid.com",
+    // Source: forestavenuebid.com/contact/
+    value: "forestavebid@gmail.com",
+    href: "mailto:forestavebid@gmail.com",
     external: false,
   },
+];
+
+// Source: forestavenuebid.com/contact/
+const socialLinks = [
   {
-    icon: (
-      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-      </svg>
-    ),
-    label: "Office hours",
-    value: "Mon–Fri, 9:00 AM – 5:00 PM",
-    href: undefined,
-    external: false,
+    href: "https://www.facebook.com/ForestAveBID/",
+    label: "Facebook",
+    path: "M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z",
+  },
+  {
+    href: "https://www.instagram.com/forestavebid/",
+    label: "Instagram",
+    path: "M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63z",
   },
 ];
 
@@ -62,16 +69,21 @@ export default function ContactPage() {
     <>
       <Hero
         eyebrow="Get in touch"
-        title="Contact the Forest Avenue BID"
-        subtitle="We're here to help. Reach out with questions about BID services, business support, events, or anything else—we'll get back to you within two business days."
+        // Source: forestavenuebid.com/contact/
+        title="Contact Us"
+        subtitle="Have any questions? We are always open to talk about your business, community, opportunities, or how we can help you."
       />
 
       <section className="section-padding bg-[var(--bg)]" aria-labelledby="contact-heading">
         <div className="container-wide">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-            {/* Contact info */}
+            {/* Contact info — Source: forestavenuebid.com/contact/ */}
             <aside>
-              <SectionHeading eyebrow="Reach us" title="Contact information" />
+              <SectionHeading
+                // Source: forestavenuebid.com/contact/ — "Get In Touch" heading
+                eyebrow="Get in touch"
+                title="Talk to us"
+              />
               <ul className="mt-8 space-y-6" role="list">
                 {contactInfo.map((info) => (
                   <li key={info.label} className="flex items-start gap-4">
@@ -105,16 +117,13 @@ export default function ContactPage() {
                 ))}
               </ul>
 
-              {/* Social */}
+              {/* Social — Source: forestavenuebid.com/contact/ — "Follow Us" section */}
               <div className="mt-10">
                 <p className="text-xs font-semibold uppercase tracking-wider text-[var(--muted)] mb-4">
                   Follow us
                 </p>
                 <div className="flex gap-3">
-                  {[
-                    { href: "https://facebook.com", label: "Facebook", path: "M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" },
-                    { href: "https://instagram.com", label: "Instagram", path: "M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63z" },
-                  ].map((s) => (
+                  {socialLinks.map((s) => (
                     <a
                       key={s.label}
                       href={s.href}
@@ -128,11 +137,22 @@ export default function ContactPage() {
                       </svg>
                     </a>
                   ))}
+                  <a
+                    href="https://youtube.com/@forestavenuebid"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="YouTube (opens in new tab)"
+                    className="w-10 h-10 rounded-xl border border-[var(--border)] bg-white flex items-center justify-center text-[var(--muted)] hover:text-[var(--brand-primary)] hover:border-[var(--brand-primary)] transition-colors"
+                  >
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+                    </svg>
+                  </a>
                 </div>
               </div>
             </aside>
 
-            {/* Form */}
+            {/* Form — mailto directs to real BID email */}
             <div className="lg:col-span-2">
               <div className="bg-white rounded-2xl border border-[var(--border)] p-8">
                 <h2 className="font-headline font-bold text-2xl text-[var(--brand-primary)] mb-6">

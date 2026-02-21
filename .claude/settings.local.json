@@ -1,7 +1,18 @@
 {
   "permissions": {
     "allow": [
-      "WebFetch(domain:forestavenuebid.com)"
+      "WebFetch(domain:forestavenuebid.com)",
+      "Bash(npm show:*)",
+      "Bash(node:*)",
+      "Bash(tail:*)",
+      "Bash(git add:*)",
+      "WebFetch(domain:webcache.googleusercontent.com)",
+      "WebFetch(domain:web.archive.org)",
+      "Bash(curl:*)",
+      "WebFetch(domain:www.canva.com)",
+      "Bash(head:*)",
+      "Bash(python3:*)",
+      "Bash(npm run:*)"
     ]
   }
 }

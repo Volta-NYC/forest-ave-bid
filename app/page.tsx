@@ -4,14 +4,22 @@ import Hero from "@/components/Hero";
 import SectionHeading from "@/components/SectionHeading";
 import CTAButton from "@/components/CTAButton";
 import EventCard from "@/components/EventCard";
-import { getAllEvents } from "@/lib/events";
+import { getAllEvents, isUpcoming } from "@/lib/events";
 
 export const metadata: Metadata = {
   title: "Forest Avenue BID | Staten Island, NY",
   description:
-    "The Forest Avenue Business Improvement District supports local businesses, drives commercial revitalization, and builds community along Staten Island's Forest Avenue corridor.",
+    "The Forest Avenue Business Improvement District supports local businesses and builds community along Forest Avenue in Staten Island, NY — from Hart Blvd to Broadway.",
 };
 
+// Source: forestavenuebid.com/our-businesses/
+const stats = [
+  { value: "153", label: "Businesses" },
+  { value: "156", label: "Property Owners" },
+  { value: "1", label: "Business Improvement District" },
+];
+
+// Source: forestavenuebid.com (homepage copy, verbatim)
 const features = [
   {
     icon: (
@@ -20,8 +28,9 @@ const features = [
       </svg>
     ),
     title: "Small Business Support",
+    // Source: forestavenuebid.com homepage
     description:
-      "We advocate for Forest Avenue merchants with technical assistance, grant resources, signage programs, and direct connections to NYC Small Business Services.",
+      "Are you a business owner on Forest Ave between Hart Blvd and Broadway? We are here to support you! Check out our small business resources or contact us today.",
     href: "/services",
   },
   {
@@ -31,8 +40,9 @@ const features = [
       </svg>
     ),
     title: "Commercial Revitalization",
+    // Source: forestavenuebid.com homepage
     description:
-      "Through beautification investments, streetscape improvements, façade grants, and strategic marketing, we strengthen Forest Avenue as a destination commercial corridor.",
+      "Our goal is to respond to locally identified needs and advocate for area improvements that better residents' and business owners quality of life.",
     href: "/services",
   },
   {
@@ -42,41 +52,39 @@ const features = [
       </svg>
     ),
     title: "Community Events",
+    // Source: forestavenuebid.com homepage
     description:
-      "From our beloved Annual Street Fair to holiday markets and neighborhood cleanups, we bring people together and create reasons to shop and celebrate on Forest Avenue.",
+      "We believe in supporting community growth and bringing people together and providing chances for interaction and collaboration. Check out our upcoming events!",
     href: "/events",
   },
 ];
 
-const stats = [
-  { value: "200+", label: "Member Businesses" },
-  { value: "15+", label: "Years Serving the District" },
-  { value: "6", label: "Annual Signature Events" },
-  { value: "~1 mile", label: "Of Commercial Corridor" },
-];
-
 export default function HomePage() {
-  const upcomingEvents = getAllEvents().slice(0, 3);
+  const allEvents = getAllEvents();
+  const upcomingEvents = allEvents.filter((e) => isUpcoming(e.date));
+  // Show up to 3 most recent past events on homepage if no upcoming events
+  const featuredEvents = upcomingEvents.length > 0
+    ? upcomingEvents.slice(0, 3)
+    : allEvents.slice(0, 3);
 
   return (
     <>
+      {/* Source: forestavenuebid.com — "BUSINESS IMPROVEMENT DISTRICT" heading */}
       <Hero
         eyebrow="Staten Island, New York"
-        title="Where Forest Avenue's Community Comes Together"
-        subtitle="The Forest Avenue Business Improvement District invests in the people, businesses, and public spaces that make our neighborhood thrive."
+        title="Forest Avenue Business Improvement District"
+        subtitle="Supporting local businesses and bringing people together along Forest Avenue — from Hart Blvd to Broadway."
         primaryCta={{ label: "Explore our businesses", href: "/our-businesses" }}
-        secondaryCta={{ label: "Learn about the BID", href: "/about" }}
+        secondaryCta={{ label: "Get in touch", href: "/contact" }}
       />
 
-      {/* Features */}
+      {/* Features — Source: forestavenuebid.com homepage sections */}
       <section className="section-padding bg-white" aria-labelledby="features-heading">
         <div className="container-wide">
           <SectionHeading
             eyebrow="What we do"
-            title="Building a stronger Forest Avenue"
-            description="The Forest Avenue BID works every day to support local businesses, invest in public spaces, and build the community connections that keep our neighborhood vibrant."
+            title="How we support Forest Avenue"
           />
-
           <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
             {features.map((feat) => (
               <Link
@@ -108,70 +116,89 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Stats band */}
+      {/* Stats — Source: forestavenuebid.com/our-businesses/ */}
       <section
         className="py-14"
         style={{ background: "var(--brand-primary)" }}
         aria-label="District statistics"
       >
-        <div className="container-wide grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div className="container-wide grid grid-cols-3 gap-8 max-w-2xl mx-auto">
           {stats.map((stat) => (
             <div key={stat.label} className="text-center">
-              <p className="font-headline font-black text-4xl text-white">{stat.value}</p>
+              <p className="font-headline font-black text-5xl text-white">{stat.value}</p>
               <p className="text-sm text-white/70 mt-1">{stat.label}</p>
             </div>
           ))}
         </div>
       </section>
 
-      {/* Upcoming events */}
-      {upcomingEvents.length > 0 && (
-        <section className="section-padding bg-[var(--bg)]" aria-labelledby="events-heading">
-          <div className="container-wide">
-            <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10">
-              <SectionHeading
-                eyebrow="What's happening"
-                title="Upcoming events"
-                description="Stay connected with Forest Avenue's calendar of community events, markets, and programs."
-              />
-              <CTAButton href="/events" variant="outline" className="flex-shrink-0">
-                View all events
-              </CTAButton>
-            </div>
-
-            <div className="flex flex-col gap-5">
-              {upcomingEvents.map((event) => (
-                <EventCard key={event.slug} event={event} featured />
-              ))}
-            </div>
+      {/* Events */}
+      <section className="section-padding bg-[var(--bg)]" aria-labelledby="events-heading">
+        <div className="container-wide">
+          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10">
+            <SectionHeading
+              eyebrow={upcomingEvents.length > 0 ? "What's happening" : "Recent events"}
+              title={upcomingEvents.length > 0 ? "Upcoming events" : "Past events"}
+              description={
+                upcomingEvents.length > 0
+                  ? undefined
+                  // Source: forestavenuebid.com/events/
+                  : "From Trick or Treating to Spring Strolls, the Forest Ave BID is always planning an upcoming community event."
+              }
+            />
+            <CTAButton href="/events" variant="outline" className="flex-shrink-0">
+              View all events
+            </CTAButton>
           </div>
-        </section>
-      )}
 
-      {/* CTA band */}
+          {upcomingEvents.length === 0 && (
+            <div className="mb-8 p-5 rounded-xl bg-white border border-[var(--border)] text-sm text-[var(--muted)]">
+              <strong className="text-[var(--text)]">No upcoming events posted yet.</strong>{" "}
+              Check back soon or{" "}
+              <a
+                href="https://www.instagram.com/forestavebid/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[var(--brand-accent)] hover:underline"
+              >
+                follow us on Instagram
+              </a>{" "}
+              for the latest updates.
+            </div>
+          )}
+
+          <div className="flex flex-col gap-5">
+            {featuredEvents.map((event) => (
+              <EventCard key={event.slug} event={event} featured />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Talk to us — Source: forestavenuebid.com homepage "Talk to us" section */}
       <section
         className="py-20"
         style={{ background: "var(--brand-secondary)" }}
         aria-labelledby="cta-heading"
       >
-        <div className="container-wide text-center max-w-3xl mx-auto">
+        <div className="container-wide text-center max-w-2xl mx-auto">
           <h2
             id="cta-heading"
             className="font-headline font-black text-white text-4xl md:text-5xl text-balance"
           >
-            Ready to get involved?
+            Talk to us
           </h2>
+          {/* Source: forestavenuebid.com homepage */}
           <p className="mt-4 text-white/85 text-lg leading-relaxed">
-            Whether you're a business owner looking for support, a resident who
-            wants to get involved, or a community partner—we'd love to hear from
-            you.
+            Have any questions? We are always open to talk about your business,
+            community, opportunities, or how we can help you.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-4">
             <CTAButton href="/contact" className="bg-white !text-[var(--brand-primary)] hover:bg-[var(--bg)]">
               Get in touch
             </CTAButton>
             <CTAButton href="/our-businesses" variant="outline" className="border-white text-white hover:bg-white/10 hover:text-white">
-              Browse the directory
+              Explore our businesses
             </CTAButton>
           </div>
         </div>

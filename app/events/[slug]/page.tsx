@@ -4,6 +4,7 @@ import Link from "next/link";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import CTAButton from "@/components/CTAButton";
 import { getAllEvents, getEventBySlug, formatEventDate } from "@/lib/events";
+import type { Event } from "@/lib/types";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -29,6 +30,57 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
+function renderBody(body: string) {
+  // Render paragraphs only — no invented bullet lists
+  return body.split("\n\n").filter(Boolean).map((para, i) => (
+    <p key={i} className="mb-4 text-[var(--muted)] leading-relaxed">
+      {para}
+    </p>
+  ));
+}
+
+function ParticipantsList({ event }: { event: Event }) {
+  const businesses = event.participatingBusinesses ?? [];
+  const participants = event.participants ?? [];
+  if (businesses.length === 0 && participants.length === 0) return null;
+
+  return (
+    <div className="mt-6 pt-6 border-t border-[var(--border)]">
+      {businesses.length > 0 && (
+        <>
+          {/* Source: forestavenuebid.com/spring-stroll-2024/ */}
+          <h3 className="font-headline font-semibold text-base text-[var(--brand-primary)] mb-3">
+            Participating businesses
+          </h3>
+          <ul className="space-y-1.5" role="list">
+            {businesses.map((b) => (
+              <li key={b} className="flex items-center gap-2 text-sm text-[var(--muted)]">
+                <span className="w-1.5 h-1.5 rounded-full bg-[var(--brand-secondary)] flex-shrink-0" aria-hidden="true" />
+                {b}
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
+      {participants.length > 0 && (
+        <div className={businesses.length > 0 ? "mt-5" : ""}>
+          <h3 className="font-headline font-semibold text-base text-[var(--brand-primary)] mb-3">
+            Participants
+          </h3>
+          <ul className="space-y-1.5" role="list">
+            {participants.map((p) => (
+              <li key={p} className="flex items-center gap-2 text-sm text-[var(--muted)]">
+                <span className="w-1.5 h-1.5 rounded-full bg-[var(--brand-secondary)] flex-shrink-0" aria-hidden="true" />
+                {p}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default async function EventDetailPage({ params }: PageProps) {
   const { slug } = await params;
   const event = getEventBySlug(slug);
@@ -49,7 +101,6 @@ export default async function EventDetailPage({ params }: PageProps) {
 
         {/* Header */}
         <div className="flex flex-col sm:flex-row gap-6 items-start">
-          {/* Date block */}
           <div
             className="flex-shrink-0 w-20 h-20 rounded-2xl flex flex-col items-center justify-center"
             style={{ background: "var(--brand-primary)" }}
@@ -91,31 +142,13 @@ export default async function EventDetailPage({ params }: PageProps) {
         </div>
 
         <div className="mt-10 grid grid-cols-1 lg:grid-cols-3 gap-10">
-          {/* Body */}
+          {/* Body — sourced from real site content only */}
           <div className="lg:col-span-2">
             <div className="bg-white rounded-2xl border border-[var(--border)] p-8">
-              <h2 className="sr-only">Event details</h2>
-              <div className="prose prose-sm max-w-none text-[var(--text)]">
-                {event.body.split("\n\n").map((para, i) => {
-                  if (para.startsWith("- ")) {
-                    const items = para.split("\n").filter((l) => l.startsWith("- "));
-                    return (
-                      <ul key={i} className="list-disc pl-5 space-y-1 my-4">
-                        {items.map((item, j) => (
-                          <li key={j} className="text-[var(--text)] text-sm">
-                            {item.replace(/^- /, "")}
-                          </li>
-                        ))}
-                      </ul>
-                    );
-                  }
-                  return (
-                    <p key={i} className="mb-4 text-[var(--muted)] leading-relaxed">
-                      {para}
-                    </p>
-                  );
-                })}
+              <div className="prose prose-sm max-w-none">
+                {renderBody(event.body)}
               </div>
+              <ParticipantsList event={event} />
             </div>
           </div>
 
@@ -125,7 +158,6 @@ export default async function EventDetailPage({ params }: PageProps) {
               <h2 className="font-headline font-bold text-lg text-[var(--brand-primary)]">
                 Event info
               </h2>
-
               <dl className="space-y-4 text-sm">
                 <div>
                   <dt className="text-xs font-semibold uppercase tracking-wider text-[var(--muted)] mb-1">
@@ -133,20 +165,40 @@ export default async function EventDetailPage({ params }: PageProps) {
                   </dt>
                   <dd className="text-[var(--text)]">{dateLabel}</dd>
                 </div>
-                <div>
-                  <dt className="text-xs font-semibold uppercase tracking-wider text-[var(--muted)] mb-1">
-                    Time
-                  </dt>
-                  <dd className="text-[var(--text)]">{event.time}</dd>
-                </div>
-                <div>
-                  <dt className="text-xs font-semibold uppercase tracking-wider text-[var(--muted)] mb-1">
-                    Location
-                  </dt>
-                  <dd className="text-[var(--text)]">{event.location}</dd>
-                </div>
+                {event.time && (
+                  <div>
+                    <dt className="text-xs font-semibold uppercase tracking-wider text-[var(--muted)] mb-1">
+                      Time
+                    </dt>
+                    <dd className="text-[var(--text)]">{event.time}</dd>
+                  </div>
+                )}
+                {event.location && (
+                  <div>
+                    <dt className="text-xs font-semibold uppercase tracking-wider text-[var(--muted)] mb-1">
+                      Location
+                    </dt>
+                    <dd className="text-[var(--text)]">{event.location}</dd>
+                  </div>
+                )}
+                {event.sourceUrl && (
+                  <div>
+                    <dt className="text-xs font-semibold uppercase tracking-wider text-[var(--muted)] mb-1">
+                      Source
+                    </dt>
+                    <dd>
+                      <a
+                        href={event.sourceUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[var(--brand-accent)] hover:underline text-xs"
+                      >
+                        View original post
+                      </a>
+                    </dd>
+                  </div>
+                )}
               </dl>
-
               <div className="pt-4 border-t border-[var(--border)]">
                 <CTAButton href="/contact" className="w-full justify-center">
                   Questions? Contact us
@@ -156,7 +208,6 @@ export default async function EventDetailPage({ params }: PageProps) {
           </aside>
         </div>
 
-        {/* Back link */}
         <div className="mt-10">
           <Link
             href="/events"

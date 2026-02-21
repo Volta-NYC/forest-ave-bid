@@ -60,7 +60,8 @@ export default function ContactForm() {
     if (!validate()) return;
 
     // Mailto fallback — replace with Formspree/Netlify Forms endpoint in production
-    const mailto = `mailto:info@forestavenuebid.com?subject=${encodeURIComponent(
+    // Source: forestavenuebid.com/contact/ — real BID email address
+    const mailto = `mailto:forestavebid@gmail.com?subject=${encodeURIComponent(
       `[Website] ${form.subject}`
     )}&body=${encodeURIComponent(
       `Name: ${form.name}\nEmail: ${form.email}\nPhone: ${form.phone || "not provided"}\n\n${form.message}`
@@ -92,10 +93,10 @@ export default function ContactForm() {
         </h3>
         <p className="mt-2 text-sm text-[var(--muted)]">
           Complete and send the pre-filled email to reach us at{" "}
-          <a href="mailto:info@forestavenuebid.com" className="text-[var(--brand-accent)] hover:underline">
-            info@forestavenuebid.com
+          <a href="mailto:forestavebid@gmail.com" className="text-[var(--brand-accent)] hover:underline">
+            forestavebid@gmail.com
           </a>
-          . We respond to all inquiries within two business days.
+          . We respond to all inquiries as soon as possible.
         </p>
         <button
           onClick={() => setSubmitted(false)}
