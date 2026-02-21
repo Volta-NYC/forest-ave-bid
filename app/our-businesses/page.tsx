@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import Hero from "@/components/Hero";
 import SectionHeading from "@/components/SectionHeading";
 import BusinessSearch from "@/components/BusinessSearch";
@@ -46,64 +47,45 @@ export default function OurBusinessesPage() {
       <section className="section-padding bg-[var(--bg)]" aria-labelledby="businesses-heading">
         <div className="container-wide">
 
-          {/* Import notice — transparent about the partial directory */}
-          <div className="mb-8 p-5 rounded-xl bg-white border border-[var(--border)] flex gap-4 items-start">
-            <svg className="w-5 h-5 text-[var(--brand-secondary)] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            <div className="text-sm text-[var(--muted)]">
-              <strong className="text-[var(--text)]">Directory in progress.</strong>{" "}
-              The full directory of 153 businesses is published as a{" "}
-              <a
-                href="https://forestavenuebid.com/our-businesses/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[var(--brand-accent)] hover:underline"
-              >
-                Canva embed on the official site
-              </a>
-              . The listings below are confirmed members sourced from BID publications. Is your business missing?{" "}
-              <a href="/contact" className="text-[var(--brand-accent)] hover:underline">Contact us</a> to be added.
-            </div>
-          </div>
-
-          <div className="mb-10">
+          <div className="mb-10 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
             <SectionHeading
-              eyebrow={`${businesses.length} confirmed listings`}
+              eyebrow={`${businesses.length} member businesses`}
               title="Find a Forest Avenue business"
-              description="Search by name or filter by category."
+              description="Search by name, address, or category. Browse A–Z or use the interactive map."
             />
+            <Link
+              href="/map"
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-[var(--evergreen-400)] text-[var(--evergreen-700)] text-sm font-semibold hover:bg-[var(--evergreen-50)] transition-colors flex-shrink-0"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+              </svg>
+              View map
+            </Link>
           </div>
 
           <BusinessSearch businesses={businesses} categories={categories} />
         </div>
       </section>
 
-      {/* Map — Source: forestavenuebid.com/contact/ (address: 686 Forest Ave) */}
+      {/* Map CTA */}
       <section className="py-16 bg-white" aria-labelledby="map-heading">
-        <div className="container-wide">
+        <div className="container-wide text-center max-w-2xl mx-auto">
           <SectionHeading
-            eyebrow="Location"
-            title="Forest Avenue, Staten Island"
+            eyebrow="Interactive map"
+            title="Explore the corridor"
             // Source: forestavenuebid.com/about/ — corridor description
-            description="The Forest Ave BID serves merchants and property owners from Hart Blvd to Broadway on Staten Island's North Shore."
+            description="See Forest Avenue BID businesses on an interactive map. The district runs from Hart Blvd to Broadway on Staten Island's North Shore."
           />
-          <div className="mt-8 rounded-2xl overflow-hidden border border-[var(--border)] h-80">
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3025.4!2d-74.1250!3d40.6290!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24f910f5b17e3%3A0x0!2s686+Forest+Ave%2C+Staten+Island%2C+NY+10310!5e0!3m2!1sen!2sus!4v1700000000000"
-              width="100%"
-              height="100%"
-              style={{ border: 0 }}
-              allowFullScreen
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              title="Forest Avenue BID map"
-            />
-          </div>
-          {/* Source: forestavenuebid.com/contact/ */}
-          <p className="mt-3 text-xs text-[var(--muted)] text-center">
-            Forest Avenue BID office: 686 Forest Ave, Staten Island, NY 10310
-          </p>
+          <Link
+            href="/map"
+            className="mt-6 inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm bg-[var(--evergreen-700)] text-white hover:bg-[var(--evergreen-500)] transition-colors shadow-wood-sm"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+            </svg>
+            Open business map
+          </Link>
         </div>
       </section>
 

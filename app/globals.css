@@ -4,55 +4,75 @@
 
 /* ── Brand tokens ─────────────────────────────────────── */
 :root {
-  --brand-primary:   #2c541d;
-  --brand-secondary: #74a84a;
-  --brand-accent:    #5a8f38;
-  --bg:              #f6f8f5;
-  --text:            #1a1a1a;
-  --muted:           #5a6355;
-  --border:          #d4e0cc;
+  /* Evergreen palette — source: forestavenuebid.com */
+  --evergreen-900: #1a3311;
+  --evergreen-700: #2c541d;   /* brand-primary */
+  --evergreen-500: #3d7028;
+  --evergreen-400: #5a8f38;   /* brand-accent */
+  --evergreen-200: #74a84a;   /* brand-secondary */
+  --evergreen-100: #c4ddb0;
+  --evergreen-50:  #edf5e4;
+
+  /* Wood / warm neutrals */
+  --wood-900: #2e1a0e;
+  --wood-700: #5c3d1e;
+  --wood-500: #8b6534;
+  --wood-300: #c4a06a;
+  --wood-200: #d9bc94;
+  --wood-100: #ede3cf;
+  --wood-50:  #f8f2e8;
+
+  /* Paper / ink */
+  --paper:    #faf6ef;
+  --ink:      #1c1a17;
+  --muted-ink:#5a5248;
+
+  /* Legacy aliases kept for compat */
+  --brand-primary:   var(--evergreen-700);
+  --brand-secondary: var(--evergreen-200);
+  --brand-accent:    var(--evergreen-400);
+  --bg:              var(--paper);
+  --text:            var(--ink);
+  --muted:           var(--muted-ink);
+  --border:          var(--wood-100);
   --surface:         #ffffff;
 
   --font-headline: "League Spartan", sans-serif;
   --font-body:     "Inter", sans-serif;
+
+  /* Subtle grain mask — SVG noise pattern */
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
 }
 
-/* ── Base resets ──────────────────────────────────────── */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-}
+/* ── Base ─────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
 
 body {
-  background-color: var(--bg);
-  color: var(--text);
+  background-color: var(--paper);
+  color: var(--ink);
   font-family: var(--font-body);
   font-size: 1rem;
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
 }
 
-/* ── Typography scale ─────────────────────────────────── */
+/* ── Typography ───────────────────────────────────────── */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-headline);
   font-weight: 700;
   line-height: 1.15;
   letter-spacing: -0.02em;
+  color: var(--evergreen-700);
 }
 
-/* ── Focus visible ────────────────────────────────────── */
+/* ── Focus / A11y ─────────────────────────────────────── */
 :focus-visible {
   outline: 2px solid var(--brand-accent);
   outline-offset: 3px;
   border-radius: 2px;
 }
 
-/* ── Skip link ────────────────────────────────────────── */
 .skip-link {
   position: absolute;
   top: -100%;
@@ -65,50 +85,87 @@ h1, h2, h3, h4, h5, h6 {
   z-index: 9999;
   transition: top 0.2s;
 }
-.skip-link:focus {
-  top: 0;
-}
+.skip-link:focus { top: 0; }
 
-/* ── Utility classes ──────────────────────────────────── */
+/* ── Layout utilities ─────────────────────────────────── */
 @layer utilities {
-  .section-padding {
-    @apply py-16 md:py-24;
-  }
+  .section-padding { @apply py-16 md:py-24; }
+  .container-narrow { @apply max-w-3xl mx-auto px-4; }
+  .container-wide   { @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8; }
+  .text-balance     { text-wrap: balance; }
 
-  .container-narrow {
-    @apply max-w-3xl mx-auto px-4;
+  /* Grain overlay — apply to a ::before pseudo-element */
+  .grain-bg::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: var(--grain);
+    background-size: 200px 200px;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.6;
   }
-
-  .container-wide {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
-  }
-
-  .text-balance {
-    text-wrap: balance;
-  }
+  .grain-bg { position: relative; }
+  .grain-bg > * { position: relative; z-index: 1; }
 }
 
-/* ── Prose overrides ──────────────────────────────────── */
-.prose p {
-  margin-bottom: 1.25em;
-  color: var(--text);
-}
-
-.prose a {
-  color: var(--brand-accent);
-  text-decoration: underline;
-}
-
-/* ── Smooth card hover ────────────────────────────────── */
+/* ── Card hover ───────────────────────────────────────── */
 .card-hover {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
 }
 .card-hover:hover {
   transform: translateY(-3px);
-  box-shadow: 0 8px 30px rgba(44, 84, 29, 0.12);
+  box-shadow: 0 10px 32px rgba(44, 84, 29, 0.14), 0 2px 8px rgba(92,61,30,0.08);
 }
 
-/* ── Navbar scroll shadow ─────────────────────────────── */
+/* ── Nav shadow ───────────────────────────────────────── */
 .nav-shadow {
   box-shadow: 0 1px 0 var(--border), 0 4px 16px rgba(0,0,0,0.06);
+}
+
+/* ── Wood divider ─────────────────────────────────────── */
+.wood-divider {
+  border: none;
+  height: 2px;
+  background: linear-gradient(to right, transparent, var(--wood-200), transparent);
+}
+
+/* ── Button polish ────────────────────────────────────── */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  border-radius: 0.5rem;
+  font-family: var(--font-headline);
+  font-weight: 700;
+  font-size: 0.875rem;
+  letter-spacing: 0.01em;
+  background: var(--evergreen-700);
+  color: #fff;
+  border: 2px solid transparent;
+  transition: background 0.15s, transform 0.1s, box-shadow 0.15s;
+  box-shadow: 0 2px 0 var(--evergreen-900);
+}
+.btn-primary:hover {
+  background: var(--evergreen-500);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 0 var(--evergreen-900);
+}
+.btn-primary:active {
+  transform: translateY(1px);
+  box-shadow: 0 1px 0 var(--evergreen-900);
+}
+
+/* ── Leaflet map overrides ────────────────────────────── */
+.leaflet-container {
+  font-family: var(--font-body) !important;
+  border-radius: 1rem;
+}
+.leaflet-popup-content-wrapper {
+  border-radius: 0.75rem !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15) !important;
+}
+.leaflet-popup-content {
+  margin: 0.75rem 1rem !important;
 }

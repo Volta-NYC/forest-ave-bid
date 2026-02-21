@@ -3,13 +3,16 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "images.unsplash.com",
-      },
+      // Official BID website — hotlink approved for BID-owned images
       {
         protocol: "https",
         hostname: "forestavenuebid.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "*.forestavenuebid.com",
+        pathname: "/**",
       },
     ],
   },

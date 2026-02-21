@@ -1,0 +1,25 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Forest Avenue BID Boundary",
+        "description": "Forest Avenue corridor from Hart Blvd to Broadway, Staten Island, NY",
+        "source": "forestavenuebid.com/about/ — boundary described as Hart Blvd to Broadway"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-74.1157, 40.6284],
+            [-74.1157, 40.6274],
+            [-74.1320, 40.6262],
+            [-74.1320, 40.6272],
+            [-74.1157, 40.6284]
+          ]
+        ]
+      }
+    }
+  ]
+}

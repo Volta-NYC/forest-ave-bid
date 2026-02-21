@@ -21,12 +21,16 @@ export interface Business {
   slug: string;
   category: string;
   address?: string;
+  /** WGS84 latitude — populated by scripts/geocode-businesses.js */
+  lat?: number | null;
+  /** WGS84 longitude — populated by scripts/geocode-businesses.js */
+  lng?: number | null;
   phone?: string;
   website?: string;
+  /** Local path (/official/…) or official URL from forestavenuebid.com only */
+  image?: string;
+  notes?: string;
   description?: string;
-  // NOTE: Only fields present on the official source are populated.
-  // Full directory (~153 businesses) lives in Canva embeds on forestavenuebid.com/our-businesses/
-  // See scripts/README-business-import.md for the import pipeline.
 }
 
 // ── Pure date utilities (no Node.js APIs) ─────────────────────────
