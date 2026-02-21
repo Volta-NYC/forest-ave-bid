@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Hero from "@/components/Hero";
 import SectionHeading from "@/components/SectionHeading";
 import ContactForm from "@/components/ContactForm";
-import { imageManifest } from "@/lib/imageManifest";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -73,7 +72,7 @@ export default function ContactPage() {
         // Source: forestavenuebid.com/contact/
         title="Contact Us"
         subtitle="Have any questions? We are always open to talk about your business, community, opportunities, or how we can help you."
-        backgroundImageUrl={imageManifest.contactHero}
+        woodTexture
       />
 
       <section className="section-padding bg-[var(--bg)]" aria-labelledby="contact-heading">

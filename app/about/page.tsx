@@ -52,7 +52,7 @@ export default function AboutPage() {
         eyebrow="About us"
         title="About the BID"
         subtitle="The Forest Avenue Business Improvement District — serving the corridor from Hart Blvd to Broadway, Staten Island."
-        backgroundImageUrl={imageManifest.aboutHero}
+        woodTexture
       />
 
       {/* Mission — Source: forestavenuebid.com/about/ */}
@@ -85,6 +85,21 @@ export default function AboutPage() {
               <div className="mt-8 flex gap-4 flex-wrap">
                 <CTAButton href="/services">Our services</CTAButton>
                 <CTAButton href="/contact" variant="outline">Get in touch</CTAButton>
+              </div>
+
+              {/* Mission image placeholder */}
+              <div
+                className="mt-8 aspect-[16/9] rounded-2xl overflow-hidden bg-[var(--wood-50)] relative"
+                aria-hidden="true"
+              >
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    backgroundImage: `url(${imageManifest.aboutMissionImage})`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                  }}
+                />
               </div>
             </div>
 
@@ -130,6 +145,21 @@ export default function AboutPage() {
                   </li>
                 ))}
               </ul>
+
+              {/* Operations image placeholder */}
+              <div
+                className="mt-8 aspect-[16/9] rounded-2xl overflow-hidden bg-[var(--wood-50)] relative"
+                aria-hidden="true"
+              >
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    backgroundImage: `url(${imageManifest.aboutOperateImage})`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                  }}
+                />
+              </div>
             </div>
           </div>
         </div>

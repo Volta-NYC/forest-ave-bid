@@ -34,8 +34,7 @@ export default function Footer() {
 
   return (
     <footer
-      className="text-white mt-auto"
-      style={{ background: "var(--brand-primary)" }}
+      className="wood-bg-hero text-white mt-auto"
       aria-label="Site footer"
     >
       <div className="container-wide py-14 grid grid-cols-1 md:grid-cols-3 gap-10">

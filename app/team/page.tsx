@@ -62,7 +62,7 @@ function initials(name: string) {
     .toUpperCase();
 }
 
-const roleBg: Record<string, string> = {
+const roleBadge: Record<string, string> = {
   Chair: "bg-[var(--brand-primary)] text-white",
   "Vice Chair": "bg-[var(--brand-primary)]/80 text-white",
   Treasurer: "bg-[var(--brand-secondary)]/20 text-[var(--brand-primary)]",
@@ -71,32 +71,61 @@ const roleBg: Record<string, string> = {
   "Board Member Emeritus": "bg-[var(--bg)] text-[var(--muted)] italic",
 };
 
-function Avatar({
+/** Rectangular tile with 4:3 image area above name/role. */
+function MemberTile({
   name,
-  size = "md",
-  bg = "var(--brand-primary)",
+  role,
+  affiliation,
+  isEmeritus = false,
 }: {
   name: string;
-  size?: "sm" | "md" | "lg";
-  bg?: string;
+  role: string;
+  affiliation: string;
+  isEmeritus?: boolean;
 }) {
-  const sizeClass = size === "lg" ? "w-14 h-14 text-xl" : size === "sm" ? "w-11 h-11 text-sm" : "w-12 h-12 text-base";
   return (
     <div
-      className={`${sizeClass} rounded-full flex-shrink-0 flex items-center justify-center font-headline font-bold text-white relative overflow-hidden`}
-      style={{ background: bg }}
-      aria-hidden="true"
+      className={`rounded-2xl border border-[var(--border)] overflow-hidden bg-white flex flex-col${
+        isEmeritus ? " opacity-80" : ""
+      }`}
     >
-      {/* Photo placeholder — shows if teamMemberFallback exists; initials are always visible as fallback */}
+      {/* 4:3 image area */}
       <div
-        className="absolute inset-0"
-        style={{
-          backgroundImage: `url(${imageManifest.teamMemberFallback})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center top",
-        }}
-      />
-      <span className="relative z-10">{initials(name)}</span>
+        className="aspect-[4/3] relative bg-[var(--wood-50)] flex items-center justify-center overflow-hidden flex-shrink-0"
+        aria-hidden="true"
+      >
+        {/* Large initials — visible when no photo is present */}
+        <span className="font-headline font-black text-6xl text-[var(--brand-primary)]/15 select-none">
+          {initials(name)}
+        </span>
+        {/* Photo — covers initials once a real image is supplied */}
+        <div
+          className="absolute inset-0 z-10"
+          style={{
+            backgroundImage: `url(${imageManifest.teamMemberFallback})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center top",
+          }}
+        />
+      </div>
+
+      {/* Info */}
+      <div className="p-4 flex flex-col gap-1">
+        <span
+          className={`self-start text-xs font-semibold px-2.5 py-0.5 rounded-full border border-transparent ${
+            roleBadge[role] ?? roleBadge["Board Member"]
+          }`}
+        >
+          {role}
+        </span>
+        <h3 className="font-headline font-bold text-base text-[var(--brand-primary)] leading-tight mt-1">
+          {name}
+        </h3>
+        <p className="text-xs text-[var(--muted)]">{affiliation}</p>
+        {isEmeritus && (
+          <span className="text-xs text-[var(--muted)] italic">Board Member Emeritus</span>
+        )}
+      </div>
     </div>
   );
 }
@@ -113,26 +142,42 @@ export default function TeamPage() {
         eyebrow="Leadership"
         title="Our Team"
         subtitle={boardIntro}
-        backgroundImageUrl={imageManifest.teamHero}
+        woodTexture
       />
 
       {/* Staff */}
       <section className="pt-16 pb-8 bg-white" aria-labelledby="staff-heading">
         <div className="container-wide">
           <SectionHeading eyebrow="Staff" title="BID Staff" />
-          <div className="mt-8 flex flex-wrap gap-5">
-            {/* Source: forestavenuebid.com/team/ */}
+          {/* Source: forestavenuebid.com/team/ */}
+          <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {staffMembers.map((s) => (
               <div
                 key={s.name}
-                className="flex items-center gap-4 p-6 rounded-2xl border border-[var(--border)] bg-[var(--bg)] min-w-[260px]"
+                className="rounded-2xl border border-[var(--border)] overflow-hidden bg-white flex flex-col"
               >
-                <Avatar name={s.name} />
-                <div>
-                  <p className="font-headline font-bold text-lg text-[var(--brand-primary)]">
+                {/* 4:3 image area */}
+                <div
+                  className="aspect-[4/3] relative bg-[var(--wood-50)] flex items-center justify-center overflow-hidden flex-shrink-0"
+                  aria-hidden="true"
+                >
+                  <span className="font-headline font-black text-6xl text-[var(--brand-primary)]/15 select-none">
+                    {initials(s.name)}
+                  </span>
+                  <div
+                    className="absolute inset-0 z-10"
+                    style={{
+                      backgroundImage: `url(${imageManifest.teamMemberFallback})`,
+                      backgroundSize: "cover",
+                      backgroundPosition: "center top",
+                    }}
+                  />
+                </div>
+                <div className="p-4">
+                  <p className="font-headline font-bold text-base text-[var(--brand-primary)]">
                     {s.name}
                   </p>
-                  <p className="text-sm text-[var(--muted)]">{s.title}</p>
+                  <p className="text-xs text-[var(--muted)] mt-0.5">{s.title}</p>
                 </div>
               </div>
             ))}
@@ -150,21 +195,12 @@ export default function TeamPage() {
           {/* Source: forestavenuebid.com/team/ */}
           <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {officers.map((m) => (
-              <div
+              <MemberTile
                 key={m.name}
-                className="bg-[var(--bg)] rounded-2xl border border-[var(--border)] p-6 flex flex-col gap-3"
-              >
-                <Avatar name={m.name} size="lg" />
-                <span className={`self-start text-xs font-semibold px-2.5 py-0.5 rounded-full border border-transparent ${roleBg[m.role] ?? roleBg["Board Member"]}`}>
-                  {m.role}
-                </span>
-                <div>
-                  <h3 className="font-headline font-bold text-lg text-[var(--brand-primary)] leading-tight">
-                    {m.name}
-                  </h3>
-                  <p className="text-xs text-[var(--muted)] mt-0.5">{m.affiliation}</p>
-                </div>
-              </div>
+                name={m.name}
+                role={m.role}
+                affiliation={m.affiliation}
+              />
             ))}
           </div>
         </div>
@@ -177,35 +213,21 @@ export default function TeamPage() {
           {/* Source: forestavenuebid.com/team/ */}
           <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {directors.map((m) => (
-              <div
+              <MemberTile
                 key={m.name}
-                className="bg-white rounded-2xl border border-[var(--border)] p-5 flex gap-4"
-              >
-                <Avatar name={m.name} size="sm" bg="var(--brand-secondary)" />
-                <div>
-                  <h3 className="font-headline font-bold text-base text-[var(--brand-primary)] leading-tight">
-                    {m.name}
-                  </h3>
-                  <p className="text-xs text-[var(--muted)] mt-0.5">{m.affiliation}</p>
-                </div>
-              </div>
+                name={m.name}
+                role={m.role}
+                affiliation={m.affiliation}
+              />
             ))}
-
-            {/* Emeritus */}
             {emeritus.map((m) => (
-              <div
+              <MemberTile
                 key={m.name}
-                className="bg-white rounded-2xl border border-[var(--border)] p-5 flex gap-4 opacity-80"
-              >
-                <Avatar name={m.name} size="sm" bg="var(--muted)" />
-                <div>
-                  <h3 className="font-headline font-bold text-base text-[var(--brand-primary)] leading-tight">
-                    {m.name}
-                  </h3>
-                  <p className="text-xs text-[var(--muted)] mt-0.5">{m.affiliation}</p>
-                  <span className="inline-block mt-1 text-xs text-[var(--muted)] italic">Board Member Emeritus</span>
-                </div>
-              </div>
+                name={m.name}
+                role={m.role}
+                affiliation={m.affiliation}
+                isEmeritus
+              />
             ))}
           </div>
         </div>
@@ -222,18 +244,12 @@ export default function TeamPage() {
           {/* Source: forestavenuebid.com/team/ */}
           <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {publicOfficials.map((m) => (
-              <div
+              <MemberTile
                 key={m.name}
-                className="bg-[var(--bg)] rounded-2xl border border-[var(--border)] p-5 flex gap-4"
-              >
-                <Avatar name={m.name} size="sm" bg="var(--brand-secondary)" />
-                <div>
-                  <h3 className="font-headline font-bold text-sm text-[var(--brand-primary)] leading-tight">
-                    {m.name}
-                  </h3>
-                  <p className="text-xs text-[var(--muted)] mt-0.5">{m.role}</p>
-                </div>
-              </div>
+                name={m.name}
+                role={m.role}
+                affiliation={m.affiliation}
+              />
             ))}
           </div>
         </div>

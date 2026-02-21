@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { imageManifest } from "@/lib/imageManifest";
 
 interface HeroProps {
   eyebrow?: string;
@@ -35,7 +36,7 @@ export default function Hero({
   const bgStyle = woodTexture
     ? {
         backgroundColor: "var(--evergreen-900)",
-        backgroundImage: `linear-gradient(rgba(26,51,17,0.82),rgba(26,51,17,0.82)), url('/textures/wood.png')`,
+        backgroundImage: `linear-gradient(rgba(26,51,17,0.82),rgba(26,51,17,0.82)), url('${imageManifest.siteHeaderImage}')`,
         backgroundSize: "cover",
         backgroundPosition: "center",
       }

@@ -8,6 +8,10 @@
  */
 
 export const imageManifest = {
+  /** Single wood-texture image used as the hero/header background on every page. */
+  siteHeaderImage: "/textures/wood.png",
+
+  // Legacy per-page hero keys kept for reference (all pages now use siteHeaderImage via woodTexture prop)
   homeHero:        "/placeholders/hero-home.jpg",
   businessesHero:  "/placeholders/hero-businesses.jpg",
   mapHero:         "/placeholders/hero-map.jpg",
@@ -42,4 +46,8 @@ export const imageManifest = {
 
   teamHero:            "/placeholders/hero-team.jpg",
   teamMemberFallback:  "/placeholders/team-member.jpg",
+
+  /** About page content images */
+  aboutMissionImage:   "/placeholders/about-mission.jpg",
+  aboutOperateImage:   "/placeholders/about-operate.jpg",
 } as const;

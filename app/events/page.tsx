@@ -3,7 +3,6 @@ import Hero from "@/components/Hero";
 import SectionHeading from "@/components/SectionHeading";
 import EventCard from "@/components/EventCard";
 import { getAllEvents, isUpcoming } from "@/lib/events";
-import { imageManifest } from "@/lib/imageManifest";
 
 export const metadata: Metadata = {
   title: "Events",
@@ -34,7 +33,7 @@ export default function EventsPage() {
         title="Events"
         // Source: forestavenuebid.com/events/
         subtitle="From Trick or Treating to Spring Strolls, the Forest Ave BID is always planning an upcoming community event that we hope you join us at."
-        backgroundImageUrl={imageManifest.eventsHero}
+        woodTexture
       />
 
       <div className="section-padding bg-[var(--bg)]">
