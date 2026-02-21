@@ -6,15 +6,18 @@ interface HeroProps {
   subtitle?: string;
   primaryCta?: { label: string; href: string };
   secondaryCta?: { label: string; href: string };
-  /** Optional: render a decorative background pattern (ignored when backgroundImageUrl is set) */
   pattern?: boolean;
   /**
-   * Placeholder path for a background image (e.g. "/placeholders/hero-home.jpg").
-   * If the file doesn't exist the browser silently ignores it and the evergreen
-   * gradient shows instead — no JS error, no broken UI.
+   * Uses /textures/wood.png with a deep-evergreen overlay.
+   * Falls back gracefully to solid evergreen if the image is missing.
+   */
+  woodTexture?: boolean;
+  /**
+   * Placeholder path for a photo background (e.g. "/placeholders/hero-home.jpg").
+   * Falls back to solid brand-primary if the file 404s.
    */
   backgroundImageUrl?: string;
-  /** Dark overlay opacity over the image (0–1). Defaults to 0.45. */
+  /** Opacity of the dark overlay over a photo background (0–1). Default 0.45. */
   overlayStrength?: number;
 }
 
@@ -25,24 +28,35 @@ export default function Hero({
   primaryCta,
   secondaryCta,
   pattern = true,
+  woodTexture = false,
   backgroundImageUrl,
   overlayStrength = 0.45,
 }: HeroProps) {
+  const bgStyle = woodTexture
+    ? {
+        backgroundColor: "var(--evergreen-900)",
+        backgroundImage: `linear-gradient(rgba(26,51,17,0.82),rgba(26,51,17,0.82)), url('/textures/wood.png')`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }
+    : backgroundImageUrl
+    ? {
+        backgroundColor: "var(--brand-primary)",
+        backgroundImage: `url(${backgroundImageUrl})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }
+    : { background: "var(--brand-primary)" };
+
+  const hasImage = woodTexture || !!backgroundImageUrl;
   return (
     <section
       className="relative overflow-hidden pt-32 pb-20 md:pt-40 md:pb-28"
-      style={{
-        backgroundColor: "var(--brand-primary)",
-        ...(backgroundImageUrl && {
-          backgroundImage: `url(${backgroundImageUrl})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }),
-      }}
+      style={bgStyle}
       aria-labelledby="hero-heading"
     >
-      {/* Dark overlay for image readability */}
-      {backgroundImageUrl && (
+      {/* Dark overlay for photo backgrounds only (wood texture uses CSS gradient) */}
+      {!woodTexture && backgroundImageUrl && (
         <div
           className="absolute inset-0 pointer-events-none"
           style={{ background: `rgba(0,0,0,${overlayStrength})` }}
@@ -50,8 +64,8 @@ export default function Hero({
         />
       )}
 
-      {/* Decorative pattern overlay (only when no bg image) */}
-      {pattern && !backgroundImageUrl && (
+      {/* Decorative pattern (only when no background image/texture) */}
+      {pattern && !hasImage && (
         <div
           className="absolute inset-0 opacity-[0.06] pointer-events-none"
           aria-hidden="true"
@@ -65,8 +79,8 @@ export default function Hero({
       <div
         className="absolute bottom-0 left-0 right-0 h-24 pointer-events-none"
         style={{
-          background: backgroundImageUrl
-            ? "linear-gradient(to bottom, transparent, rgba(0,0,0,0.5))"
+          background: hasImage
+            ? "linear-gradient(to bottom, transparent, rgba(0,0,0,0.4))"
             : "linear-gradient(to bottom, transparent, var(--brand-primary))",
         }}
         aria-hidden="true"

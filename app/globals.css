@@ -37,8 +37,8 @@
   --border:          var(--wood-100);
   --surface:         #ffffff;
 
-  --font-headline: "League Spartan", sans-serif;
-  --font-body:     "Inter", sans-serif;
+  --font-headline: "Roboto", sans-serif;  /* same family as body; weight 700-900 gives blocky headings */
+  --font-body:     "Roboto", sans-serif;
 
   /* Subtle grain mask — SVG noise pattern */
   --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
@@ -107,6 +107,33 @@ h1, h2, h3, h4, h5, h6 {
   }
   .grain-bg { position: relative; }
   .grain-bg > * { position: relative; z-index: 1; }
+}
+
+/* ── Wood texture utilities ────────────────────────────── */
+/*
+ * Both classes use a layered background-image so the gradient overlay is
+ * always present; if wood.png is missing (404) the gradient falls back
+ * over the background-color — no broken UI.
+ */
+
+/* Dark variant — hero/banner areas; white text */
+.wood-bg-hero {
+  background-color: var(--evergreen-900);
+  background-image:
+    linear-gradient(rgba(26, 51, 17, 0.82), rgba(26, 51, 17, 0.82)),
+    url('/textures/wood.png');
+  background-size: cover;
+  background-position: center;
+}
+
+/* Light variant — secondary sections; dark ink text */
+.wood-bg-section {
+  background-color: var(--wood-100);
+  background-image:
+    linear-gradient(rgba(248, 242, 232, 0.82), rgba(248, 242, 232, 0.82)),
+    url('/textures/wood.png');
+  background-size: cover;
+  background-position: center;
 }
 
 /* ── Card hover ───────────────────────────────────────── */

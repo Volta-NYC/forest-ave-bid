@@ -77,7 +77,7 @@ export default function HomePage() {
         subtitle="Supporting local businesses and bringing people together along Forest Avenue — from Hart Blvd to Broadway."
         primaryCta={{ label: "Explore our businesses", href: "/our-businesses" }}
         secondaryCta={{ label: "Get in touch", href: "/contact" }}
-        backgroundImageUrl={imageManifest.homeHero}
+        woodTexture
       />
 
       {/* Features — Source: forestavenuebid.com homepage sections */}

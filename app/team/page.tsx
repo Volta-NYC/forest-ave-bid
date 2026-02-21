@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Hero from "@/components/Hero";
 import SectionHeading from "@/components/SectionHeading";
+import { imageManifest } from "@/lib/imageManifest";
 
 export const metadata: Metadata = {
   title: "Our Team",
@@ -70,6 +71,36 @@ const roleBg: Record<string, string> = {
   "Board Member Emeritus": "bg-[var(--bg)] text-[var(--muted)] italic",
 };
 
+function Avatar({
+  name,
+  size = "md",
+  bg = "var(--brand-primary)",
+}: {
+  name: string;
+  size?: "sm" | "md" | "lg";
+  bg?: string;
+}) {
+  const sizeClass = size === "lg" ? "w-14 h-14 text-xl" : size === "sm" ? "w-11 h-11 text-sm" : "w-12 h-12 text-base";
+  return (
+    <div
+      className={`${sizeClass} rounded-full flex-shrink-0 flex items-center justify-center font-headline font-bold text-white relative overflow-hidden`}
+      style={{ background: bg }}
+      aria-hidden="true"
+    >
+      {/* Photo placeholder — shows if teamMemberFallback exists; initials are always visible as fallback */}
+      <div
+        className="absolute inset-0"
+        style={{
+          backgroundImage: `url(${imageManifest.teamMemberFallback})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center top",
+        }}
+      />
+      <span className="relative z-10">{initials(name)}</span>
+    </div>
+  );
+}
+
 export default function TeamPage() {
   const officers = boardMembers.filter((m) => m.isOfficer);
   const directors = boardMembers.filter((m) => !m.isOfficer && !m.isPublicOfficial && !m.isEmeritus);
@@ -82,6 +113,7 @@ export default function TeamPage() {
         eyebrow="Leadership"
         title="Our Team"
         subtitle={boardIntro}
+        backgroundImageUrl={imageManifest.teamHero}
       />
 
       {/* Staff */}
@@ -95,13 +127,7 @@ export default function TeamPage() {
                 key={s.name}
                 className="flex items-center gap-4 p-6 rounded-2xl border border-[var(--border)] bg-[var(--bg)] min-w-[260px]"
               >
-                <div
-                  className="w-12 h-12 rounded-full flex-shrink-0 flex items-center justify-center font-headline font-bold text-base text-white"
-                  style={{ background: "var(--brand-primary)" }}
-                  aria-hidden="true"
-                >
-                  {initials(s.name)}
-                </div>
+                <Avatar name={s.name} />
                 <div>
                   <p className="font-headline font-bold text-lg text-[var(--brand-primary)]">
                     {s.name}
@@ -128,13 +154,7 @@ export default function TeamPage() {
                 key={m.name}
                 className="bg-[var(--bg)] rounded-2xl border border-[var(--border)] p-6 flex flex-col gap-3"
               >
-                <div
-                  className="w-14 h-14 rounded-full flex items-center justify-center font-headline font-black text-xl text-white"
-                  style={{ background: "var(--brand-primary)" }}
-                  aria-hidden="true"
-                >
-                  {initials(m.name)}
-                </div>
+                <Avatar name={m.name} size="lg" />
                 <span className={`self-start text-xs font-semibold px-2.5 py-0.5 rounded-full border border-transparent ${roleBg[m.role] ?? roleBg["Board Member"]}`}>
                   {m.role}
                 </span>
@@ -161,13 +181,7 @@ export default function TeamPage() {
                 key={m.name}
                 className="bg-white rounded-2xl border border-[var(--border)] p-5 flex gap-4"
               >
-                <div
-                  className="w-11 h-11 rounded-full flex-shrink-0 flex items-center justify-center font-headline font-bold text-sm text-white"
-                  style={{ background: "var(--brand-secondary)" }}
-                  aria-hidden="true"
-                >
-                  {initials(m.name)}
-                </div>
+                <Avatar name={m.name} size="sm" bg="var(--brand-secondary)" />
                 <div>
                   <h3 className="font-headline font-bold text-base text-[var(--brand-primary)] leading-tight">
                     {m.name}
@@ -183,13 +197,7 @@ export default function TeamPage() {
                 key={m.name}
                 className="bg-white rounded-2xl border border-[var(--border)] p-5 flex gap-4 opacity-80"
               >
-                <div
-                  className="w-11 h-11 rounded-full flex-shrink-0 flex items-center justify-center font-headline font-bold text-sm text-white"
-                  style={{ background: "var(--muted)" }}
-                  aria-hidden="true"
-                >
-                  {initials(m.name)}
-                </div>
+                <Avatar name={m.name} size="sm" bg="var(--muted)" />
                 <div>
                   <h3 className="font-headline font-bold text-base text-[var(--brand-primary)] leading-tight">
                     {m.name}
@@ -218,13 +226,7 @@ export default function TeamPage() {
                 key={m.name}
                 className="bg-[var(--bg)] rounded-2xl border border-[var(--border)] p-5 flex gap-4"
               >
-                <div
-                  className="w-11 h-11 rounded-full flex-shrink-0 flex items-center justify-center font-headline font-bold text-sm text-[var(--brand-primary)]"
-                  style={{ background: "var(--brand-secondary)", opacity: 0.3 }}
-                  aria-hidden="true"
-                >
-                  {initials(m.name)}
-                </div>
+                <Avatar name={m.name} size="sm" bg="var(--brand-secondary)" />
                 <div>
                   <h3 className="font-headline font-bold text-sm text-[var(--brand-primary)] leading-tight">
                     {m.name}

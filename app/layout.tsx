@@ -1,23 +1,15 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import localFont from "next/font/local";
+import { Roboto } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
-const inter = Inter({
+const roboto = Roboto({
   subsets: ["latin"],
+  weight: ["400", "500", "700", "900"],
   variable: "--font-body",
   display: "swap",
 });
-
-// League Spartan via Google Fonts is not in Next.js built-in list,
-// so we load it as a CSS variable via the @import in globals or use
-// a next/font/google workaround. We'll declare the variable manually
-// and load via <link> in layout.
-const leagueSpartan = {
-  variable: "--font-headline",
-};
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://forestavenuebid.com"),
@@ -61,32 +53,15 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-    },
+    googleBot: { index: true, follow: true },
   },
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={inter.variable}>
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600&display=swap"
-          rel="stylesheet"
-        />
-      </head>
+    <html lang="en" className={roboto.variable}>
       <body>
         <a href="#main-content" className="skip-link">
           Skip to main content

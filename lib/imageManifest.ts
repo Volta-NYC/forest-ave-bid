@@ -33,4 +33,13 @@ export const imageManifest = {
 
   eventThumbnail: "/placeholders/event-thumbnail.jpg",
   fallback:       "/placeholders/fallback.jpg",
+
+  services: {
+    "small-business": "/placeholders/service-small-business.jpg",
+    "revitalization":  "/placeholders/service-revitalization.jpg",
+    "community":       "/placeholders/service-community.jpg",
+  } as Record<string, string>,
+
+  teamHero:            "/placeholders/hero-team.jpg",
+  teamMemberFallback:  "/placeholders/team-member.jpg",
 } as const;

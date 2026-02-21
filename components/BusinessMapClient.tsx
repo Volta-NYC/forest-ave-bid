@@ -28,6 +28,7 @@ export default function BusinessMapClient({ businesses, boundary }: Props) {
   const mapRef = useRef<HTMLDivElement>(null);
   const leafletMapRef = useRef<import("leaflet").Map | null>(null);
   const [mounted, setMounted] = useState(false);
+  const [legendOpen, setLegendOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [activeSlug, setActiveSlug] = useState<string | null>(null);
@@ -302,6 +303,53 @@ const BUCKET_COLORS: Record<NormalizedCategory, string> = {
       {/* Map panel */}
       <div className="flex-1 relative min-h-0">
         <div ref={mapRef} className="w-full h-full" aria-label="Business map" />
+
+        {/* Map legend */}
+        <div className="absolute bottom-8 right-3 z-[1000]">
+          {/* Mobile toggle */}
+          <button
+            className="lg:hidden mb-2 flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/95 border border-[var(--border)] shadow-wood-sm text-xs font-semibold text-[var(--ink)]"
+            onClick={() => setLegendOpen((v) => !v)}
+            aria-expanded={legendOpen}
+            aria-label="Toggle map legend"
+          >
+            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+            </svg>
+            Map Key
+          </button>
+
+          {/* Legend card — always visible on desktop, toggled on mobile */}
+          <div
+            className={`bg-white/97 backdrop-blur-sm rounded-xl shadow-wood-md border border-[var(--border)] p-3 w-44 ${
+              legendOpen ? "block" : "hidden lg:block"
+            }`}
+            role="note"
+            aria-label="Map legend"
+          >
+            <p className="text-xs font-bold text-[var(--ink)] mb-2 uppercase tracking-wide">Map Key</p>
+
+            {/* Category buckets */}
+            <ul className="space-y-1.5" role="list">
+              {NORMALIZED_CATEGORIES.map((cat) => (
+                <li key={cat} className="flex items-center gap-2">
+                  <span
+                    className="w-3 h-3 rounded-full flex-shrink-0"
+                    style={{ background: BUCKET_COLORS[cat] }}
+                    aria-hidden="true"
+                  />
+                  <span className="text-xs text-[var(--ink)] leading-tight">{cat}</span>
+                </li>
+              ))}
+            </ul>
+
+            {/* BID boundary */}
+            <div className="mt-2 pt-2 border-t border-[var(--border)] flex items-center gap-2">
+              <span className="flex-shrink-0 w-6 h-0 border-t-2 border-[#2c541d] opacity-80 rounded" aria-hidden="true" />
+              <span className="text-xs text-[var(--ink)]">BID boundary</span>
+            </div>
+          </div>
+        </div>
 
         {/* Geocoding notice — shown when no businesses are geocoded */}
         {mounted && geocoded.length === 0 && (

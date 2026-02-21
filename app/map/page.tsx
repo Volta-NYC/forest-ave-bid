@@ -23,8 +23,8 @@ export default function MapPage() {
 
   return (
     <main className="pt-16">
-      {/* Page header */}
-      <div className="bg-[var(--evergreen-700)] text-white py-5 px-6">
+      {/* Page header — wood texture with evergreen overlay */}
+      <div className="wood-bg-hero text-white py-5 px-6">
         <div className="container-wide flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
           <div>
             <h1 className="font-headline font-black text-2xl">

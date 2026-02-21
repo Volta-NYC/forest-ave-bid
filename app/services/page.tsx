@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Hero from "@/components/Hero";
 import SectionHeading from "@/components/SectionHeading";
 import CTAButton from "@/components/CTAButton";
+import { imageManifest } from "@/lib/imageManifest";
 
 export const metadata: Metadata = {
   title: "Services",
@@ -68,6 +69,7 @@ export default function ServicesPage() {
         eyebrow="Programs & services"
         title="Services"
         subtitle="The Forest Avenue BID delivers programs across three core areas to support our businesses, corridor, and community."
+        woodTexture
       />
 
       <section className="section-padding bg-white" aria-labelledby="services-heading">
@@ -88,19 +90,32 @@ export default function ServicesPage() {
                     </div>
                   </div>
 
-                  {/* Visual */}
+                  {/* Visual — image slot with colour overlay fallback */}
                   <div
-                    className={`rounded-3xl p-12 flex flex-col items-center justify-center text-center gap-6 min-h-[240px] ${
+                    className={`rounded-3xl flex flex-col items-center justify-center text-center gap-6 min-h-[240px] relative overflow-hidden ${
                       i % 2 === 1 ? "lg:order-1" : ""
                     }`}
                     style={{ background: service.bg }}
                   >
-                    <div className="w-20 h-20 rounded-2xl bg-white/20 flex items-center justify-center text-white">
-                      {service.icon}
+                    {/* Image placeholder — opacity 0.18 so colour overlay stays dominant */}
+                    <div
+                      className="absolute inset-0"
+                      style={{
+                        backgroundImage: `url(${imageManifest.services[service.id] ?? imageManifest.fallback})`,
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                        opacity: 0.18,
+                      }}
+                      aria-hidden="true"
+                    />
+                    <div className="relative z-10 p-12 flex flex-col items-center gap-6 w-full">
+                      <div className="w-20 h-20 rounded-2xl bg-white/20 flex items-center justify-center text-white">
+                        {service.icon}
+                      </div>
+                      <p className="font-headline font-black text-3xl text-white leading-tight max-w-xs">
+                        {service.title}
+                      </p>
                     </div>
-                    <p className="font-headline font-black text-3xl text-white leading-tight max-w-xs">
-                      {service.title}
-                    </p>
                   </div>
                 </div>
               </article>
