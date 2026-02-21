@@ -1,0 +1,114 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Brand tokens ─────────────────────────────────────── */
+:root {
+  --brand-primary:   #2c541d;
+  --brand-secondary: #74a84a;
+  --brand-accent:    #5a8f38;
+  --bg:              #f6f8f5;
+  --text:            #1a1a1a;
+  --muted:           #5a6355;
+  --border:          #d4e0cc;
+  --surface:         #ffffff;
+
+  --font-headline: "League Spartan", sans-serif;
+  --font-body:     "Inter", sans-serif;
+}
+
+/* ── Base resets ──────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Typography scale ─────────────────────────────────── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-headline);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+/* ── Focus visible ────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--brand-accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ── Skip link ────────────────────────────────────────── */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  background: var(--brand-primary);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 0 0 6px 6px;
+  font-weight: 600;
+  z-index: 9999;
+  transition: top 0.2s;
+}
+.skip-link:focus {
+  top: 0;
+}
+
+/* ── Utility classes ──────────────────────────────────── */
+@layer utilities {
+  .section-padding {
+    @apply py-16 md:py-24;
+  }
+
+  .container-narrow {
+    @apply max-w-3xl mx-auto px-4;
+  }
+
+  .container-wide {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* ── Prose overrides ──────────────────────────────────── */
+.prose p {
+  margin-bottom: 1.25em;
+  color: var(--text);
+}
+
+.prose a {
+  color: var(--brand-accent);
+  text-decoration: underline;
+}
+
+/* ── Smooth card hover ────────────────────────────────── */
+.card-hover {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.card-hover:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(44, 84, 29, 0.12);
+}
+
+/* ── Navbar scroll shadow ─────────────────────────────── */
+.nav-shadow {
+  box-shadow: 0 1px 0 var(--border), 0 4px 16px rgba(0,0,0,0.06);
+}
