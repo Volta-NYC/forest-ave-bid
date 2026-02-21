@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Event } from "@/lib/types";
 import { formatMonthDay } from "@/lib/types";
+import { imageManifest } from "@/lib/imageManifest";
 
 interface EventCardProps {
   event: Event;
@@ -58,22 +59,24 @@ export default function EventCard({ event, featured = false }: EventCardProps) {
 
   return (
     <article className="card-hover group bg-white rounded-2xl overflow-hidden border border-[var(--border)] flex flex-col">
-      {/* Date header */}
+      {/* Thumbnail image slot — placeholder; falls back to wood colour if file missing */}
       <div
-        className="flex items-center gap-4 px-5 py-4"
-        style={{ background: "var(--brand-primary)" }}
+        className="relative h-36 bg-[var(--wood-50)]"
+        style={{
+          backgroundImage: `url(${imageManifest.eventThumbnail})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
       >
-        <div className="text-center">
-          <span className="font-headline font-black text-3xl text-white leading-none block">
-            {day}
-          </span>
-          <span className="text-xs font-semibold uppercase tracking-widest text-white/70">
-            {month}
-          </span>
+        {/* Date + type overlay */}
+        <div
+          className="absolute bottom-0 left-0 flex items-center gap-3 px-4 py-3 w-full"
+          style={{ background: "linear-gradient(to top, rgba(44,84,29,0.85), transparent)" }}
+        >
+          <span className="font-headline font-black text-2xl text-white leading-none">{day}</span>
+          <span className="text-xs font-semibold uppercase tracking-widest text-white/80">{month}</span>
+          <span className="ml-auto text-xs font-semibold px-2 py-0.5 rounded-full bg-white/20 text-white">{event.type}</span>
         </div>
-        <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-white/20 text-white">
-          {event.type}
-        </span>
       </div>
       <div className="p-5 flex flex-col gap-2 flex-1">
         <h3 className="font-headline font-bold text-lg text-[var(--brand-primary)] group-hover:underline leading-tight">

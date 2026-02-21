@@ -3,7 +3,8 @@ import Link from "next/link";
 import Hero from "@/components/Hero";
 import SectionHeading from "@/components/SectionHeading";
 import BusinessSearch from "@/components/BusinessSearch";
-import { getAllBusinesses, getBusinessCategories } from "@/lib/businesses";
+import { getAllBusinesses } from "@/lib/businesses";
+import { imageManifest } from "@/lib/imageManifest";
 
 export const metadata: Metadata = {
   title: "Our Businesses",
@@ -13,7 +14,6 @@ export const metadata: Metadata = {
 
 export default function OurBusinessesPage() {
   const businesses = getAllBusinesses();
-  const categories = getBusinessCategories();
 
   return (
     <>
@@ -22,6 +22,7 @@ export default function OurBusinessesPage() {
         title="Our Businesses"
         // Source: forestavenuebid.com/our-businesses/
         subtitle="The Forest Ave BID is home to long standing businesses as well as new businesses. We are ever-expanding, growing, and changing!"
+        backgroundImageUrl={imageManifest.businessesHero}
       />
 
       {/* Stats — Source: forestavenuebid.com/our-businesses/ */}
@@ -64,7 +65,7 @@ export default function OurBusinessesPage() {
             </Link>
           </div>
 
-          <BusinessSearch businesses={businesses} categories={categories} />
+          <BusinessSearch businesses={businesses} />
         </div>
       </section>
 

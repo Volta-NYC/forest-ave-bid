@@ -6,8 +6,16 @@ interface HeroProps {
   subtitle?: string;
   primaryCta?: { label: string; href: string };
   secondaryCta?: { label: string; href: string };
-  /** Optional: render a decorative background pattern */
+  /** Optional: render a decorative background pattern (ignored when backgroundImageUrl is set) */
   pattern?: boolean;
+  /**
+   * Placeholder path for a background image (e.g. "/placeholders/hero-home.jpg").
+   * If the file doesn't exist the browser silently ignores it and the evergreen
+   * gradient shows instead — no JS error, no broken UI.
+   */
+  backgroundImageUrl?: string;
+  /** Dark overlay opacity over the image (0–1). Defaults to 0.45. */
+  overlayStrength?: number;
 }
 
 export default function Hero({
@@ -17,15 +25,33 @@ export default function Hero({
   primaryCta,
   secondaryCta,
   pattern = true,
+  backgroundImageUrl,
+  overlayStrength = 0.45,
 }: HeroProps) {
   return (
     <section
       className="relative overflow-hidden pt-32 pb-20 md:pt-40 md:pb-28"
-      style={{ background: "var(--brand-primary)" }}
+      style={{
+        backgroundColor: "var(--brand-primary)",
+        ...(backgroundImageUrl && {
+          backgroundImage: `url(${backgroundImageUrl})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }),
+      }}
       aria-labelledby="hero-heading"
     >
-      {/* Decorative pattern overlay */}
-      {pattern && (
+      {/* Dark overlay for image readability */}
+      {backgroundImageUrl && (
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{ background: `rgba(0,0,0,${overlayStrength})` }}
+          aria-hidden="true"
+        />
+      )}
+
+      {/* Decorative pattern overlay (only when no bg image) */}
+      {pattern && !backgroundImageUrl && (
         <div
           className="absolute inset-0 opacity-[0.06] pointer-events-none"
           aria-hidden="true"
@@ -39,7 +65,9 @@ export default function Hero({
       <div
         className="absolute bottom-0 left-0 right-0 h-24 pointer-events-none"
         style={{
-          background: "linear-gradient(to bottom, transparent, var(--brand-primary))",
+          background: backgroundImageUrl
+            ? "linear-gradient(to bottom, transparent, rgba(0,0,0,0.5))"
+            : "linear-gradient(to bottom, transparent, var(--brand-primary))",
         }}
         aria-hidden="true"
       />

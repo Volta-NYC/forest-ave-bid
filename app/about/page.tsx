@@ -3,6 +3,7 @@ import Hero from "@/components/Hero";
 import SectionHeading from "@/components/SectionHeading";
 import AccessibleAccordion from "@/components/AccessibleAccordion";
 import CTAButton from "@/components/CTAButton";
+import { imageManifest } from "@/lib/imageManifest";
 
 export const metadata: Metadata = {
   title: "About",
@@ -51,6 +52,7 @@ export default function AboutPage() {
         eyebrow="About us"
         title="About the BID"
         subtitle="The Forest Avenue Business Improvement District — serving the corridor from Hart Blvd to Broadway, Staten Island."
+        backgroundImageUrl={imageManifest.aboutHero}
       />
 
       {/* Mission — Source: forestavenuebid.com/about/ */}

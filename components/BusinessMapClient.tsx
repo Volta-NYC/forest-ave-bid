@@ -3,7 +3,7 @@
 import "leaflet/dist/leaflet.css";
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { Business } from "@/lib/types";
-import { categoryColor } from "./CategoryIcons";
+import { normalizeCategory, NORMALIZED_CATEGORIES, type NormalizedCategory } from "@/lib/normalizeCategory";
 
 // Leaflet is imported lazily inside useEffect to avoid SSR issues.
 // This component must only ever be rendered client-side (via dynamic import).
@@ -33,11 +33,18 @@ export default function BusinessMapClient({ businesses, boundary }: Props) {
   const [activeSlug, setActiveSlug] = useState<string | null>(null);
   const sidebarRef = useRef<HTMLDivElement>(null);
 
-  // Derive categories from businesses
-  const categories = useMemo(() => {
-    const cats = Array.from(new Set(businesses.map((b) => b.category))).sort();
-    return ["All", ...cats];
-  }, [businesses]);
+  // Marker colours per normalised bucket
+const BUCKET_COLORS: Record<NormalizedCategory, string> = {
+  "Food & Drink":          "#f59e0b",
+  "Medical":               "#22c55e",
+  "Neighborhood Amenities":"#3b82f6",
+  "Religious Institution": "#8b5cf6",
+  "Services":              "#14b8a6",
+  "Shopping":              "#f43f5e",
+};
+
+// Sidebar list — filtered by normalised bucket + search
+  const categories = useMemo(() => ["All", ...NORMALIZED_CATEGORIES], []);
 
   // Geocoded businesses (those with lat/lng)
   const geocoded = useMemo(
@@ -45,13 +52,14 @@ export default function BusinessMapClient({ businesses, boundary }: Props) {
     [businesses]
   );
 
-  // Sidebar list — filtered by search + category
+  // Sidebar list — filtered by normalised bucket + search
   const sidebarList = useMemo(() => {
     const q = query.toLowerCase().trim();
     return [...businesses]
       .filter((b) => {
         const catMatch =
-          selectedCategory === "All" || b.category === selectedCategory;
+          selectedCategory === "All" ||
+          normalizeCategory(b.category) === selectedCategory;
         const textMatch =
           !q ||
           b.name.toLowerCase().includes(q) ||
@@ -107,13 +115,20 @@ export default function BusinessMapClient({ businesses, boundary }: Props) {
         }).addTo(map);
       }
 
-      // Business markers (only geocoded)
+      // Business markers — colour-coded by bucket
       geocoded.forEach((b) => {
         if (b.lat == null || b.lng == null) return;
-        const marker = L.marker([b.lat, b.lng], { icon: DefaultIcon }).addTo(
-          map
-        );
-        marker.bindPopup(
+        const bucket = normalizeCategory(b.category);
+        const color = BUCKET_COLORS[bucket];
+        const circleMarker = L.circleMarker([b.lat, b.lng], {
+          radius: 7,
+          fillColor: color,
+          color: "#fff",
+          weight: 1.5,
+          opacity: 1,
+          fillOpacity: 0.9,
+        }).addTo(map);
+        circleMarker.bindPopup(
           `<strong>${b.name}</strong><br/><span style="color:#5a5248;font-size:0.8em">${b.category}</span>${
             b.address ? `<br/><span style="font-size:0.8em">${b.address}</span>` : ""
           }${
@@ -250,11 +265,11 @@ export default function BusinessMapClient({ businesses, boundary }: Props) {
                     <p className="font-medium text-sm text-[var(--ink)] leading-tight">
                       {b.name}
                     </p>
-                    <p
-                      className={`text-xs mt-0.5 font-medium inline-block px-1.5 py-0.5 rounded ${categoryColor(
-                        b.category
-                      )}`}
-                    >
+                    {/* Bucket prominent, raw category muted beneath */}
+                    <p className="text-xs font-semibold text-[var(--evergreen-700)] mt-0.5">
+                      {normalizeCategory(b.category)}
+                    </p>
+                    <p className="text-xs text-[var(--muted)]">
                       {b.category}
                     </p>
                     {b.address && (

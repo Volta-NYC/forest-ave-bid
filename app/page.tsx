@@ -5,6 +5,7 @@ import SectionHeading from "@/components/SectionHeading";
 import CTAButton from "@/components/CTAButton";
 import EventCard from "@/components/EventCard";
 import { getAllEvents, isUpcoming } from "@/lib/events";
+import { imageManifest } from "@/lib/imageManifest";
 
 export const metadata: Metadata = {
   title: "Forest Avenue BID | Staten Island, NY",
@@ -76,6 +77,7 @@ export default function HomePage() {
         subtitle="Supporting local businesses and bringing people together along Forest Avenue — from Hart Blvd to Broadway."
         primaryCta={{ label: "Explore our businesses", href: "/our-businesses" }}
         secondaryCta={{ label: "Get in touch", href: "/contact" }}
+        backgroundImageUrl={imageManifest.homeHero}
       />
 
       {/* Features — Source: forestavenuebid.com homepage sections */}
@@ -86,30 +88,42 @@ export default function HomePage() {
             title="How we support Forest Avenue"
           />
           <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
-            {features.map((feat) => (
+            {features.map((feat, i) => (
               <Link
                 key={feat.title}
                 href={feat.href}
-                className="card-hover group flex flex-col gap-4 p-8 rounded-2xl border border-[var(--border)] bg-[var(--bg)] hover:border-[var(--brand-secondary)] transition-colors"
+                className="card-hover group flex flex-col rounded-2xl border border-[var(--border)] bg-[var(--bg)] hover:border-[var(--brand-secondary)] transition-colors overflow-hidden"
               >
+                {/* Image slot — placeholder; falls back to wood colour if missing */}
                 <div
-                  className="w-12 h-12 rounded-xl flex items-center justify-center text-white"
-                  style={{ background: "var(--brand-primary)" }}
+                  className="h-40 bg-[var(--wood-100)] flex items-center justify-center"
+                  style={{
+                    backgroundImage: `url(${imageManifest.homeCards[i]})`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                  }}
                 >
-                  {feat.icon}
+                  <div
+                    className="w-12 h-12 rounded-xl flex items-center justify-center text-white shadow-wood-sm"
+                    style={{ background: "var(--brand-primary)" }}
+                  >
+                    {feat.icon}
+                  </div>
                 </div>
-                <h3 className="font-headline font-bold text-xl text-[var(--brand-primary)]">
-                  {feat.title}
-                </h3>
-                <p className="text-[var(--muted)] text-sm leading-relaxed flex-1">
-                  {feat.description}
-                </p>
-                <span className="text-sm font-semibold text-[var(--brand-accent)] group-hover:underline inline-flex items-center gap-1">
-                  Learn more
-                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
-                </span>
+                <div className="p-8 flex flex-col gap-4 flex-1">
+                  <h3 className="font-headline font-bold text-xl text-[var(--brand-primary)]">
+                    {feat.title}
+                  </h3>
+                  <p className="text-[var(--muted)] text-sm leading-relaxed flex-1">
+                    {feat.description}
+                  </p>
+                  <span className="text-sm font-semibold text-[var(--brand-accent)] group-hover:underline inline-flex items-center gap-1">
+                    Learn more
+                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </span>
+                </div>
               </Link>
             ))}
           </div>
