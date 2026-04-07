@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Hero from "@/components/Hero";
 import SectionHeading from "@/components/SectionHeading";
 import ContactForm from "@/components/ContactForm";
+import { socialLinks } from "@/lib/socialLinks";
+import { imageManifest } from "@/lib/imageManifest";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -51,20 +53,31 @@ const contactInfo = [
 ];
 
 // Source: forestavenuebid.com/contact/
-const socialLinks = [
+const socialIconLinks = [
   {
-    href: "https://www.facebook.com/ForestAveBID/",
+    href: socialLinks.forestAveBid.facebook,
     label: "Facebook",
     path: "M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z",
   },
   {
-    href: "https://www.instagram.com/forestavebid/",
+    href: socialLinks.forestAveBid.instagram,
     label: "Instagram",
-    path: "M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63z",
+    path: "M7 2h10a5 5 0 015 5v10a5 5 0 01-5 5H7a5 5 0 01-5-5V7a5 5 0 015-5zm5 5.25A4.75 4.75 0 1012 16.75 4.75 4.75 0 0012 7.25zm6.1-.9a1.15 1.15 0 11-2.3 0 1.15 1.15 0 012.3 0zM12 9.15A2.85 2.85 0 1112 14.85 2.85 2.85 0 0112 9.15z",
   },
 ];
 
 export default function ContactPage() {
+  const forestSocial = [
+    { label: "Instagram", href: socialLinks.forestAveBid.instagram },
+    { label: "Facebook", href: socialLinks.forestAveBid.facebook },
+    { label: "YouTube", href: socialLinks.forestAveBid.youtube },
+  ];
+  const sibocSocial = [
+    { label: "Instagram", href: socialLinks.siboc.instagram },
+    { label: "Facebook", href: socialLinks.siboc.facebook },
+    { label: "YouTube", href: socialLinks.siboc.youtube },
+  ];
+
   return (
     <>
       <Hero
@@ -72,7 +85,9 @@ export default function ContactPage() {
         // Source: forestavenuebid.com/contact/
         title="Contact Us"
         subtitle="Have any questions? We are always open to talk about your business, community, opportunities, or how we can help you."
-        woodTexture
+        backgroundImageUrl={imageManifest.headerMurals.contact}
+        overlayStrength={0.16}
+        pattern={false}
       />
 
       <section className="section-padding bg-[var(--bg)]" aria-labelledby="contact-heading">
@@ -124,31 +139,72 @@ export default function ContactPage() {
                   Follow us
                 </p>
                 <div className="flex gap-3">
-                  {socialLinks.map((s) => (
+                  {socialIconLinks.map((s) => (
                     <a
                       key={s.label}
                       href={s.href}
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={`${s.label} (opens in new tab)`}
-                      className="w-10 h-10 rounded-xl border border-[var(--border)] bg-white flex items-center justify-center text-[var(--muted)] hover:text-[var(--brand-primary)] hover:border-[var(--brand-primary)] transition-colors"
+                      className="social-pop ui-bounce crazy-spin w-14 h-14 rounded-2xl border border-[var(--border)] bg-white flex items-center justify-center text-[var(--muted)] hover:text-[var(--brand-primary)] hover:border-[var(--brand-primary)] transition-colors"
                     >
-                      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                      <svg className="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                         <path d={s.path} />
                       </svg>
                     </a>
                   ))}
                   <a
-                    href="https://youtube.com/@forestavenuebid"
+                    href={socialLinks.forestAveBid.youtube}
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="YouTube (opens in new tab)"
-                    className="w-10 h-10 rounded-xl border border-[var(--border)] bg-white flex items-center justify-center text-[var(--muted)] hover:text-[var(--brand-primary)] hover:border-[var(--brand-primary)] transition-colors"
+                    className="social-pop ui-bounce crazy-spin w-14 h-14 rounded-2xl border border-[var(--border)] bg-white flex items-center justify-center text-[var(--muted)] hover:text-[var(--brand-primary)] hover:border-[var(--brand-primary)] transition-colors"
                   >
-                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <svg className="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                       <path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
                     </svg>
                   </a>
+                </div>
+                <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div className="rounded-xl border border-[var(--border)] bg-white p-3">
+                    <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted)]">
+                      Forest Ave BID
+                    </p>
+                    <p className="mt-1 text-xs text-[var(--muted)]">
+                      Prioritize our Instagram, Facebook, and YouTube for current updates.
+                    </p>
+                    <div className="mt-2 flex flex-wrap gap-2">
+                      {forestSocial.map((item) => (
+                        <a
+                          key={item.label}
+                          href={item.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-xs font-semibold text-[var(--brand-accent)] hover:underline"
+                        >
+                          {item.label}
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="rounded-xl border border-[var(--border)] bg-white p-3">
+                    <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted)]">
+                      SIBOC
+                    </p>
+                    <div className="mt-2 flex flex-wrap gap-2">
+                      {sibocSocial.map((item) => (
+                        <a
+                          key={item.label}
+                          href={item.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-xs font-semibold text-[var(--brand-accent)] hover:underline"
+                        >
+                          {item.label}
+                        </a>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               </div>
             </aside>

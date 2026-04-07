@@ -22,7 +22,9 @@ export default function OurBusinessesPage() {
         title="Our Businesses"
         // Source: forestavenuebid.com/our-businesses/
         subtitle="The Forest Ave BID is home to long standing businesses as well as new businesses. We are ever-expanding, growing, and changing!"
-        woodTexture
+        backgroundImageUrl={imageManifest.headerMurals.businesses}
+        overlayStrength={0.16}
+        pattern={false}
       />
 
       {/* Stats — Source: forestavenuebid.com/our-businesses/ */}

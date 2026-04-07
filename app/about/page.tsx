@@ -52,7 +52,9 @@ export default function AboutPage() {
         eyebrow="About us"
         title="About the BID"
         subtitle="The Forest Avenue Business Improvement District — serving the corridor from Hart Blvd to Broadway, Staten Island."
-        woodTexture
+        backgroundImageUrl={imageManifest.headerMurals.about}
+        overlayStrength={0.16}
+        pattern={false}
       />
 
       {/* Mission — Source: forestavenuebid.com/about/ */}

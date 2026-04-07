@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Hero from "@/components/Hero";
 import SectionHeading from "@/components/SectionHeading";
 import { imageManifest } from "@/lib/imageManifest";
@@ -18,6 +19,7 @@ interface BoardMember {
   name: string;
   role: string;
   affiliation: string;
+  photoSrc?: string;
   isOfficer?: boolean;
   isPublicOfficial?: boolean;
   isEmeritus?: boolean;
@@ -26,29 +28,29 @@ interface BoardMember {
 // Source: forestavenuebid.com/team/
 const boardMembers: BoardMember[] = [
   // Officers
-  { name: "Megan Coppola", role: "Chair", affiliation: "Owner of Beans and Leaves Cafe", isOfficer: true },
-  { name: "Kim Beckett", role: "Vice Chair", affiliation: "Owner of Burrito Bar", isOfficer: true },
-  { name: "Gary LiGreci", role: "Treasurer", affiliation: "Owner of LiGreci's Staaten", isOfficer: true },
-  { name: "Laura Volsario", role: "Secretary", affiliation: "Owner of Gateway Arms Realty", isOfficer: true },
+  { name: "Megan Coppola", role: "Chair", affiliation: "Owner of Beans and Leaves Cafe", photoSrc: "https://forestavenuebid.com/wp-content/uploads/2024/02/ls72vj3encabkermumpv.webp", isOfficer: true },
+  { name: "Kim Beckett", role: "Vice Chair", affiliation: "Owner of Burrito Bar", photoSrc: "https://forestavenuebid.com/wp-content/uploads/2024/02/sqen9iaubkptsq20ds0m.webp", isOfficer: true },
+  { name: "Gary LiGreci", role: "Treasurer", affiliation: "Owner of LiGreci's Staaten", photoSrc: "https://forestavenuebid.com/wp-content/uploads/2024/02/ligreci.jpg", isOfficer: true },
+  { name: "Laura Volsario", role: "Secretary", affiliation: "Owner of Gateway Arms Realty", photoSrc: "https://forestavenuebid.com/wp-content/uploads/2024/02/laura.jpg", isOfficer: true },
   // Directors
-  { name: "Donald Bentson", role: "Board Member", affiliation: "Owner of Bentson & Company" },
-  { name: "Jean Daggan", role: "Board Member", affiliation: "Property Owner" },
-  { name: "Rachel Fundaro", role: "Board Member", affiliation: "Paralegal at Thompson Law, PLLC" },
-  { name: "Andrea S. Morse, Esq.", role: "Board Member", affiliation: "Owner of Law Office of Andrea Morse" },
-  { name: "Eddie Donovan", role: "Board Member", affiliation: "Owner of Duffy's" },
-  { name: "Christina Saez", role: "Board Member", affiliation: "Manager of Panini Grill" },
+  { name: "Donald Bentson", role: "Board Member", affiliation: "Owner of Bentson & Company", photoSrc: "https://forestavenuebid.com/wp-content/uploads/2024/02/1516560349488.jpg" },
+  { name: "Jean Daggan", role: "Board Member", affiliation: "Property Owner", photoSrc: "https://forestavenuebid.com/wp-content/uploads/2024/02/Screenshot-25.png" },
+  { name: "Rachel Fundaro", role: "Board Member", affiliation: "Paralegal at Thompson Law, PLLC", photoSrc: "https://forestavenuebid.com/wp-content/uploads/2024/02/Thomson_Law_1200.png" },
+  { name: "Andrea S. Morse, Esq.", role: "Board Member", affiliation: "Owner of Law Office of Andrea Morse", photoSrc: "https://forestavenuebid.com/wp-content/uploads/2024/02/unnamed.jpg" },
+  { name: "Eddie Donovan", role: "Board Member", affiliation: "Owner of Duffy's", photoSrc: "https://forestavenuebid.com/wp-content/uploads/2024/02/duffys.png" },
+  { name: "Christina Saez", role: "Board Member", affiliation: "Manager of Panini Grill", photoSrc: "https://forestavenuebid.com/wp-content/uploads/2024/02/panini-grill.png" },
   // Emeritus
-  { name: "Vincent D'Antuono", role: "Board Member Emeritus", affiliation: "Owner of Pastosa Ravioli & Cheese Inc.", isEmeritus: true },
+  { name: "Vincent D'Antuono", role: "Board Member Emeritus", affiliation: "Owner of Pastosa Ravioli & Cheese Inc.", photoSrc: "https://forestavenuebid.com/wp-content/uploads/2024/02/pastosa.jpg", isEmeritus: true },
   // Public officials
-  { name: "Vito Fossella", role: "Borough President", affiliation: "Borough President of Staten Island", isPublicOfficial: true },
-  { name: "Kamilliah Hanks", role: "Councilwoman", affiliation: "Councilwoman", isPublicOfficial: true },
-  { name: "Brad Lander", role: "Comptroller", affiliation: "NYC Comptroller", isPublicOfficial: true },
-  { name: "Eric Adams", role: "NYC Mayor", affiliation: "NYC Mayor", isPublicOfficial: true },
+  { name: "Vito Fossella", role: "Borough President", affiliation: "Borough President of Staten Island", photoSrc: "https://forestavenuebid.com/wp-content/uploads/2024/04/BID-Logo.png", isPublicOfficial: true },
+  { name: "Kamilliah Hanks", role: "Councilwoman", affiliation: "Councilwoman", photoSrc: "https://forestavenuebid.com/wp-content/uploads/2024/02/1628421002027.jpg", isPublicOfficial: true },
+  { name: "Brad Lander", role: "Comptroller", affiliation: "NYC Comptroller", photoSrc: "https://forestavenuebid.com/wp-content/uploads/2024/02/Brad-Lander-Headshot-1.jpg", isPublicOfficial: true },
+  { name: "Eric Adams", role: "NYC Mayor", affiliation: "NYC Mayor", photoSrc: "https://forestavenuebid.com/wp-content/uploads/2024/02/bwInZ7l2_400x400.jpg", isPublicOfficial: true },
 ];
 
 // Source: forestavenuebid.com/team/
 const staffMembers = [
-  { name: "Nina Flores", title: "Executive Director" },
+  { name: "Nina Flores", title: "Executive Director", photoSrc: "https://forestavenuebid.com/wp-content/uploads/2024/02/DS701287-scaled.jpg" },
 ];
 
 function initials(name: string) {
@@ -77,11 +79,13 @@ function MemberTile({
   role,
   affiliation,
   isEmeritus = false,
+  photoSrc,
 }: {
   name: string;
   role: string;
   affiliation: string;
   isEmeritus?: boolean;
+  photoSrc?: string;
 }) {
   return (
     <div
@@ -94,19 +98,31 @@ function MemberTile({
         className="aspect-[4/3] relative bg-[var(--wood-50)] flex items-center justify-center overflow-hidden flex-shrink-0"
         aria-hidden="true"
       >
-        {/* Large initials — visible when no photo is present */}
-        <span className="font-headline font-black text-6xl text-[var(--brand-primary)]/15 select-none">
-          {initials(name)}
-        </span>
-        {/* Photo — covers initials once a real image is supplied */}
-        <div
-          className="absolute inset-0 z-10"
-          style={{
-            backgroundImage: `url(${imageManifest.teamMemberFallback})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center top",
-          }}
-        />
+        {photoSrc ? (
+          <Image
+            src={photoSrc}
+            alt={`${name} portrait`}
+            width={640}
+            height={480}
+            className="absolute inset-0 z-10 h-full w-full object-cover"
+          />
+        ) : (
+          <>
+            {/* Large initials — visible when no photo is present */}
+            <span className="font-headline font-black text-6xl text-[var(--brand-primary)]/15 select-none">
+              {initials(name)}
+            </span>
+            {/* Photo — covers initials once a real image is supplied */}
+            <div
+              className="absolute inset-0 z-10"
+              style={{
+                backgroundImage: `url(${imageManifest.teamMemberFallback})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center top",
+              }}
+            />
+          </>
+        )}
       </div>
 
       {/* Info */}
@@ -142,7 +158,9 @@ export default function TeamPage() {
         eyebrow="Leadership"
         title="Our Team"
         subtitle={boardIntro}
-        woodTexture
+        backgroundImageUrl={imageManifest.headerMurals.team}
+        overlayStrength={0.16}
+        pattern={false}
       />
 
       {/* Staff */}
@@ -161,17 +179,29 @@ export default function TeamPage() {
                   className="aspect-[4/3] relative bg-[var(--wood-50)] flex items-center justify-center overflow-hidden flex-shrink-0"
                   aria-hidden="true"
                 >
-                  <span className="font-headline font-black text-6xl text-[var(--brand-primary)]/15 select-none">
-                    {initials(s.name)}
-                  </span>
-                  <div
-                    className="absolute inset-0 z-10"
-                    style={{
-                      backgroundImage: `url(${imageManifest.teamMemberFallback})`,
-                      backgroundSize: "cover",
-                      backgroundPosition: "center top",
-                    }}
-                  />
+                  {s.photoSrc ? (
+                    <Image
+                      src={s.photoSrc}
+                      alt={`${s.name} portrait`}
+                      width={640}
+                      height={480}
+                      className="absolute inset-0 z-10 h-full w-full object-cover"
+                    />
+                  ) : (
+                    <>
+                      <span className="font-headline font-black text-6xl text-[var(--brand-primary)]/15 select-none">
+                        {initials(s.name)}
+                      </span>
+                      <div
+                        className="absolute inset-0 z-10"
+                        style={{
+                          backgroundImage: `url(${imageManifest.teamMemberFallback})`,
+                          backgroundSize: "cover",
+                          backgroundPosition: "center top",
+                        }}
+                      />
+                    </>
+                  )}
                 </div>
                 <div className="p-4">
                   <p className="font-headline font-bold text-base text-[var(--brand-primary)]">
@@ -200,6 +230,7 @@ export default function TeamPage() {
                 name={m.name}
                 role={m.role}
                 affiliation={m.affiliation}
+                photoSrc={m.photoSrc}
               />
             ))}
           </div>
@@ -218,6 +249,7 @@ export default function TeamPage() {
                 name={m.name}
                 role={m.role}
                 affiliation={m.affiliation}
+                photoSrc={m.photoSrc}
               />
             ))}
             {emeritus.map((m) => (
@@ -226,6 +258,7 @@ export default function TeamPage() {
                 name={m.name}
                 role={m.role}
                 affiliation={m.affiliation}
+                photoSrc={m.photoSrc}
                 isEmeritus
               />
             ))}
@@ -249,6 +282,7 @@ export default function TeamPage() {
                 name={m.name}
                 role={m.role}
                 affiliation={m.affiliation}
+                photoSrc={m.photoSrc}
               />
             ))}
           </div>

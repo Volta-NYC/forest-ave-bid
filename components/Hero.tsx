@@ -20,6 +20,12 @@ interface HeroProps {
   backgroundImageUrl?: string;
   /** Opacity of the dark overlay over a photo background (0–1). Default 0.45. */
   overlayStrength?: number;
+  /** Show decorative hexagon accents inspired by the legacy homepage. */
+  hexDecor?: boolean;
+  sideImages?: boolean;
+  sideImageLeftUrl?: string;
+  sideImageRightUrl?: string;
+  size?: "home" | "inner";
 }
 
 export default function Hero({
@@ -32,6 +38,11 @@ export default function Hero({
   woodTexture = false,
   backgroundImageUrl,
   overlayStrength = 0.45,
+  hexDecor = true,
+  sideImages = true,
+  sideImageLeftUrl = imageManifest.heroSides.left,
+  sideImageRightUrl = imageManifest.heroSides.right,
+  size = "inner",
 }: HeroProps) {
   const bgStyle = woodTexture
     ? {
@@ -49,10 +60,20 @@ export default function Hero({
       }
     : { background: "var(--brand-primary)" };
 
+  const sectionSizeClass =
+    size === "home"
+      ? "pt-36 pb-24 md:pt-52 md:pb-36 min-h-[62vh] md:min-h-[72vh] flex items-end"
+      : "pt-44 pb-32 md:pt-60 md:pb-44 min-h-[58vh] md:min-h-[68vh] flex items-end";
+  const titleSizeClass =
+    size === "home"
+      ? "text-5xl sm:text-6xl md:text-7xl lg:text-8xl"
+      : "text-6xl sm:text-7xl md:text-8xl lg:text-[6.5rem]";
+
   const hasImage = woodTexture || !!backgroundImageUrl;
+  const heroMotionClass = hasImage ? "mural-pan" : "";
   return (
     <section
-      className="relative overflow-hidden pt-32 pb-20 md:pt-40 md:pb-28"
+      className={`relative overflow-hidden ${sectionSizeClass} ${heroMotionClass}`}
       style={bgStyle}
       aria-labelledby="hero-heading"
     >
@@ -76,6 +97,60 @@ export default function Hero({
         />
       )}
 
+      {/* Legacy-style hexagon accents over wood texture */}
+      {woodTexture && hexDecor && (
+        <>
+          <div className="absolute -top-8 left-[6%] w-20 h-20 md:w-28 md:h-28 opacity-35 pointer-events-none" aria-hidden="true">
+            <div
+              className="w-full h-full border border-white/60 hero-drift"
+              style={{ clipPath: "polygon(25% 6%, 75% 6%, 96% 50%, 75% 94%, 25% 94%, 4% 50%)" }}
+            />
+          </div>
+          <div className="absolute top-20 left-[13%] w-14 h-14 md:w-20 md:h-20 opacity-25 pointer-events-none" aria-hidden="true">
+            <div
+              className="w-full h-full border border-[var(--brand-secondary)]/80 hero-drift"
+              style={{ clipPath: "polygon(25% 6%, 75% 6%, 96% 50%, 75% 94%, 25% 94%, 4% 50%)" }}
+            />
+          </div>
+          <div className="absolute top-6 right-[10%] w-24 h-24 md:w-32 md:h-32 opacity-30 pointer-events-none" aria-hidden="true">
+            <div
+              className="w-full h-full border border-white/50 hero-drift"
+              style={{ clipPath: "polygon(25% 6%, 75% 6%, 96% 50%, 75% 94%, 25% 94%, 4% 50%)" }}
+            />
+          </div>
+          <div className="absolute top-28 right-[18%] w-12 h-12 md:w-16 md:h-16 opacity-20 pointer-events-none" aria-hidden="true">
+            <div
+              className="w-full h-full border border-[var(--brand-secondary)]/80 hero-drift"
+              style={{ clipPath: "polygon(25% 6%, 75% 6%, 96% 50%, 75% 94%, 25% 94%, 4% 50%)" }}
+            />
+          </div>
+        </>
+      )}
+
+      {/* Side visual strips for more lively page headers */}
+      {sideImages && (
+        <>
+          <div
+            className="hidden xl:block absolute left-0 top-0 bottom-0 w-28 opacity-55 hero-drift pointer-events-none"
+            style={{
+              backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.45), transparent), url('${sideImageLeftUrl}')`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+            aria-hidden="true"
+          />
+          <div
+            className="hidden xl:block absolute right-0 top-0 bottom-0 w-28 opacity-55 hero-drift pointer-events-none"
+            style={{
+              backgroundImage: `linear-gradient(to left, rgba(0,0,0,0.45), transparent), url('${sideImageRightUrl}')`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+            aria-hidden="true"
+          />
+        </>
+      )}
+
       {/* Gradient fade at bottom */}
       <div
         className="absolute bottom-0 left-0 right-0 h-24 pointer-events-none"
@@ -87,7 +162,7 @@ export default function Hero({
         aria-hidden="true"
       />
 
-      <div className="container-wide relative">
+      <div className="container-wide relative hero-copy">
         {eyebrow && (
           <p className="mb-4 text-sm font-semibold uppercase tracking-widest text-[var(--brand-secondary)]">
             {eyebrow}
@@ -95,7 +170,7 @@ export default function Hero({
         )}
         <h1
           id="hero-heading"
-          className="font-headline font-black text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl max-w-4xl text-balance"
+          className={`font-headline font-black text-white ${titleSizeClass} max-w-4xl text-balance`}
         >
           {title}
         </h1>

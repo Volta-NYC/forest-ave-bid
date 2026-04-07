@@ -1,8 +1,10 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { imageManifest } from "@/lib/imageManifest";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -50,17 +52,19 @@ export default function Navbar() {
         {/* Logo */}
         <Link
           href="/"
-          className="flex items-center gap-2 group"
+          className="flex items-center gap-3 group"
           aria-label="Forest Avenue BID — home"
         >
-          <span
-            className="flex items-center justify-center w-9 h-9 rounded-lg text-white font-bold text-sm"
-            style={{ background: "var(--brand-primary)" }}
-            aria-hidden="true"
-          >
-            FA
+          <span className="relative h-10 w-[82px] overflow-hidden rounded bg-white" aria-hidden="true">
+            <Image
+              src={imageManifest.siteLogo}
+              alt="Forest Avenue BID logo"
+              fill
+              className="object-contain"
+              sizes="82px"
+            />
           </span>
-          <span className="font-headline font-bold text-lg leading-tight text-[var(--brand-primary)] hidden sm:block">
+          <span className="font-headline font-bold text-lg leading-tight text-[var(--brand-primary)] hidden md:block">
             Forest Ave <span className="font-normal text-[var(--muted)]">BID</span>
           </span>
         </Link>

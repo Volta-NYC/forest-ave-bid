@@ -3,21 +3,48 @@ import type { Business } from "@/lib/types";
 import { CategoryIcon, categoryColor } from "./CategoryIcons";
 
 export default function BusinessCard({ business }: { business: Business }) {
+  const isRemoteImage = /^https?:\/\//i.test(business.image ?? "");
+
   return (
     <article className="card-hover bg-white rounded-2xl border border-[var(--border)] overflow-hidden flex flex-col">
       {/* Image / icon header */}
       <div className="relative h-36 bg-[var(--wood-50)] flex-shrink-0">
         {business.image ? (
-          <Image
-            src={business.image}
-            alt={business.name}
-            fill
-            className="object-cover"
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-          />
+          isRemoteImage ? (
+            <a
+              href={business.image}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${business.name} image (opens in new tab)`}
+              className="block h-full w-full"
+            >
+              <img
+                src={business.image}
+                alt={business.name}
+                className="h-full w-full object-cover"
+                loading="lazy"
+              />
+            </a>
+          ) : (
+            <a
+              href={business.image}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${business.name} image (opens in new tab)`}
+              className="block h-full w-full"
+            >
+              <Image
+                src={business.image}
+                alt={business.name}
+                fill
+                className="object-cover"
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              />
+            </a>
+          )
         ) : (
           <div className="h-full flex items-center justify-center">
-            <CategoryIcon category={business.category} className="w-16 h-16" />
+            <CategoryIcon category={business.category} className="w-28 h-28 p-2 icon-pop" />
           </div>
         )}
       </div>

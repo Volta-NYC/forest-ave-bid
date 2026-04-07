@@ -69,10 +69,12 @@ export default function ServicesPage() {
         eyebrow="Programs & services"
         title="Services"
         subtitle="The Forest Avenue BID delivers programs across three core areas to support our businesses, corridor, and community."
-        woodTexture
+        backgroundImageUrl={imageManifest.headerMurals.services}
+        overlayStrength={0.16}
+        pattern={false}
       />
 
-      <section className="section-padding bg-white" aria-labelledby="services-heading">
+      <section className="section-padding section-gradient section-reveal" aria-labelledby="services-heading">
         <div className="container-wide">
           <div className="space-y-20">
             {services.map((service, i) => (
@@ -104,7 +106,7 @@ export default function ServicesPage() {
                         backgroundImage: `url(${imageManifest.services[service.id] ?? imageManifest.fallback})`,
                         backgroundSize: "cover",
                         backgroundPosition: "center",
-                        opacity: 0.18,
+                        opacity: 0.42,
                       }}
                       aria-hidden="true"
                     />

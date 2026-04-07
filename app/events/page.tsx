@@ -3,6 +3,8 @@ import Hero from "@/components/Hero";
 import SectionHeading from "@/components/SectionHeading";
 import EventCard from "@/components/EventCard";
 import { getAllEvents, isUpcoming } from "@/lib/events";
+import { socialLinks } from "@/lib/socialLinks";
+import { imageManifest } from "@/lib/imageManifest";
 
 export const metadata: Metadata = {
   title: "Events",
@@ -33,7 +35,10 @@ export default function EventsPage() {
         title="Events"
         // Source: forestavenuebid.com/events/
         subtitle="From Trick or Treating to Spring Strolls, the Forest Ave BID is always planning an upcoming community event that we hope you join us at."
-        woodTexture
+        backgroundImageUrl={imageManifest.eventsMuralHero}
+        overlayStrength={0.1}
+        sideImages={false}
+        pattern={false}
       />
 
       <div className="section-padding bg-[var(--bg)]">
@@ -45,6 +50,14 @@ export default function EventsPage() {
               eyebrow="Upcoming"
               title="Upcoming events"
             />
+            <div className="mt-3">
+              <a
+                href="/api/events/calendar"
+                className="inline-flex items-center gap-1 text-xs font-semibold text-[var(--brand-accent)] hover:underline"
+              >
+                Download calendar feed (.ics)
+              </a>
+            </div>
 
             {upcoming.length === 0 ? (
               // No 2026+ events have been posted yet — show friendly message
@@ -58,7 +71,7 @@ export default function EventsPage() {
                 </p>
                 <div className="mt-5 flex justify-center gap-3">
                   <a
-                    href="https://www.instagram.com/forestavebid/"
+                    href={socialLinks.forestAveBid.instagram}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold border border-[var(--border)] bg-white text-[var(--text)] hover:border-[var(--brand-primary)] hover:text-[var(--brand-primary)] transition-colors"
@@ -67,7 +80,7 @@ export default function EventsPage() {
                     Follow on Instagram
                   </a>
                   <a
-                    href="https://www.facebook.com/ForestAveBID/"
+                    href={socialLinks.forestAveBid.facebook}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold border border-[var(--border)] bg-white text-[var(--text)] hover:border-[var(--brand-primary)] hover:text-[var(--brand-primary)] transition-colors"
@@ -76,6 +89,18 @@ export default function EventsPage() {
                     Follow on Facebook
                   </a>
                 </div>
+                <p className="mt-3 text-xs text-[var(--muted)]">
+                  Also watch event highlights on{" "}
+                  <a
+                    href={socialLinks.forestAveBid.youtube}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[var(--brand-accent)] hover:underline"
+                  >
+                    YouTube
+                  </a>
+                  .
+                </p>
               </div>
             ) : (
               <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

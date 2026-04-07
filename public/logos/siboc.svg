@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360" role="img" aria-labelledby="title desc">
+  <title id="title">SIBOC logo placeholder</title>
+  <desc id="desc">Staten Island Business Outreach Center branding placeholder card.</desc>
+  <defs>
+    <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#17385c"/>
+      <stop offset="1" stop-color="#205f9b"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="360" rx="28" fill="url(#g)"/>
+  <rect x="30" y="30" width="580" height="300" rx="20" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="2"/>
+  <text x="320" y="150" text-anchor="middle" fill="#ffffff" font-family="Georgia, serif" font-size="76" font-weight="700">SIBOC</text>
+  <text x="320" y="205" text-anchor="middle" fill="rgba(255,255,255,0.88)" font-family="Arial, sans-serif" font-size="20">Staten Island Business Outreach Center</text>
+</svg>

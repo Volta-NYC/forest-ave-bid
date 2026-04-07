@@ -13,26 +13,48 @@ interface Props {
   boundary: GeoJSON.FeatureCollection;
 }
 
-const FOREST_AVE_CENTER: [number, number] = [40.628, -74.122];
+const FOREST_AVE_CENTER: [number, number] = [40.6301, -74.109];
 const DEFAULT_ZOOM = 15;
 
-// Marker icon URLs (avoids webpack URL resolution issues with leaflet defaults)
-const ICON_URL =
-  "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png";
-const ICON_RETINA_URL =
-  "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png";
-const SHADOW_URL =
-  "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png";
+function isForestAveBusiness(b: Business): boolean {
+  const text = [b.address, b.notes, b.description]
+    .filter(Boolean)
+    .join(" ")
+    .toLowerCase();
+  if (!text) return false;
+  return /\bforest\s+av(?:e|enue)?\b/i.test(text);
+}
+
+function hasValidCoordinate(b: Business): boolean {
+  if (b.lat == null || b.lng == null) return false;
+  // Guard against occasional bad geocode points far outside Staten Island.
+  return (
+    b.lat >= 40.58 &&
+    b.lat <= 40.68 &&
+    b.lng >= -74.25 &&
+    b.lng <= -74.02
+  );
+}
 
 export default function BusinessMapClient({ businesses, boundary }: Props) {
   const mapRef = useRef<HTMLDivElement>(null);
   const leafletMapRef = useRef<import("leaflet").Map | null>(null);
+  const markerLayerRef = useRef<import("leaflet").LayerGroup | null>(null);
+  const markerBySlugRef = useRef<
+    Map<string, import("leaflet").CircleMarker>
+  >(new Map());
   const [mounted, setMounted] = useState(false);
   const [legendOpen, setLegendOpen] = useState(false);
+  const [mapReady, setMapReady] = useState(false);
   const [query, setQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [activeSlug, setActiveSlug] = useState<string | null>(null);
+  const [mapZoom, setMapZoom] = useState(DEFAULT_ZOOM);
   const sidebarRef = useRef<HTMLDivElement>(null);
+  const forestAveBusinesses = useMemo(
+    () => businesses.filter((b) => isForestAveBusiness(b)),
+    [businesses]
+  );
 
   // Marker colours per normalised bucket
 const BUCKET_COLORS: Record<NormalizedCategory, string> = {
@@ -47,16 +69,10 @@ const BUCKET_COLORS: Record<NormalizedCategory, string> = {
 // Sidebar list — filtered by normalised bucket + search
   const categories = useMemo(() => ["All", ...NORMALIZED_CATEGORIES], []);
 
-  // Geocoded businesses (those with lat/lng)
-  const geocoded = useMemo(
-    () => businesses.filter((b) => b.lat != null && b.lng != null),
-    [businesses]
-  );
-
   // Sidebar list — filtered by normalised bucket + search
   const sidebarList = useMemo(() => {
     const q = query.toLowerCase().trim();
-    return [...businesses]
+    return [...forestAveBusinesses]
       .filter((b) => {
         const catMatch =
           selectedCategory === "All" ||
@@ -69,7 +85,26 @@ const BUCKET_COLORS: Record<NormalizedCategory, string> = {
         return catMatch && textMatch;
       })
       .sort((a, b) => a.name.localeCompare(b.name));
-  }, [businesses, query, selectedCategory]);
+  }, [forestAveBusinesses, query, selectedCategory]);
+
+  // Geocoded businesses (those with lat/lng) currently visible in the sidebar filter.
+  const filteredGeocoded = useMemo(
+    () => sidebarList.filter((b) => hasValidCoordinate(b)),
+    [sidebarList]
+  );
+
+  const geocodedCount = useMemo(
+    () => forestAveBusinesses.filter((b) => hasValidCoordinate(b)).length,
+    [forestAveBusinesses]
+  );
+
+  const markerRadius = useMemo(() => {
+    if (mapZoom <= 12) return 16;
+    if (mapZoom <= 13) return 15;
+    if (mapZoom <= 14) return 14;
+    if (mapZoom <= 15) return 13;
+    return 12;
+  }, [mapZoom]);
 
   useEffect(() => {
     if (!mapRef.current || leafletMapRef.current) return;
@@ -78,23 +113,16 @@ const BUCKET_COLORS: Record<NormalizedCategory, string> = {
     import("leaflet").then((L) => {
       if (!mapRef.current) return;
 
-      // Fix default icon paths broken by webpack
-      const DefaultIcon = L.icon({
-        iconUrl: ICON_URL,
-        iconRetinaUrl: ICON_RETINA_URL,
-        shadowUrl: SHADOW_URL,
-        iconSize: [25, 41],
-        iconAnchor: [12, 41],
-        popupAnchor: [1, -34],
-        shadowSize: [41, 41],
-      });
-
       const map = L.map(mapRef.current, {
         center: FOREST_AVE_CENTER,
         zoom: DEFAULT_ZOOM,
         scrollWheelZoom: true,
       });
       leafletMapRef.current = map;
+      setMapZoom(map.getZoom());
+      map.on("zoomend", () => {
+        setMapZoom(map.getZoom());
+      });
 
       // OpenStreetMap tiles (free, no key)
       L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -103,48 +131,21 @@ const BUCKET_COLORS: Record<NormalizedCategory, string> = {
         maxZoom: 19,
       }).addTo(map);
 
-      // BID boundary polygon
+      // Use boundary geometry only for fit-bounds; hide outline/fill entirely.
       if (boundary) {
-        L.geoJSON(boundary as Parameters<typeof L.geoJSON>[0], {
-          style: {
-            color: "#2c541d",
-            weight: 2.5,
-            opacity: 0.8,
-            fillColor: "#2c541d",
-            fillOpacity: 0.08,
-          },
-        }).addTo(map);
+        const boundaryLayer = L.geoJSON(boundary as Parameters<typeof L.geoJSON>[0]);
+        const bounds = boundaryLayer.getBounds();
+        if (bounds.isValid()) {
+          map.fitBounds(bounds, { padding: [20, 20] });
+        }
       }
 
-      // Business markers — colour-coded by bucket
-      geocoded.forEach((b) => {
-        if (b.lat == null || b.lng == null) return;
-        const bucket = normalizeCategory(b.category);
-        const color = BUCKET_COLORS[bucket];
-        const circleMarker = L.circleMarker([b.lat, b.lng], {
-          radius: 7,
-          fillColor: color,
-          color: "#fff",
-          weight: 1.5,
-          opacity: 1,
-          fillOpacity: 0.9,
-        }).addTo(map);
-        circleMarker.bindPopup(
-          `<strong>${b.name}</strong><br/><span style="color:#5a5248;font-size:0.8em">${b.category}</span>${
-            b.address ? `<br/><span style="font-size:0.8em">${b.address}</span>` : ""
-          }${
-            b.phone
-              ? `<br/><a href="tel:${b.phone.replace(/\D/g, "")}" style="font-size:0.8em">${b.phone}</a>`
-              : ""
-          }${
-            b.website
-              ? `<br/><a href="${b.website}" target="_blank" rel="noopener noreferrer" style="font-size:0.8em;color:#3d7028">Open website ↗</a>`
-              : ""
-          }`
-        );
-      });
+      markerLayerRef.current = L.layerGroup().addTo(map);
+      map.invalidateSize();
+      setTimeout(() => map.invalidateSize(), 120);
 
       setMounted(true);
+      setMapReady(true);
     });
 
     return () => {
@@ -152,6 +153,78 @@ const BUCKET_COLORS: Record<NormalizedCategory, string> = {
       leafletMapRef.current = null;
     };
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    if (!leafletMapRef.current || !markerLayerRef.current) return;
+
+    import("leaflet").then((L) => {
+      if (!markerLayerRef.current) return;
+      markerLayerRef.current.clearLayers();
+      markerBySlugRef.current.clear();
+
+      const escapeHtml = (value: string) =>
+        value
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("'", "&#39;");
+
+      filteredGeocoded.forEach((b) => {
+        if (b.lat == null || b.lng == null) return;
+        const bucket = normalizeCategory(b.category);
+        const color = BUCKET_COLORS[bucket];
+        const circleMarker = L.circleMarker([b.lat, b.lng], {
+          radius: markerRadius,
+          fillColor: color,
+          color: "#fff",
+          weight: 4,
+          opacity: 1,
+          fillOpacity: 0.98,
+        });
+        circleMarker.bringToFront();
+
+        circleMarker.bindPopup(
+          `<strong>${escapeHtml(b.name)}</strong><br/><span style="color:#5a5248;font-size:0.8em">${escapeHtml(b.category)}</span>${
+            b.address
+              ? `<br/><span style="font-size:0.8em">${escapeHtml(b.address)}</span>`
+              : ""
+          }${
+            b.phone
+              ? `<br/><a href="tel:${b.phone.replace(/\D/g, "")}" style="font-size:0.8em">${escapeHtml(b.phone)}</a>`
+              : ""
+          }${
+            b.website
+              ? `<br/><a href="${escapeHtml(b.website)}" target="_blank" rel="noopener noreferrer" style="font-size:0.8em;color:#3d7028">Open website ↗</a>`
+              : ""
+          }`
+        );
+
+        markerLayerRef.current?.addLayer(circleMarker);
+        markerBySlugRef.current.set(b.slug, circleMarker);
+      });
+    });
+  }, [filteredGeocoded, markerRadius]);
+
+  // Keep map viewport focused on available pins when no specific business is active.
+  useEffect(() => {
+    if (!leafletMapRef.current || filteredGeocoded.length === 0 || activeSlug) return;
+    import("leaflet").then((L) => {
+      if (!leafletMapRef.current) return;
+      const bounds = L.latLngBounds(
+        filteredGeocoded.map((b) => [b.lat as number, b.lng as number] as [number, number])
+      );
+      if (bounds.isValid()) {
+        leafletMapRef.current.fitBounds(bounds, { padding: [36, 36], maxZoom: 16 });
+      }
+    });
+  }, [filteredGeocoded, activeSlug]);
+
+  useEffect(() => {
+    const onResize = () => leafletMapRef.current?.invalidateSize();
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
 
   // Scroll active item into view in sidebar
   useEffect(() => {
@@ -169,7 +242,7 @@ const BUCKET_COLORS: Record<NormalizedCategory, string> = {
     "bg-white text-[var(--ink)] border-[var(--border)] hover:border-[var(--evergreen-700)] hover:text-[var(--evergreen-700)]";
 
   return (
-    <div className="flex flex-col lg:flex-row h-[calc(100vh-4rem)] overflow-hidden">
+    <div className="flex flex-col lg:flex-row min-h-[72vh] lg:h-[calc(100vh-8rem)] overflow-hidden">
       {/* Sidebar */}
       <aside className="w-full lg:w-80 xl:w-96 flex flex-col border-b lg:border-b-0 lg:border-r border-[var(--border)] bg-[var(--bg)] flex-shrink-0 max-h-64 lg:max-h-none overflow-hidden">
         {/* Sidebar header */}
@@ -246,15 +319,13 @@ const BUCKET_COLORS: Record<NormalizedCategory, string> = {
                     onClick={() => {
                       setActiveSlug(b.slug);
                       if (
-                        b.lat != null &&
-                        b.lng != null &&
+                        hasValidCoordinate(b) &&
                         leafletMapRef.current
                       ) {
-                        leafletMapRef.current.setView(
-                          [b.lat, b.lng],
-                          17,
-                          { animate: true }
-                        );
+                        leafletMapRef.current.setView([b.lat as number, b.lng as number], 17, {
+                          animate: true,
+                        });
+                        markerBySlugRef.current.get(b.slug)?.openPopup();
                       }
                     }}
                     className={`w-full text-left px-4 py-3 border-b border-[var(--border)] transition-colors ${
@@ -278,7 +349,7 @@ const BUCKET_COLORS: Record<NormalizedCategory, string> = {
                         {b.address}
                       </p>
                     )}
-                    {b.lat == null && (
+                    {!hasValidCoordinate(b) && (
                       <p className="text-xs text-[var(--muted)] mt-1 italic">
                         No map pin yet
                       </p>
@@ -294,15 +365,19 @@ const BUCKET_COLORS: Record<NormalizedCategory, string> = {
         <div className="p-3 border-t border-[var(--border)] flex-shrink-0 bg-white">
           <p className="text-xs text-[var(--muted)]">
             {sidebarList.length} of {businesses.length} businesses
-            {geocoded.length > 0 &&
-              ` · ${geocoded.length} mapped`}
+            {geocodedCount > 0 && ` · ${filteredGeocoded.length} shown on map`}
           </p>
         </div>
       </aside>
 
       {/* Map panel */}
       <div className="flex-1 relative min-h-0">
-        <div ref={mapRef} className="w-full h-full" aria-label="Business map" />
+        <div ref={mapRef} className="w-full h-full min-h-[430px]" aria-label="Business map" />
+        {!mapReady && (
+          <div className="absolute inset-0 bg-[var(--wood-50)] flex items-center justify-center text-sm text-[var(--muted)]">
+            Loading map…
+          </div>
+        )}
 
         {/* Map legend */}
         <div className="absolute bottom-8 right-3 z-[1000]">
@@ -334,7 +409,7 @@ const BUCKET_COLORS: Record<NormalizedCategory, string> = {
               {NORMALIZED_CATEGORIES.map((cat) => (
                 <li key={cat} className="flex items-center gap-2">
                   <span
-                    className="w-3 h-3 rounded-full flex-shrink-0"
+                    className="w-7 h-7 rounded-full flex-shrink-0"
                     style={{ background: BUCKET_COLORS[cat] }}
                     aria-hidden="true"
                   />
@@ -342,17 +417,11 @@ const BUCKET_COLORS: Record<NormalizedCategory, string> = {
                 </li>
               ))}
             </ul>
-
-            {/* BID boundary */}
-            <div className="mt-2 pt-2 border-t border-[var(--border)] flex items-center gap-2">
-              <span className="flex-shrink-0 w-6 h-0 border-t-2 border-[#2c541d] opacity-80 rounded" aria-hidden="true" />
-              <span className="text-xs text-[var(--ink)]">BID boundary</span>
-            </div>
           </div>
         </div>
 
         {/* Geocoding notice — shown when no businesses are geocoded */}
-        {mounted && geocoded.length === 0 && (
+        {mounted && geocodedCount === 0 && (
           <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-[1000] max-w-sm w-[calc(100%-2rem)]">
             <div className="bg-white/95 backdrop-blur-sm rounded-xl shadow-wood-md border border-[var(--border)] p-4 text-center">
               <p className="text-sm font-medium text-[var(--ink)]">

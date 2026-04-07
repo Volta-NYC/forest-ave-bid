@@ -14,7 +14,7 @@ export default function SectionHeading({
   as: Tag = "h2",
 }: SectionHeadingProps) {
   return (
-    <div className={center ? "text-center" : ""}>
+    <div className={`${center ? "text-center" : ""} section-reveal heading-float`}>
       {eyebrow && (
         <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-[var(--brand-secondary)]">
           {eyebrow}

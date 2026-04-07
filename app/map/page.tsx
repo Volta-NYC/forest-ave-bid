@@ -3,6 +3,7 @@ import { readFileSync } from "fs";
 import path from "path";
 import { getAllBusinesses } from "@/lib/businesses";
 import MapWrapper from "@/components/MapWrapper";
+import { imageManifest } from "@/lib/imageManifest";
 
 export const metadata: Metadata = {
   title: "Business Map",
@@ -23,14 +24,21 @@ export default function MapPage() {
 
   return (
     <main className="pt-16">
-      {/* Page header — wood texture with evergreen overlay */}
-      <div className="wood-bg-hero text-white py-5 px-6">
+      {/* Page header — mural background */}
+      <div
+        className="text-white py-16 md:py-24 px-6 min-h-[42vh] md:min-h-[52vh] flex items-end mural-pan"
+        style={{
+          backgroundImage: `linear-gradient(rgba(0,0,0,0.24), rgba(0,0,0,0.24)), url('${imageManifest.headerMurals.map}')`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
         <div className="container-wide flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
           <div>
-            <h1 className="font-headline font-black text-2xl">
+            <h1 className="font-headline font-black text-4xl md:text-5xl">
               Business Map
             </h1>
-            <p className="text-white/70 text-sm mt-0.5">
+            <p className="text-white/80 text-base mt-1.5">
               Forest Avenue corridor · Hart Blvd to Broadway, Staten Island
             </p>
           </div>
