@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 420" role="img" aria-labelledby="title desc">
+  <title id="title">Office of the Mayor of New York City</title>
+  <desc id="desc">Logo tile for the Office of the Mayor of New York City.</desc>
+  <rect width="640" height="420" fill="#0b3b2b"/>
+  <rect x="22" y="22" width="596" height="376" fill="none" stroke="#86efac" stroke-opacity=".45" stroke-width="2"/>
+  <circle cx="112" cy="210" r="52" fill="#86efac" fill-opacity=".14"/>
+  <circle cx="112" cy="210" r="38" fill="none" stroke="#86efac" stroke-width="2.5"/>
+  <text x="112" y="216" font-size="13" text-anchor="middle" fill="#dcfce7" font-family="Georgia, serif">NYC</text>
+  <text x="188" y="181" font-size="16" fill="#86efac" font-weight="700" font-family="Arial, sans-serif">OFFICE OF THE</text>
+  <text x="188" y="223" font-size="56" fill="#ffffff" font-weight="900" font-family="Arial, sans-serif">MAYOR</text>
+  <text x="188" y="254" font-size="14" fill="#dcfce7" font-family="Arial, sans-serif">THE CITY OF NEW YORK</text>
+</svg>

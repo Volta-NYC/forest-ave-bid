@@ -50,6 +50,11 @@ export const metadata: Metadata = {
       "Supporting local businesses and building community along Staten Island's Forest Avenue corridor.",
     images: ["/og-image.jpg"],
   },
+  icons: {
+    icon: [{ url: "/icon.jpg", type: "image/jpeg" }],
+    shortcut: ["/icon.jpg"],
+    apple: [{ url: "/icon.jpg", type: "image/jpeg" }],
+  },
   robots: {
     index: true,
     follow: true,

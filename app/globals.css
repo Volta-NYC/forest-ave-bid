@@ -36,6 +36,7 @@
   --muted:           var(--muted-ink);
   --border:          var(--wood-100);
   --surface:         #ffffff;
+  --volta-green:     #84d61a;
 
   --font-headline: "Roboto", sans-serif;  /* same family as body; weight 700-900 gives blocky headings */
   --font-body:     "Roboto", sans-serif;
@@ -134,6 +135,47 @@ h1, h2, h3, h4, h5, h6 {
     url('/textures/wood.png');
   background-size: cover;
   background-position: center;
+}
+
+/* Islamic-inspired geometric overlays */
+.islamic-geometry-layer {
+  background-image: url('/textures/islamic-geometry-pattern.svg');
+  background-repeat: repeat;
+  background-size: 230px 230px;
+  animation: pattern-drift 40s linear infinite;
+}
+
+.islamic-geometry-footer {
+  position: relative;
+  isolation: isolate;
+}
+
+.islamic-geometry-footer::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: url('/textures/islamic-geometry-pattern.svg');
+  background-repeat: repeat;
+  background-size: 240px 240px;
+  opacity: 0.18;
+  mix-blend-mode: screen;
+  animation: pattern-drift 44s linear infinite;
+}
+
+.islamic-geometry-footer > * {
+  position: relative;
+  z-index: 1;
+}
+
+.volta-credit-link {
+  color: var(--volta-green);
+  font-weight: 700;
+  transition: opacity 0.2s ease;
+}
+
+.volta-credit-link:hover {
+  opacity: 0.82;
 }
 
 /* ── Card hover ───────────────────────────────────────── */
@@ -257,6 +299,12 @@ h1, h2, h3, h4, h5, h6 {
 }
 .hero-copy {
   animation: hero-copy 1s cubic-bezier(0.18, 0.89, 0.32, 1.1) both;
+}
+
+@keyframes pattern-drift {
+  0% { background-position: 0 0; }
+  50% { background-position: 120px 80px; }
+  100% { background-position: 240px 160px; }
 }
 
 @keyframes mural-pan {

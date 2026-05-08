@@ -86,6 +86,12 @@ export default function Hero({
         />
       )}
 
+      {/* Decorative Islamic-inspired geometric layer */}
+      <div
+        className="absolute inset-0 pointer-events-none islamic-geometry-layer opacity-[0.14]"
+        aria-hidden="true"
+      />
+
       {/* Decorative pattern (only when no background image/texture) */}
       {pattern && !hasImage && (
         <div

@@ -42,10 +42,10 @@ const boardMembers: BoardMember[] = [
   // Emeritus
   { name: "Vincent D'Antuono", role: "Board Member Emeritus", affiliation: "Owner of Pastosa Ravioli & Cheese Inc.", photoSrc: "https://forestavenuebid.com/wp-content/uploads/2024/02/pastosa.jpg", isEmeritus: true },
   // Public officials
-  { name: "Vito Fossella", role: "Borough President", affiliation: "Borough President of Staten Island", photoSrc: "https://forestavenuebid.com/wp-content/uploads/2024/04/BID-Logo.png", isPublicOfficial: true },
-  { name: "Kamilliah Hanks", role: "Councilwoman", affiliation: "Councilwoman", photoSrc: "https://forestavenuebid.com/wp-content/uploads/2024/02/1628421002027.jpg", isPublicOfficial: true },
-  { name: "Brad Lander", role: "Comptroller", affiliation: "NYC Comptroller", photoSrc: "https://forestavenuebid.com/wp-content/uploads/2024/02/Brad-Lander-Headshot-1.jpg", isPublicOfficial: true },
-  { name: "Eric Adams", role: "NYC Mayor", affiliation: "NYC Mayor", photoSrc: "https://forestavenuebid.com/wp-content/uploads/2024/02/bwInZ7l2_400x400.jpg", isPublicOfficial: true },
+  { name: "Vito Fossella", role: "Borough President", affiliation: "Borough President of Staten Island", photoSrc: "/logos/gov/staten-island-borough-president.svg", isPublicOfficial: true },
+  { name: "Kamilliah Hanks", role: "Councilwoman", affiliation: "Councilwoman", photoSrc: "/logos/gov/nyc-council.svg", isPublicOfficial: true },
+  { name: "Brad Lander", role: "Comptroller", affiliation: "NYC Comptroller", photoSrc: "/logos/gov/nyc-comptroller.svg", isPublicOfficial: true },
+  { name: "Eric Adams", role: "NYC Mayor", affiliation: "NYC Mayor", photoSrc: "/logos/gov/nyc-mayor.svg", isPublicOfficial: true },
 ];
 
 // Source: forestavenuebid.com/team/

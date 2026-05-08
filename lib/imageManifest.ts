@@ -11,7 +11,7 @@ export const imageManifest = {
   /** Single wood-texture image used as the hero/header background on every page. */
   siteHeaderImage: "/textures/wood.png",
   siteLogo: "https://forestavenuebid.com/wp-content/uploads/2024/02/cropped-cropped-FABID-New-Logo-300x147.jpg",
-  eventsMuralHero: "https://lh3.googleusercontent.com/p/AF1QipM_9i5ctygf63bw9ek66uNP1LEL2IcNRvImM5A7=s1360-w1360-h1020-rw",
+  eventsMuralHero: "/photos/uploads/Resized_20260414_114601.JPEG",
 
   heroSides: {
     left: "https://forestavenuebid.com/wp-content/uploads/2024/02/Girl-Scout-Troop-5184-caroling-at-Pastosas-1024x768.jpg",
@@ -24,9 +24,9 @@ export const imageManifest = {
     services: "https://forestavenuebid.com/wp-content/uploads/2024/02/Forest-Ave-Planter-Volunteers-Jeans-Fine-Wines-4.30.2016-1024x613.jpg",
     contact: "https://forestavenuebid.com/wp-content/uploads/2024/02/Gifted-1024x768.jpg",
     team: "https://forestavenuebid.com/wp-content/uploads/2024/02/Girl-Scout-Troop-5184-caroling-at-Pastosas-1024x768.jpg",
-    businesses: "https://forestavenuebid.com/wp-content/uploads/2024/02/Forest-Ave-Planter-Volunteers-4.30.2016-1-scaled.jpg",
-    map: "https://lh3.googleusercontent.com/p/AF1QipM_9i5ctygf63bw9ek66uNP1LEL2IcNRvImM5A7=s1360-w1360-h1020-rw",
-    events: "https://lh3.googleusercontent.com/p/AF1QipM_9i5ctygf63bw9ek66uNP1LEL2IcNRvImM5A7=s1360-w1360-h1020-rw",
+    businesses: "/photos/uploads/1000002845.jpg",
+    map: "/photos/uploads/Resized_20260414_123207.JPEG",
+    events: "/photos/uploads/Resized_20260414_114601.JPEG",
   } as const,
 
   // Legacy per-page hero keys kept for reference (all pages now use siteHeaderImage via woodTexture prop)
@@ -57,9 +57,9 @@ export const imageManifest = {
   fallback:       "/placeholders/fallback.jpg",
 
   services: {
-    "small-business": "https://forestavenuebid.com/wp-content/uploads/2024/02/Gifted-1024x768.jpg",
-    "revitalization": "https://forestavenuebid.com/wp-content/uploads/2024/02/Forest-Ave-Planter-Volunteers-Jeans-Fine-Wines-4.30.2016-1024x613.jpg",
-    "community": "https://forestavenuebid.com/wp-content/uploads/2024/02/Girl-Scout-Troop-5184-caroling-at-Pastosas-1024x768.jpg",
+    "small-business": "/photos/uploads/1000002837.jpg",
+    "revitalization": "/photos/uploads/1000002846.jpg",
+    "community": "/photos/uploads/1000002838.jpg",
   } as Record<string, string>,
 
   teamHero:            "/placeholders/hero-team.jpg",
@@ -73,6 +73,6 @@ export const imageManifest = {
   } as const,
 
   /** About page content images */
-  aboutMissionImage:   "/placeholders/about-mission.jpg",
-  aboutOperateImage:   "/placeholders/about-operate.jpg",
+  aboutMissionImage:   "/photos/uploads/Resized_20260414_114649.JPEG",
+  aboutOperateImage:   "/photos/uploads/Resized_20260414_120232.JPEG",
 } as const;

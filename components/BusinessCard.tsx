@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import type { Business } from "@/lib/types";
 import { CategoryIcon, categoryColor } from "./CategoryIcons";
 
@@ -147,6 +148,12 @@ export default function BusinessCard({ business }: { business: Business }) {
             Open website
           </a>
         )}
+        <Link
+          href={`/our-businesses/${business.slug}`}
+          className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg border border-[var(--border)] text-[var(--ink)] hover:bg-[var(--wood-50)] transition-colors"
+        >
+          View profile
+        </Link>
       </div>
     </article>
   );

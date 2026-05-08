@@ -8,6 +8,7 @@ import BusinessCard from "./BusinessCard";
 const PAGE_SIZE = 24;
 const ALL_CATS = ["All", ...NORMALIZED_CATEGORIES] as const;
 const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+type SortMode = "name-asc" | "name-desc" | "category";
 
 function AZView({
   businesses,
@@ -111,8 +112,11 @@ export default function BusinessSearch({ businesses }: BusinessSearchProps) {
   const [query, setQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+  const [sortMode, setSortMode] = useState<SortMode>("name-asc");
+  const [onlyWithPhotos, setOnlyWithPhotos] = useState(false);
 
-  const isFiltered = query.trim() !== "" || selectedCategory !== "All";
+  const isFiltered =
+    query.trim() !== "" || selectedCategory !== "All" || onlyWithPhotos;
 
   const filtered = useMemo(() => {
     const q = query.toLowerCase().trim();
@@ -120,18 +124,32 @@ export default function BusinessSearch({ businesses }: BusinessSearchProps) {
       const catMatch =
         selectedCategory === "All" ||
         normalizeCategory(b.category) === selectedCategory;
+      const photoMatch = !onlyWithPhotos || Boolean(b.image?.trim());
       const textMatch =
         !q ||
         b.name.toLowerCase().includes(q) ||
         b.address?.toLowerCase().includes(q) ||
         b.category.toLowerCase().includes(q);
-      return catMatch && textMatch;
+      return catMatch && photoMatch && textMatch;
     });
-  }, [businesses, query, selectedCategory]);
+  }, [businesses, query, selectedCategory, onlyWithPhotos]);
 
   const visibleFiltered = useMemo(
-    () => [...filtered].sort((a, b) => a.name.localeCompare(b.name)).slice(0, visibleCount),
-    [filtered, visibleCount]
+    () =>
+      [...filtered]
+        .sort((a, b) => {
+          if (sortMode === "name-desc") return b.name.localeCompare(a.name);
+          if (sortMode === "category") {
+            const cat = normalizeCategory(a.category).localeCompare(
+              normalizeCategory(b.category)
+            );
+            if (cat !== 0) return cat;
+            return a.name.localeCompare(b.name);
+          }
+          return a.name.localeCompare(b.name);
+        })
+        .slice(0, visibleCount),
+    [filtered, visibleCount, sortMode]
   );
 
   function handleCategoryChange(cat: string) {
@@ -185,7 +203,7 @@ export default function BusinessSearch({ businesses }: BusinessSearchProps) {
       </div>
 
       {/* Category chips — 6 normalised buckets */}
-      <div className="flex flex-wrap gap-2 mb-8" role="group" aria-label="Filter by category">
+      <div className="flex flex-wrap gap-2 mb-4" role="group" aria-label="Filter by category">
         {ALL_CATS.map((cat) => (
           <button
             key={cat}
@@ -196,6 +214,37 @@ export default function BusinessSearch({ businesses }: BusinessSearchProps) {
             {cat}
           </button>
         ))}
+      </div>
+      <div className="mb-8 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
+        <div className="flex items-center gap-2">
+          <label className="inline-flex items-center gap-2 text-sm text-[var(--ink)]">
+            <input
+              type="checkbox"
+              checked={onlyWithPhotos}
+              onChange={(e) => {
+                setOnlyWithPhotos(e.target.checked);
+                setVisibleCount(PAGE_SIZE);
+              }}
+              className="rounded border-[var(--border)] text-[var(--evergreen-700)] focus:ring-[var(--evergreen-400)]"
+            />
+            Only businesses with photos
+          </label>
+        </div>
+        <label className="text-sm text-[var(--muted)] inline-flex items-center gap-2">
+          Sort
+          <select
+            value={sortMode}
+            onChange={(e) => {
+              setSortMode(e.target.value as SortMode);
+              setVisibleCount(PAGE_SIZE);
+            }}
+            className="rounded-lg border border-[var(--border)] bg-white px-2.5 py-1.5 text-[var(--ink)] focus:outline-none focus:border-[var(--evergreen-400)]"
+          >
+            <option value="name-asc">Name A–Z</option>
+            <option value="name-desc">Name Z–A</option>
+            <option value="category">Category</option>
+          </select>
+        </label>
       </div>
 
       {/* Results */}
@@ -210,7 +259,12 @@ export default function BusinessSearch({ businesses }: BusinessSearchProps) {
             {query.trim() && ` matching "${query.trim()}"`}
             {" · "}
             <button
-              onClick={() => { handleQueryChange(""); handleCategoryChange("All"); }}
+              onClick={() => {
+                handleQueryChange("");
+                handleCategoryChange("All");
+                setOnlyWithPhotos(false);
+                setSortMode("name-asc");
+              }}
               className="text-[var(--evergreen-500)] hover:underline"
             >
               Clear filters

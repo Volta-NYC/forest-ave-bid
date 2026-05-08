@@ -50,6 +50,7 @@ export default function BusinessMapClient({ businesses, boundary }: Props) {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [activeSlug, setActiveSlug] = useState<string | null>(null);
   const [mapZoom, setMapZoom] = useState(DEFAULT_ZOOM);
+  const [locating, setLocating] = useState(false);
   const sidebarRef = useRef<HTMLDivElement>(null);
   const forestAveBusinesses = useMemo(
     () => businesses.filter((b) => isForestAveBusiness(b)),
@@ -184,6 +185,7 @@ const BUCKET_COLORS: Record<NormalizedCategory, string> = {
         });
         circleMarker.bringToFront();
 
+        const profileUrl = `/our-businesses/${encodeURIComponent(b.slug)}`;
         circleMarker.bindPopup(
           `<strong>${escapeHtml(b.name)}</strong><br/><span style="color:#5a5248;font-size:0.8em">${escapeHtml(b.category)}</span>${
             b.address
@@ -197,7 +199,7 @@ const BUCKET_COLORS: Record<NormalizedCategory, string> = {
             b.website
               ? `<br/><a href="${escapeHtml(b.website)}" target="_blank" rel="noopener noreferrer" style="font-size:0.8em;color:#3d7028">Open website ↗</a>`
               : ""
-          }`
+          }<br/><a href="${profileUrl}" style="font-size:0.8em;color:#1f4f2c">View profile →</a>`
         );
 
         markerLayerRef.current?.addLayer(circleMarker);
@@ -283,6 +285,56 @@ const BUCKET_COLORS: Record<NormalizedCategory, string> = {
               </button>
             )}
           </div>
+          <div className="mb-3 flex items-center gap-2">
+            <button
+              onClick={() => {
+                if (!leafletMapRef.current) return;
+                setLocating(true);
+                navigator.geolocation.getCurrentPosition(
+                  (position) => {
+                    const { latitude, longitude } = position.coords;
+                    leafletMapRef.current?.setView([latitude, longitude], 16, {
+                      animate: true,
+                    });
+                    setLocating(false);
+                  },
+                  () => setLocating(false),
+                  { enableHighAccuracy: true, timeout: 10000 }
+                );
+              }}
+              className="px-2.5 py-1.5 rounded-lg text-xs font-semibold border border-[var(--border)] bg-white hover:bg-[var(--wood-50)] transition-colors"
+            >
+              {locating ? "Locating…" : "Locate me"}
+            </button>
+            <button
+              onClick={() => {
+                if (!leafletMapRef.current) return;
+                setActiveSlug(null);
+                if (filteredGeocoded.length > 0) {
+                  import("leaflet").then((L) => {
+                    const bounds = L.latLngBounds(
+                      filteredGeocoded.map(
+                        (b) => [b.lat as number, b.lng as number] as [number, number]
+                      )
+                    );
+                    if (bounds.isValid()) {
+                      leafletMapRef.current?.fitBounds(bounds, {
+                        padding: [36, 36],
+                        maxZoom: 16,
+                      });
+                    }
+                  });
+                } else {
+                  leafletMapRef.current.setView(FOREST_AVE_CENTER, DEFAULT_ZOOM, {
+                    animate: true,
+                  });
+                }
+              }}
+              className="px-2.5 py-1.5 rounded-lg text-xs font-semibold border border-[var(--border)] bg-white hover:bg-[var(--wood-50)] transition-colors"
+            >
+              Reset view
+            </button>
+          </div>
           {/* Category chips */}
           <div
             className="flex gap-1.5 flex-wrap"
@@ -349,6 +401,13 @@ const BUCKET_COLORS: Record<NormalizedCategory, string> = {
                         {b.address}
                       </p>
                     )}
+                    <a
+                      href={`/our-businesses/${b.slug}`}
+                      className="mt-1 inline-flex text-xs text-[var(--evergreen-700)] hover:underline"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      View profile →
+                    </a>
                     {!hasValidCoordinate(b) && (
                       <p className="text-xs text-[var(--muted)] mt-1 italic">
                         No map pin yet
@@ -364,7 +423,7 @@ const BUCKET_COLORS: Record<NormalizedCategory, string> = {
         {/* Footer count */}
         <div className="p-3 border-t border-[var(--border)] flex-shrink-0 bg-white">
           <p className="text-xs text-[var(--muted)]">
-            {sidebarList.length} of {businesses.length} businesses
+            {sidebarList.length} of {forestAveBusinesses.length} businesses
             {geocodedCount > 0 && ` · ${filteredGeocoded.length} shown on map`}
           </p>
         </div>

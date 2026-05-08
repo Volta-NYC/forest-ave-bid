@@ -37,7 +37,7 @@ export default function Footer() {
 
   return (
     <footer
-      className="wood-bg-hero text-white mt-auto"
+      className="wood-bg-hero islamic-geometry-footer text-white mt-auto"
       aria-label="Site footer"
     >
       <div className="container-wide py-14 grid grid-cols-1 md:grid-cols-3 gap-10">
@@ -158,7 +158,20 @@ export default function Footer() {
           <p>
             &copy; {year} Forest Avenue Business Improvement District. All rights reserved.
           </p>
-          <p>Staten Island, New York</p>
+          <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4">
+            <p>Staten Island, New York</p>
+            <p>
+              Made by{" "}
+              <a
+                href="https://voltanyc.org"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="volta-credit-link"
+              >
+                Volta
+              </a>
+            </p>
+          </div>
         </div>
       </div>
     </footer>

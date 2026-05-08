@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 240 240" role="img" aria-label="Islamic geometric pattern">
+  <defs>
+    <pattern id="islamic" width="120" height="120" patternUnits="userSpaceOnUse">
+      <rect width="120" height="120" fill="none" />
+      <g stroke="#d8c28a" stroke-width="1.4" fill="none" opacity="0.72">
+        <path d="M60 8 75 30 102 28 84 49 90 76 60 62 30 76 36 49 18 28 45 30Z" />
+        <path d="M60 0V120M0 60H120M0 0L120 120M120 0L0 120" />
+        <circle cx="60" cy="60" r="33" />
+        <circle cx="60" cy="60" r="12" />
+      </g>
+      <g fill="#d8c28a" opacity="0.58">
+        <circle cx="60" cy="0" r="2" />
+        <circle cx="120" cy="60" r="2" />
+        <circle cx="60" cy="120" r="2" />
+        <circle cx="0" cy="60" r="2" />
+      </g>
+    </pattern>
+  </defs>
+  <rect width="240" height="240" fill="url(#islamic)" />
+</svg>

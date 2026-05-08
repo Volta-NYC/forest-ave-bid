@@ -38,13 +38,13 @@ export default function MapPage() {
             <h1 className="font-headline font-black text-4xl md:text-5xl">
               Business Map
             </h1>
-            <p className="text-white/80 text-base mt-1.5">
+            <p className="text-white text-base mt-1.5">
               Forest Avenue corridor · Hart Blvd to Broadway, Staten Island
             </p>
           </div>
           <a
             href="/our-businesses"
-            className="text-sm text-white/80 hover:text-white underline underline-offset-2 transition-colors self-start sm:self-auto"
+            className="text-sm text-white hover:text-white underline underline-offset-2 transition-colors self-start sm:self-auto"
           >
             ← Full directory
           </a>

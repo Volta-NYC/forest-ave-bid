@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 420" role="img" aria-labelledby="title desc">
+  <title id="title">New York City Council</title>
+  <desc id="desc">Logo tile for New York City Council.</desc>
+  <rect width="640" height="420" fill="#111827"/>
+  <rect x="22" y="22" width="596" height="376" fill="none" stroke="#93c5fd" stroke-opacity=".45" stroke-width="2"/>
+  <text x="70" y="190" font-size="44" fill="#93c5fd" font-weight="800" font-family="Arial, sans-serif">NYC</text>
+  <text x="70" y="238" font-size="58" fill="#ffffff" font-weight="900" font-family="Arial, sans-serif">COUNCIL</text>
+  <text x="70" y="272" font-size="14" fill="#d1d5db" font-family="Arial, sans-serif">THE COUNCIL OF THE CITY OF NEW YORK</text>
+</svg>

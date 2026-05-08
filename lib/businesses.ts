@@ -50,6 +50,33 @@ export function getBusinessesByCategory(category: string): Business[] {
   return getAllBusinesses().filter((b) => b.category === category);
 }
 
+export function getBusinessBySlug(slug: string): Business | undefined {
+  return getAllBusinesses().find((b) => b.slug === slug);
+}
+
+export function getRelatedBusinesses(
+  business: Business,
+  limit = 6
+): Business[] {
+  const normalizedName = business.name.toLowerCase();
+  return getAllBusinesses()
+    .filter((b) => b.slug !== business.slug)
+    .sort((a, b) => {
+      const aScore =
+        (a.category === business.category ? 2 : 0) +
+        (a.address?.toLowerCase().includes("forest ave") ? 1 : 0);
+      const bScore =
+        (b.category === business.category ? 2 : 0) +
+        (b.address?.toLowerCase().includes("forest ave") ? 1 : 0);
+      if (aScore !== bScore) return bScore - aScore;
+      const aNameNear = a.name.toLowerCase().includes(normalizedName) ? 1 : 0;
+      const bNameNear = b.name.toLowerCase().includes(normalizedName) ? 1 : 0;
+      if (aNameNear !== bNameNear) return bNameNear - aNameNear;
+      return a.name.localeCompare(b.name);
+    })
+    .slice(0, limit);
+}
+
 export function getBusinessCategories(): string[] {
   const businesses = getAllBusinesses();
   const cats = Array.from(new Set(businesses.map((b) => b.category)));
