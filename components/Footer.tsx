@@ -163,12 +163,12 @@ export default function Footer() {
             <p>
               Made by{" "}
               <a
-                href="https://voltanyc.org"
+                href="https://www.novusnyc.org/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="volta-credit-link"
               >
-                Volta
+                Made by Novus
               </a>
             </p>
           </div>
