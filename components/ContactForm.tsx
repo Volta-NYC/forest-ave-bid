@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState } from "react";
 
 interface FormState {
   name: string;
@@ -30,7 +30,8 @@ export default function ContactForm() {
   });
   const [errors, setErrors] = useState<Partial<FormState>>({});
   const [submitted, setSubmitted] = useState(false);
-  const formRef = useRef<HTMLFormElement>(null);
+  const [isSending, setIsSending] = useState(false);
+  const [submitError, setSubmitError] = useState("");
 
   const validate = (): boolean => {
     const errs: Partial<FormState> = {};
@@ -50,24 +51,40 @@ export default function ContactForm() {
   ) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
+    if (submitError) setSubmitError("");
     if (errors[name as keyof FormState]) {
       setErrors((prev) => ({ ...prev, [name]: undefined }));
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
 
-    // Mailto fallback — replace with Formspree/Netlify Forms endpoint in production
-    // Source: forestavenuebid.com/contact/ — real BID email address
-    const mailto = `mailto:forestavebid@gmail.com?subject=${encodeURIComponent(
-      `[Website] ${form.subject}`
-    )}&body=${encodeURIComponent(
-      `Name: ${form.name}\nEmail: ${form.email}\nPhone: ${form.phone || "not provided"}\n\n${form.message}`
-    )}`;
-    window.location.href = mailto;
-    setSubmitted(true);
+    setIsSending(true);
+    setSubmitError("");
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      const data = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        if (data.fieldErrors && typeof data.fieldErrors === "object") {
+          setErrors(data.fieldErrors as Partial<FormState>);
+        }
+        throw new Error(data.error || "We couldn't send your message. Please try again.");
+      }
+
+      setSubmitted(true);
+    } catch (error) {
+      setSubmitError(error instanceof Error ? error.message : "We couldn't send your message. Please try again.");
+    } finally {
+      setIsSending(false);
+    }
   };
 
   const inputClass = (field: keyof FormState) =>
@@ -89,14 +106,10 @@ export default function ContactForm() {
           </svg>
         </div>
         <h3 className="font-headline font-bold text-2xl text-[var(--brand-primary)]">
-          Your email client has opened
+          Thanks for getting in touch
         </h3>
         <p className="mt-2 text-sm text-[var(--muted)]">
-          Complete and send the pre-filled email to reach us at{" "}
-          <a href="mailto:forestavebid@gmail.com" className="text-[var(--brand-accent)] hover:underline">
-            forestavebid@gmail.com
-          </a>
-          . We respond to all inquiries as soon as possible.
+          Your message has been sent. We will respond as soon as possible.
         </p>
         <button
           onClick={() => setSubmitted(false)}
@@ -110,7 +123,6 @@ export default function ContactForm() {
 
   return (
     <form
-      ref={formRef}
       onSubmit={handleSubmit}
       noValidate
       aria-label="Contact form"
@@ -233,25 +245,19 @@ export default function ContactForm() {
 
       <button
         type="submit"
+        disabled={isSending}
+        aria-disabled={isSending}
         className="w-full sm:w-auto px-8 py-3 rounded-xl font-semibold text-sm text-white transition-colors hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--brand-accent)]"
         style={{ background: "var(--brand-primary)" }}
       >
-        Send message
+        {isSending ? "Sending…" : "Send message"}
       </button>
 
-      <p className="text-xs text-[var(--muted)]">
-        This form opens your email client with a pre-filled message. To wire up
-        server-side form handling, replace the <code>handleSubmit</code> function with a{" "}
-        <a
-          href="https://formspree.io"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="underline hover:text-[var(--brand-primary)]"
-        >
-          Formspree
-        </a>{" "}
-        or Netlify Forms fetch call.
-      </p>
+      {submitError && (
+        <p role="alert" className="text-sm text-red-600">
+          {submitError}
+        </p>
+      )}
     </form>
   );
 }
