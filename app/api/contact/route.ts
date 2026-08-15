@@ -5,6 +5,16 @@ export const runtime = "nodejs";
 
 const SHEET_TAB = "Sheet1";
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const PHONE_PATTERN = /^[0-9+().\-\s]*(?:ext\.?\s*\d+|x\s*\d+)?$/i;
+const SUBJECTS = new Set([
+  "General inquiry",
+  "Business support / services",
+  "Events",
+  "List my business in the directory",
+  "Sponsorship opportunities",
+  "Media / press",
+  "Other",
+]);
 
 type ContactFields = {
   name: string;
@@ -16,21 +26,25 @@ type ContactFields = {
 
 type FieldErrors = Partial<Record<keyof ContactFields, string>>;
 
-function asTrimmedString(value: unknown) {
-  return typeof value === "string" ? value.trim() : "";
+function asTrimmedString(value: unknown, collapseWhitespace = true) {
+  if (typeof value !== "string") return "";
+  const trimmed = value.trim();
+  return collapseWhitespace ? trimmed.replace(/\s+/g, " ") : trimmed;
 }
 
 function validateContactForm(body: unknown): {
   fields: ContactFields;
   errors: FieldErrors;
 } {
-  const values = body && typeof body === "object" ? body as Record<string, unknown> : {};
+  const values = body && typeof body === "object" && !Array.isArray(body)
+    ? body as Record<string, unknown>
+    : {};
   const fields: ContactFields = {
     name: asTrimmedString(values.name),
-    email: asTrimmedString(values.email),
+    email: asTrimmedString(values.email).toLowerCase(),
     phone: asTrimmedString(values.phone),
     subject: asTrimmedString(values.subject),
-    message: asTrimmedString(values.message),
+    message: asTrimmedString(values.message, false),
   };
   const errors: FieldErrors = {};
 
@@ -42,7 +56,11 @@ function validateContactForm(body: unknown): {
   else if (fields.email.length > 254) errors.email = "Email address is too long.";
 
   if (fields.phone.length > 50) errors.phone = "Phone number must be 50 characters or fewer.";
+  else if (fields.phone && !PHONE_PATTERN.test(fields.phone)) {
+    errors.phone = "Please enter a valid phone number.";
+  }
   if (fields.subject.length > 120) errors.subject = "Subject must be 120 characters or fewer.";
+  else if (!SUBJECTS.has(fields.subject)) errors.subject = "Please choose a valid subject.";
 
   if (!fields.message) errors.message = "Message is required.";
   else if (fields.message.length > 5000) errors.message = "Message must be 5,000 characters or fewer.";
@@ -51,6 +69,10 @@ function validateContactForm(body: unknown): {
 }
 
 export async function POST(request: Request) {
+  if (!request.headers.get("content-type")?.toLowerCase().includes("application/json")) {
+    return NextResponse.json({ error: "Please submit the form again." }, { status: 415 });
+  }
+
   let body: unknown;
 
   try {
@@ -90,7 +112,8 @@ export async function POST(request: Request) {
     await sheets.spreadsheets.values.append({
       spreadsheetId,
       range: `${SHEET_TAB}!A:F`,
-      valueInputOption: "USER_ENTERED",
+      // RAW prevents form values beginning with =, +, - or @ from becoming Sheet formulas.
+      valueInputOption: "RAW",
       requestBody: {
         values: [[
           new Date().toISOString(),

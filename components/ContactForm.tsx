@@ -20,14 +20,16 @@ const subjects = [
   "Other",
 ];
 
+const initialForm: FormState = {
+  name: "",
+  email: "",
+  phone: "",
+  subject: subjects[0],
+  message: "",
+};
+
 export default function ContactForm() {
-  const [form, setForm] = useState<FormState>({
-    name: "",
-    email: "",
-    phone: "",
-    subject: subjects[0],
-    message: "",
-  });
+  const [form, setForm] = useState<FormState>(initialForm);
   const [errors, setErrors] = useState<Partial<FormState>>({});
   const [submitted, setSubmitted] = useState(false);
   const [isSending, setIsSending] = useState(false);
@@ -35,13 +37,19 @@ export default function ContactForm() {
 
   const validate = (): boolean => {
     const errs: Partial<FormState> = {};
-    if (!form.name.trim()) errs.name = "Name is required.";
+    if (!form.name.trim()) errs.name = "Full name is required.";
+    else if (form.name.trim().length > 120) errs.name = "Full name must be 120 characters or fewer.";
     if (!form.email.trim()) {
       errs.email = "Email is required.";
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
       errs.email = "Please enter a valid email address.";
+    } else if (form.email.trim().length > 254) {
+      errs.email = "Email address is too long.";
     }
+    if (form.phone.trim().length > 50) errs.phone = "Phone number must be 50 characters or fewer.";
+    if (form.subject.length > 120) errs.subject = "Please choose a valid subject.";
     if (!form.message.trim()) errs.message = "Message is required.";
+    else if (form.message.trim().length > 5000) errs.message = "Message must be 5,000 characters or fewer.";
     setErrors(errs);
     return Object.keys(errs).length === 0;
   };
@@ -64,11 +72,15 @@ export default function ContactForm() {
     setIsSending(true);
     setSubmitError("");
 
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort(), 15_000);
+
     try {
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
+        signal: controller.signal,
       });
       const data = await response.json().catch(() => ({}));
 
@@ -79,10 +91,19 @@ export default function ContactForm() {
         throw new Error(data.error || "We couldn't send your message. Please try again.");
       }
 
+      setForm(initialForm);
+      setErrors({});
       setSubmitted(true);
     } catch (error) {
-      setSubmitError(error instanceof Error ? error.message : "We couldn't send your message. Please try again.");
+      setSubmitError(
+        error instanceof DOMException && error.name === "AbortError"
+          ? "The request took too long. Please check your connection and try again."
+          : error instanceof Error
+            ? error.message
+            : "We couldn't send your message. Please try again."
+      );
     } finally {
+      window.clearTimeout(timeout);
       setIsSending(false);
     }
   };
@@ -145,6 +166,7 @@ export default function ContactForm() {
             aria-required="true"
             aria-describedby={errors.name ? "name-error" : undefined}
             aria-invalid={!!errors.name}
+            maxLength={120}
             placeholder="Jane Smith"
           />
           {errors.name && (
@@ -170,6 +192,7 @@ export default function ContactForm() {
             aria-required="true"
             aria-describedby={errors.email ? "email-error" : undefined}
             aria-invalid={!!errors.email}
+            maxLength={254}
             placeholder="jane@example.com"
           />
           {errors.email && (
@@ -194,6 +217,7 @@ export default function ContactForm() {
             value={form.phone}
             onChange={handleChange}
             className={inputClass("phone")}
+            maxLength={50}
             placeholder="(718) 555-0100"
           />
         </div>
@@ -231,6 +255,7 @@ export default function ContactForm() {
           value={form.message}
           onChange={handleChange}
           className={inputClass("message")}
+          maxLength={5000}
           aria-required="true"
           aria-describedby={errors.message ? "message-error" : undefined}
           aria-invalid={!!errors.message}
@@ -247,7 +272,7 @@ export default function ContactForm() {
         type="submit"
         disabled={isSending}
         aria-disabled={isSending}
-        className="w-full sm:w-auto px-8 py-3 rounded-xl font-semibold text-sm text-white transition-colors hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--brand-accent)]"
+        className="w-full sm:w-auto px-8 py-3 rounded-xl font-semibold text-sm text-white transition-colors hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--brand-accent)]"
         style={{ background: "var(--brand-primary)" }}
       >
         {isSending ? "Sending…" : "Send message"}
