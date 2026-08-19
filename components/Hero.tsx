@@ -54,7 +54,7 @@ export default function Hero({
     : backgroundImageUrl
     ? {
         backgroundColor: "var(--brand-primary)",
-        backgroundImage: `url(${backgroundImageUrl})`,
+        backgroundImage: `url("${backgroundImageUrl}")`,
         backgroundSize: "cover",
         backgroundPosition: "center",
       }
@@ -139,7 +139,7 @@ export default function Hero({
           <div
             className="hidden xl:block absolute left-0 top-0 bottom-0 w-28 opacity-55 hero-drift pointer-events-none"
             style={{
-              backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.45), transparent), url('${sideImageLeftUrl}')`,
+              backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.45), transparent), url("${sideImageLeftUrl}")`,
               backgroundSize: "cover",
               backgroundPosition: "center",
             }}
@@ -148,7 +148,7 @@ export default function Hero({
           <div
             className="hidden xl:block absolute right-0 top-0 bottom-0 w-28 opacity-55 hero-drift pointer-events-none"
             style={{
-              backgroundImage: `linear-gradient(to left, rgba(0,0,0,0.45), transparent), url('${sideImageRightUrl}')`,
+              backgroundImage: `linear-gradient(to left, rgba(0,0,0,0.45), transparent), url("${sideImageRightUrl}")`,
               backgroundSize: "cover",
               backgroundPosition: "center",
             }}

@@ -28,19 +28,19 @@ interface BoardMember {
 // Source: forestavenuebid.com/team/
 const boardMembers: BoardMember[] = [
   // Officers
-  { name: "Megan Coppola", role: "Chair", affiliation: "Owner of Beans and Leaves Cafe", photoSrc: "https://forestavenuebid.com/wp-content/uploads/2024/02/ls72vj3encabkermumpv.webp", isOfficer: true },
-  { name: "Kim Beckett", role: "Vice Chair", affiliation: "Owner of Burrito Bar", photoSrc: "https://forestavenuebid.com/wp-content/uploads/2024/02/sqen9iaubkptsq20ds0m.webp", isOfficer: true },
-  { name: "Gary LiGreci", role: "Treasurer", affiliation: "Owner of LiGreci's Staaten", photoSrc: "https://forestavenuebid.com/wp-content/uploads/2024/02/ligreci.jpg", isOfficer: true },
-  { name: "Laura Volsario", role: "Secretary", affiliation: "Owner of Gateway Arms Realty", photoSrc: "https://forestavenuebid.com/wp-content/uploads/2024/02/laura.jpg", isOfficer: true },
+  { name: "Megan Coppola", role: "Chair", affiliation: "Owner of Beans and Leaves Cafe", photoSrc: "/photos/businesses/beans-leaves-coffee-tea-cafe.svg", isOfficer: true },
+  { name: "Kim Beckett", role: "Vice Chair", affiliation: "Owner of Burrito Bar", photoSrc: "/photos/businesses/burrito-bar.svg", isOfficer: true },
+  { name: "Gary LiGreci", role: "Treasurer", affiliation: "Owner of LiGreci's Staaten", photoSrc: "/photos/businesses/ligrecis-staaten.svg", isOfficer: true },
+  { name: "Laura Volsario", role: "Secretary", affiliation: "Owner of Gateway Arms Realty", photoSrc: "/photos/businesses/gateway-arms-realty.svg", isOfficer: true },
   // Directors
-  { name: "Donald Bentson", role: "Board Member", affiliation: "Owner of Bentson & Company", photoSrc: "https://forestavenuebid.com/wp-content/uploads/2024/02/1516560349488.jpg" },
-  { name: "Jean Daggan", role: "Board Member", affiliation: "Property Owner", photoSrc: "https://forestavenuebid.com/wp-content/uploads/2024/02/Screenshot-25.png" },
-  { name: "Rachel Fundaro", role: "Board Member", affiliation: "Paralegal at Thompson Law, PLLC", photoSrc: "https://forestavenuebid.com/wp-content/uploads/2024/02/Thomson_Law_1200.png" },
-  { name: "Andrea S. Morse, Esq.", role: "Board Member", affiliation: "Owner of Law Office of Andrea Morse", photoSrc: "https://forestavenuebid.com/wp-content/uploads/2024/02/unnamed.jpg" },
-  { name: "Eddie Donovan", role: "Board Member", affiliation: "Owner of Duffy's", photoSrc: "https://forestavenuebid.com/wp-content/uploads/2024/02/duffys.png" },
-  { name: "Christina Saez", role: "Board Member", affiliation: "Manager of Panini Grill", photoSrc: "https://forestavenuebid.com/wp-content/uploads/2024/02/panini-grill.png" },
+  { name: "Donald Bentson", role: "Board Member", affiliation: "Owner of Bentson & Company", photoSrc: "/photos/businesses/bentson-company-insurance.svg" },
+  { name: "Jean Daggan", role: "Board Member", affiliation: "Property Owner", photoSrc: imageManifest.teamMemberFallback },
+  { name: "Rachel Fundaro", role: "Board Member", affiliation: "Paralegal at Thompson Law, PLLC", photoSrc: "/photos/businesses/thomson-law-pllc.svg" },
+  { name: "Andrea S. Morse, Esq.", role: "Board Member", affiliation: "Owner of Law Office of Andrea Morse", photoSrc: imageManifest.teamMemberFallback },
+  { name: "Eddie Donovan", role: "Board Member", affiliation: "Owner of Duffy's", photoSrc: "/photos/businesses/duffys.svg" },
+  { name: "Christina Saez", role: "Board Member", affiliation: "Manager of Panini Grill", photoSrc: "/photos/businesses/panini-grill.svg" },
   // Emeritus
-  { name: "Vincent D'Antuono", role: "Board Member Emeritus", affiliation: "Owner of Pastosa Ravioli & Cheese Inc.", photoSrc: "https://forestavenuebid.com/wp-content/uploads/2024/02/pastosa.jpg", isEmeritus: true },
+  { name: "Vincent D'Antuono", role: "Board Member Emeritus", affiliation: "Owner of Pastosa Ravioli & Cheese Inc.", photoSrc: "/photos/businesses/pastosa-ravioli.svg", isEmeritus: true },
   // Public officials
   { name: "Vito Fossella", role: "Borough President", affiliation: "Borough President of Staten Island", photoSrc: "/logos/gov/staten-island-borough-president.svg", isPublicOfficial: true },
   { name: "Kamilliah Hanks", role: "Councilwoman", affiliation: "Councilwoman", photoSrc: "/logos/gov/nyc-council.svg", isPublicOfficial: true },
@@ -50,7 +50,7 @@ const boardMembers: BoardMember[] = [
 
 // Source: forestavenuebid.com/team/
 const staffMembers = [
-  { name: "Nina Flores", title: "Executive Director", photoSrc: "https://forestavenuebid.com/wp-content/uploads/2024/02/DS701287-scaled.jpg" },
+  { name: "Nina Flores", title: "Executive Director", photoSrc: imageManifest.teamMemberFallback },
 ];
 
 function initials(name: string) {

@@ -28,7 +28,7 @@ export default function MapPage() {
       <div
         className="text-white py-16 md:py-24 px-6 min-h-[42vh] md:min-h-[52vh] flex items-end mural-pan"
         style={{
-          backgroundImage: `linear-gradient(rgba(0,0,0,0.24), rgba(0,0,0,0.24)), url('${imageManifest.headerMurals.map}')`,
+          backgroundImage: `linear-gradient(rgba(0,0,0,0.24), rgba(0,0,0,0.24)), url("${imageManifest.headerMurals.map}")`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}

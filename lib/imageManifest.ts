@@ -10,20 +10,20 @@
 export const imageManifest = {
   /** Single wood-texture image used as the hero/header background on every page. */
   siteHeaderImage: "/textures/wood.png",
-  siteLogo: "https://forestavenuebid.com/wp-content/uploads/2024/02/cropped-cropped-FABID-New-Logo-300x147.jpg",
+  siteLogo: "/icon.jpg",
   eventsMuralHero: "/photos/uploads/Resized_20260414_114601.JPEG",
 
   heroSides: {
-    left: "https://forestavenuebid.com/wp-content/uploads/2024/02/Girl-Scout-Troop-5184-caroling-at-Pastosas-1024x768.jpg",
-    right: "https://forestavenuebid.com/wp-content/uploads/2024/02/Gifted-1024x768.jpg",
+    left: "/photos/uploads/1000002847.jpg",
+    right: "/photos/uploads/Resized_20260414_120232.JPEG",
   } as const,
 
   headerMurals: {
-    home: "https://forestavenuebid.com/wp-content/uploads/2024/02/Forest-Ave-Planter-Volunteers-4.30.2016-1-scaled.jpg",
-    about: "https://forestavenuebid.com/wp-content/uploads/2024/02/BID-Meeting.jpg",
-    services: "https://forestavenuebid.com/wp-content/uploads/2024/02/Forest-Ave-Planter-Volunteers-Jeans-Fine-Wines-4.30.2016-1024x613.jpg",
-    contact: "https://forestavenuebid.com/wp-content/uploads/2024/02/Gifted-1024x768.jpg",
-    team: "https://forestavenuebid.com/wp-content/uploads/2024/02/Girl-Scout-Troop-5184-caroling-at-Pastosas-1024x768.jpg",
+    home: "/photos/uploads/1000002847.jpg",
+    about: "/photos/uploads/Resized_20260414_114649.JPEG",
+    services: "/photos/uploads/1000002837.jpg",
+    contact: "/photos/uploads/Resized_20260414_120232.JPEG",
+    team: "/photos/uploads/1000002845.jpg",
     businesses: "/photos/uploads/1000002845.jpg",
     map: "/photos/uploads/Resized_20260414_123207.JPEG",
     events: "/photos/uploads/Resized_20260414_114601.JPEG",
@@ -48,13 +48,13 @@ export const imageManifest = {
   } as Record<string, string>,
 
   homeCards: [
-    "https://forestavenuebid.com/wp-content/uploads/2024/02/Pastosa-Mozzarella-making-class.jpg",
-    "https://forestavenuebid.com/wp-content/uploads/2024/02/BID-Meeting.jpg",
-    "https://forestavenuebid.com/wp-content/uploads/2024/02/Forest-Ave-Planter-Volunteers-4.30.2016-1-scaled.jpg",
+    "/photos/uploads/1000002837.jpg",
+    "/photos/uploads/1000002846.jpg",
+    "/photos/uploads/1000002838.jpg",
   ],
 
-  eventThumbnail: "/placeholders/event-thumbnail.jpg",
-  fallback:       "/placeholders/fallback.jpg",
+  eventThumbnail: "/photos/uploads/Resized_20260414_114601.JPEG",
+  fallback:       "/photos/business-storefront-placeholder.svg",
 
   services: {
     "small-business": "/photos/uploads/1000002837.jpg",

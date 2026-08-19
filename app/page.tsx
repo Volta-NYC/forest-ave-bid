@@ -103,7 +103,7 @@ export default function HomePage() {
                 <div
                   className="h-40 bg-[var(--wood-100)] flex items-center justify-center"
                   style={{
-                    backgroundImage: `url(${imageManifest.homeCards[i]})`,
+                    backgroundImage: `url("${imageManifest.homeCards[i]}")`,
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                   }}

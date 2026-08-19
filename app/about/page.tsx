@@ -97,7 +97,7 @@ export default function AboutPage() {
                 <div
                   className="absolute inset-0"
                   style={{
-                    backgroundImage: `url(${imageManifest.aboutMissionImage})`,
+                    backgroundImage: `url("${imageManifest.aboutMissionImage}")`,
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                   }}
@@ -156,7 +156,7 @@ export default function AboutPage() {
                 <div
                   className="absolute inset-0"
                   style={{
-                    backgroundImage: `url(${imageManifest.aboutOperateImage})`,
+                    backgroundImage: `url("${imageManifest.aboutOperateImage}")`,
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                   }}

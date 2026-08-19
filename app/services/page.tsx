@@ -103,7 +103,7 @@ export default function ServicesPage() {
                     <div
                       className="absolute inset-0"
                       style={{
-                        backgroundImage: `url(${imageManifest.services[service.id] ?? imageManifest.fallback})`,
+                        backgroundImage: `url("${imageManifest.services[service.id] ?? imageManifest.fallback}")`,
                         backgroundSize: "cover",
                         backgroundPosition: "center",
                         opacity: 0.42,

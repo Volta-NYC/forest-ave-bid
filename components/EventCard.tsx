@@ -63,7 +63,7 @@ export default function EventCard({ event, featured = false }: EventCardProps) {
       <div
         className="relative h-36 bg-[var(--wood-50)]"
         style={{
-          backgroundImage: `url(${imageManifest.eventThumbnail})`,
+          backgroundImage: `url("${imageManifest.eventThumbnail}")`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
