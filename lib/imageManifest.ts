@@ -23,7 +23,7 @@ export const imageManifest = {
     about: "/photos/uploads/Resized_20260414_114649.JPEG",
     services: "/photos/uploads/1000002837.jpg",
     contact: "/photos/uploads/Resized_20260414_120232.JPEG",
-    team: "/photos/uploads/1000002845.jpg",
+    team: "/photos/uploads/1000002838.jpg",
     businesses: "/photos/uploads/1000002845.jpg",
     map: "/photos/uploads/Resized_20260414_123207.JPEG",
     events: "/photos/uploads/Resized_20260414_114601.JPEG",
@@ -53,7 +53,7 @@ export const imageManifest = {
     "/photos/uploads/1000002838.jpg",
   ],
 
-  eventThumbnail: "/photos/uploads/Resized_20260414_114601.JPEG",
+  eventThumbnail: "/photos/uploads/1000002846.jpg",
   fallback:       "/photos/business-storefront-placeholder.svg",
 
   services: {

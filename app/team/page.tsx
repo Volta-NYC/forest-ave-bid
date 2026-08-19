@@ -34,9 +34,9 @@ const boardMembers: BoardMember[] = [
   { name: "Laura Volsario", role: "Secretary", affiliation: "Owner of Gateway Arms Realty", photoSrc: "/photos/businesses/gateway-arms-realty.svg", isOfficer: true },
   // Directors
   { name: "Donald Bentson", role: "Board Member", affiliation: "Owner of Bentson & Company", photoSrc: "/photos/businesses/bentson-company-insurance.svg" },
-  { name: "Jean Daggan", role: "Board Member", affiliation: "Property Owner", photoSrc: imageManifest.teamMemberFallback },
+  { name: "Jean Daggan", role: "Board Member", affiliation: "Property Owner" },
   { name: "Rachel Fundaro", role: "Board Member", affiliation: "Paralegal at Thompson Law, PLLC", photoSrc: "/photos/businesses/thomson-law-pllc.svg" },
-  { name: "Andrea S. Morse, Esq.", role: "Board Member", affiliation: "Owner of Law Office of Andrea Morse", photoSrc: imageManifest.teamMemberFallback },
+  { name: "Andrea S. Morse, Esq.", role: "Board Member", affiliation: "Owner of Law Office of Andrea Morse" },
   { name: "Eddie Donovan", role: "Board Member", affiliation: "Owner of Duffy's", photoSrc: "/photos/businesses/duffys.svg" },
   { name: "Christina Saez", role: "Board Member", affiliation: "Manager of Panini Grill", photoSrc: "/photos/businesses/panini-grill.svg" },
   // Emeritus
@@ -109,18 +109,10 @@ function MemberTile({
         ) : (
           <>
             {/* Large initials — visible when no photo is present */}
-            <span className="font-headline font-black text-6xl text-[var(--brand-primary)]/15 select-none">
+            <span className="relative z-10 font-headline font-black text-6xl text-[var(--brand-primary)]/15 select-none">
               {initials(name)}
             </span>
-            {/* Photo — covers initials once a real image is supplied */}
-            <div
-              className="absolute inset-0 z-10"
-              style={{
-                backgroundImage: `url(${imageManifest.teamMemberFallback})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center top",
-              }}
-            />
+            <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_top_left,rgba(116,168,74,0.18),transparent_45%),linear-gradient(135deg,var(--wood-50),white)]" />
           </>
         )}
       </div>
@@ -189,17 +181,10 @@ export default function TeamPage() {
                     />
                   ) : (
                     <>
-                      <span className="font-headline font-black text-6xl text-[var(--brand-primary)]/15 select-none">
+                      <span className="relative z-10 font-headline font-black text-6xl text-[var(--brand-primary)]/15 select-none">
                         {initials(s.name)}
                       </span>
-                      <div
-                        className="absolute inset-0 z-10"
-                        style={{
-                          backgroundImage: `url(${imageManifest.teamMemberFallback})`,
-                          backgroundSize: "cover",
-                          backgroundPosition: "center top",
-                        }}
-                      />
+                      <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_top_left,rgba(116,168,74,0.18),transparent_45%),linear-gradient(135deg,var(--wood-50),white)]" />
                     </>
                   )}
                 </div>
