@@ -156,7 +156,7 @@ export default function TeamPage() {
       />
 
       {/* Staff */}
-      <section className="pt-16 pb-8 bg-white" aria-labelledby="staff-heading">
+      <section className="pt-16 pb-8 bg-white section-reveal" aria-labelledby="staff-heading">
         <div className="container-wide">
           <SectionHeading eyebrow="Staff" title="BID Staff" />
           {/* Source: forestavenuebid.com/team/ */}

@@ -3,8 +3,10 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import CTAButton from "@/components/CTAButton";
+import Hero from "@/components/Hero";
 import { getAllEvents, getEventBySlug, formatEventDate } from "@/lib/events";
 import type { Event } from "@/lib/types";
+import { imageManifest } from "@/lib/imageManifest";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -87,10 +89,23 @@ export default async function EventDetailPage({ params }: PageProps) {
   if (!event) notFound();
 
   const dateLabel = formatEventDate(event.date, event.endDate || undefined);
+  const heroSubtitle = [dateLabel, event.time, event.location]
+    .filter(Boolean)
+    .join(" · ");
 
   return (
-    <div className="pt-24 pb-24 min-h-screen bg-[var(--bg)]">
-      <div className="container-wide max-w-4xl">
+    <>
+      <Hero
+        eyebrow={event.type}
+        title={event.title}
+        subtitle={heroSubtitle}
+        backgroundImageUrl={imageManifest.eventsMuralHero}
+        overlayStrength={0.16}
+        pattern={false}
+      />
+
+      <section className="section-padding min-h-screen bg-[var(--bg)] section-reveal">
+        <div className="container-wide max-w-4xl">
         <Breadcrumbs
           items={[
             { label: "Home", href: "/" },
@@ -220,6 +235,7 @@ export default async function EventDetailPage({ params }: PageProps) {
           </Link>
         </div>
       </div>
-    </div>
+      </section>
+    </>
   );
 }

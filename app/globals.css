@@ -252,19 +252,6 @@ h1, h2, h3, h4, h5, h6 {
   transform: none;
 }
 
-@keyframes pulse-glow {
-  0% { box-shadow: 0 0 0 rgba(90, 143, 56, 0.00); }
-  50% { box-shadow: 0 0 24px rgba(90, 143, 56, 0.24); }
-  100% { box-shadow: 0 0 0 rgba(90, 143, 56, 0.00); }
-}
-.hover-glow:hover {
-  box-shadow: 0 0 20px rgba(90, 143, 56, 0.18);
-}
-
-@keyframes hero-copy {
-  from { opacity: 0; transform: translateY(12px); }
-  to { opacity: 1; transform: translateY(0); }
-}
 .icon-pop {
   transition: transform 0.2s ease;
 }
@@ -284,9 +271,6 @@ h1, h2, h3, h4, h5, h6 {
 }
 .tilt-drift {
   transform-origin: center;
-}
-.crazy-spin:hover svg {
-  transform: none;
 }
 main a,
 main button {
