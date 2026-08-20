@@ -37,7 +37,6 @@ export default function EventsPage() {
         subtitle="From Trick or Treating to Spring Strolls, the Forest Ave BID is always planning an upcoming community event that we hope you join us at."
         backgroundImageUrl={imageManifest.eventsMuralHero}
         overlayStrength={0.1}
-        sideImages={false}
         pattern={false}
       />
 

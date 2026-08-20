@@ -142,7 +142,6 @@ h1, h2, h3, h4, h5, h6 {
   background-image: url('/textures/islamic-geometry-pattern.svg');
   background-repeat: repeat;
   background-size: 230px 230px;
-  animation: pattern-drift 40s linear infinite;
 }
 
 .islamic-geometry-footer {
@@ -160,7 +159,6 @@ h1, h2, h3, h4, h5, h6 {
   background-size: 240px 240px;
   opacity: 0.18;
   mix-blend-mode: screen;
-  animation: pattern-drift 44s linear infinite;
 }
 
 .islamic-geometry-footer > * {
@@ -183,26 +181,12 @@ h1, h2, h3, h4, h5, h6 {
 .card-hover {
   position: relative;
   overflow: hidden;
-  transition: transform 0.24s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.24s ease, border-color 0.24s ease;
+  transition: transform 0.24s ease, box-shadow 0.24s ease, border-color 0.24s ease;
   will-change: transform;
 }
 .card-hover:hover {
-  transform: translateY(-7px) scale(1.01);
-  box-shadow: 0 18px 44px rgba(44, 84, 29, 0.2), 0 6px 14px rgba(92,61,30,0.12);
-}
-.card-hover::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -160%;
-  width: 80%;
-  height: 100%;
-  background: linear-gradient(105deg, transparent, rgba(255,255,255,0.35), transparent);
-  transform: skewX(-18deg);
-  pointer-events: none;
-}
-.card-hover:hover::after {
-  animation: card-sheen 0.85s ease;
+  transform: translateY(-4px);
+  box-shadow: 0 14px 34px rgba(44, 84, 29, 0.14), 0 5px 12px rgba(92,61,30,0.1);
 }
 
 /* ── Nav shadow ───────────────────────────────────────── */
@@ -258,31 +242,14 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ── Motion / Transitions ─────────────────────────────── */
-@keyframes section-enter {
-  from { opacity: 0; transform: translateY(22px); }
-  to { opacity: 1; transform: translateY(0); }
-}
 .section-reveal {
-  animation: section-enter 0.9s cubic-bezier(0.18, 0.89, 0.32, 1.1) both;
-}
-
-@keyframes section-shimmer {
-  0% { background-position: 0% 50%; }
-  100% { background-position: 100% 50%; }
+  will-change: transform, opacity;
 }
 .section-gradient {
   background: linear-gradient(120deg, #f8f2e8 0%, #f4ead7 35%, #edf5e4 100%);
-  background-size: 200% 200%;
-  animation: section-shimmer 12s ease-in-out infinite alternate;
-}
-
-@keyframes hero-drift {
-  0% { transform: translateY(0) rotate(0deg) scale(1); }
-  50% { transform: translateY(-8px) rotate(1.5deg) scale(1.03); }
-  100% { transform: translateY(0) rotate(0deg) scale(1); }
 }
 .hero-drift {
-  animation: hero-drift 5.5s ease-in-out infinite;
+  transform: none;
 }
 
 @keyframes pulse-glow {
@@ -291,103 +258,35 @@ h1, h2, h3, h4, h5, h6 {
   100% { box-shadow: 0 0 0 rgba(90, 143, 56, 0.00); }
 }
 .hover-glow:hover {
-  animation: pulse-glow 1.4s ease-in-out infinite;
+  box-shadow: 0 0 20px rgba(90, 143, 56, 0.18);
 }
 
 @keyframes hero-copy {
   from { opacity: 0; transform: translateY(12px); }
   to { opacity: 1; transform: translateY(0); }
 }
-.hero-copy {
-  animation: hero-copy 1s cubic-bezier(0.18, 0.89, 0.32, 1.1) both;
-}
-
-@keyframes pattern-drift {
-  0% { background-position: 0 0; }
-  50% { background-position: 120px 80px; }
-  100% { background-position: 240px 160px; }
-}
-
-@keyframes mural-pan {
-  0% { background-position: 49% 47%; transform: scale(1.01); }
-  50% { background-position: 52% 51%; transform: scale(1.03); }
-  100% { background-position: 50% 53%; transform: scale(1.02); }
-}
-.mural-pan {
-  animation: mural-pan 14s ease-in-out infinite alternate;
-}
-
-@keyframes card-sheen {
-  from { left: -160%; }
-  to { left: 180%; }
-}
-
-@keyframes icon-pop {
-  0% { transform: translateY(0) scale(1); }
-  50% { transform: translateY(-3px) scale(1.03); }
-  100% { transform: translateY(0) scale(1); }
-}
 .icon-pop {
-  animation: icon-pop 2s ease-in-out infinite;
+  transition: transform 0.2s ease;
+}
+.group:hover .icon-pop {
+  transform: translateY(-2px);
 }
 
-@keyframes heading-float {
-  0% { transform: translateY(0); }
-  50% { transform: translateY(-2px); }
-  100% { transform: translateY(0); }
-}
-.heading-float {
-  animation: heading-float 3.4s ease-in-out infinite;
-}
-
-@keyframes social-pop {
-  0% { transform: translateY(0) scale(1); }
-  50% { transform: translateY(-4px) scale(1.06); }
-  100% { transform: translateY(0) scale(1); }
-}
 .social-pop {
-  animation: social-pop 2.2s ease-in-out infinite, social-glow 2.8s ease-in-out infinite;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-
-@keyframes ui-bounce-in {
-  0% { transform: translateY(0) scale(1); }
-  100% { transform: translateY(-3px) scale(1.04); }
+.social-pop:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 24px rgba(44, 84, 29, 0.14);
 }
 .ui-bounce:hover {
-  animation: ui-bounce-in 180ms ease-out forwards;
-}
-
-@keyframes subtle-tilt {
-  0% { transform: rotate(0deg); }
-  50% { transform: rotate(0.75deg); }
-  100% { transform: rotate(0deg); }
+  transform: translateY(-2px);
 }
 .tilt-drift {
   transform-origin: center;
-  animation: subtle-tilt 4.4s ease-in-out infinite;
-}
-
-@keyframes social-glow {
-  0% { box-shadow: 0 0 0 rgba(193, 53, 132, 0.0); }
-  50% { box-shadow: 0 0 28px rgba(193, 53, 132, 0.25); }
-  100% { box-shadow: 0 0 0 rgba(193, 53, 132, 0.0); }
-}
-
-@keyframes spin-burst {
-  0% { transform: rotate(0deg) scale(1); }
-  50% { transform: rotate(10deg) scale(1.1); }
-  100% { transform: rotate(0deg) scale(1.02); }
 }
 .crazy-spin:hover svg {
-  animation: spin-burst 420ms ease-in-out;
-}
-
-@keyframes party-pulse {
-  0% { transform: translateY(0) scale(1); }
-  25% { transform: translateY(-2px) scale(1.015); }
-  50% { transform: translateY(0) scale(1.01); }
-  75% { transform: translateY(-1px) scale(1.02); }
-  100% { transform: translateY(0) scale(1); }
+  transform: none;
 }
 main a,
 main button {
@@ -395,6 +294,5 @@ main button {
 }
 main a:hover,
 main button:hover {
-  animation: party-pulse 0.36s ease-out;
   filter: saturate(1.12);
 }

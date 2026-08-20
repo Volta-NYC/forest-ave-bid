@@ -26,7 +26,7 @@ export default function MapPage() {
     <main className="pt-16">
       {/* Page header — mural background */}
       <div
-        className="text-white py-16 md:py-24 px-6 min-h-[42vh] md:min-h-[52vh] flex items-end mural-pan"
+        className="text-white py-16 md:py-24 px-6 min-h-[42vh] md:min-h-[52vh] flex items-end"
         style={{
           backgroundImage: `linear-gradient(rgba(0,0,0,0.24), rgba(0,0,0,0.24)), url("${imageManifest.headerMurals.map}")`,
           backgroundSize: "cover",

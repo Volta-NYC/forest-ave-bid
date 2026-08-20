@@ -22,9 +22,6 @@ interface HeroProps {
   overlayStrength?: number;
   /** Show decorative hexagon accents inspired by the legacy homepage. */
   hexDecor?: boolean;
-  sideImages?: boolean;
-  sideImageLeftUrl?: string;
-  sideImageRightUrl?: string;
   size?: "home" | "inner";
 }
 
@@ -39,9 +36,6 @@ export default function Hero({
   backgroundImageUrl,
   overlayStrength = 0.45,
   hexDecor = true,
-  sideImages = true,
-  sideImageLeftUrl = imageManifest.heroSides.left,
-  sideImageRightUrl = imageManifest.heroSides.right,
   size = "inner",
 }: HeroProps) {
   const bgStyle = woodTexture
@@ -70,10 +64,9 @@ export default function Hero({
       : "text-6xl sm:text-7xl md:text-8xl lg:text-[6.5rem]";
 
   const hasImage = woodTexture || !!backgroundImageUrl;
-  const heroMotionClass = hasImage ? "mural-pan" : "";
   return (
     <section
-      className={`relative overflow-hidden ${sectionSizeClass} ${heroMotionClass}`}
+      className={`site-hero relative overflow-hidden ${sectionSizeClass}`}
       style={bgStyle}
       aria-labelledby="hero-heading"
     >
@@ -85,12 +78,6 @@ export default function Hero({
           aria-hidden="true"
         />
       )}
-
-      {/* Decorative Islamic-inspired geometric layer */}
-      <div
-        className="absolute inset-0 pointer-events-none islamic-geometry-layer opacity-[0.14]"
-        aria-hidden="true"
-      />
 
       {/* Decorative pattern (only when no background image/texture) */}
       {pattern && !hasImage && (
@@ -130,30 +117,6 @@ export default function Hero({
               style={{ clipPath: "polygon(25% 6%, 75% 6%, 96% 50%, 75% 94%, 25% 94%, 4% 50%)" }}
             />
           </div>
-        </>
-      )}
-
-      {/* Side visual strips for more lively page headers */}
-      {sideImages && (
-        <>
-          <div
-            className="hidden xl:block absolute left-0 top-0 bottom-0 w-28 opacity-55 hero-drift pointer-events-none"
-            style={{
-              backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.45), transparent), url("${sideImageLeftUrl}")`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-            }}
-            aria-hidden="true"
-          />
-          <div
-            className="hidden xl:block absolute right-0 top-0 bottom-0 w-28 opacity-55 hero-drift pointer-events-none"
-            style={{
-              backgroundImage: `linear-gradient(to left, rgba(0,0,0,0.45), transparent), url("${sideImageRightUrl}")`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-            }}
-            aria-hidden="true"
-          />
         </>
       )}
 
