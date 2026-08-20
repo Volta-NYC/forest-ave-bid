@@ -10,20 +10,20 @@
 export const imageManifest = {
   /** Single wood-texture image used as the hero/header background on every page. */
   siteHeaderImage: "/textures/wood.png",
-  siteLogo: "/icon.jpg",
+  siteLogo: "/photos/legacy/site-logo.jpg",
   eventsMuralHero: "/photos/uploads/Resized_20260414_114601.JPEG",
 
   heroSides: {
-    left: "/photos/uploads/1000002847.jpg",
-    right: "/photos/uploads/Resized_20260414_120232.JPEG",
+    left: "/photos/legacy/girl-scout-caroling-pastosas.jpg",
+    right: "/photos/legacy/gifted.jpg",
   } as const,
 
   headerMurals: {
-    home: "/photos/uploads/1000002847.jpg",
-    about: "/photos/uploads/Resized_20260414_114649.JPEG",
-    services: "/photos/uploads/1000002837.jpg",
-    contact: "/photos/uploads/Resized_20260414_120232.JPEG",
-    team: "/photos/uploads/1000002838.jpg",
+    home: "/photos/legacy/forest-ave-planter-volunteers.jpg",
+    about: "/photos/legacy/bid-meeting.jpg",
+    services: "/photos/legacy/planter-volunteers-jeans-fine-wines.jpg",
+    contact: "/photos/legacy/gifted.jpg",
+    team: "/photos/legacy/girl-scout-caroling-pastosas.jpg",
     businesses: "/photos/uploads/1000002845.jpg",
     map: "/photos/uploads/Resized_20260414_123207.JPEG",
     events: "/photos/uploads/Resized_20260414_114601.JPEG",
@@ -48,9 +48,9 @@ export const imageManifest = {
   } as Record<string, string>,
 
   homeCards: [
-    "/photos/uploads/1000002837.jpg",
-    "/photos/uploads/1000002846.jpg",
-    "/photos/uploads/1000002838.jpg",
+    "/photos/legacy/pastosa-mozzarella-making-class.jpg",
+    "/photos/legacy/bid-meeting.jpg",
+    "/photos/legacy/forest-ave-planter-volunteers.jpg",
   ],
 
   eventThumbnail: "/photos/uploads/1000002846.jpg",

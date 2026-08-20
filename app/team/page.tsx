@@ -28,19 +28,19 @@ interface BoardMember {
 // Source: forestavenuebid.com/team/
 const boardMembers: BoardMember[] = [
   // Officers
-  { name: "Megan Coppola", role: "Chair", affiliation: "Owner of Beans and Leaves Cafe", photoSrc: "/photos/businesses/beans-leaves-coffee-tea-cafe.svg", isOfficer: true },
-  { name: "Kim Beckett", role: "Vice Chair", affiliation: "Owner of Burrito Bar", photoSrc: "/photos/businesses/burrito-bar.svg", isOfficer: true },
-  { name: "Gary LiGreci", role: "Treasurer", affiliation: "Owner of LiGreci's Staaten", photoSrc: "/photos/businesses/ligrecis-staaten.svg", isOfficer: true },
-  { name: "Laura Volsario", role: "Secretary", affiliation: "Owner of Gateway Arms Realty", photoSrc: "/photos/businesses/gateway-arms-realty.svg", isOfficer: true },
+  { name: "Megan Coppola", role: "Chair", affiliation: "Owner of Beans and Leaves Cafe", photoSrc: "/photos/legacy/megan-coppola.webp", isOfficer: true },
+  { name: "Kim Beckett", role: "Vice Chair", affiliation: "Owner of Burrito Bar", photoSrc: "/photos/legacy/kim-beckett.webp", isOfficer: true },
+  { name: "Gary LiGreci", role: "Treasurer", affiliation: "Owner of LiGreci's Staaten", photoSrc: "/photos/legacy/gary-ligreci.jpg", isOfficer: true },
+  { name: "Laura Volsario", role: "Secretary", affiliation: "Owner of Gateway Arms Realty", photoSrc: "/photos/legacy/laura-volsario.jpg", isOfficer: true },
   // Directors
-  { name: "Donald Bentson", role: "Board Member", affiliation: "Owner of Bentson & Company", photoSrc: "/photos/businesses/bentson-company-insurance.svg" },
-  { name: "Jean Daggan", role: "Board Member", affiliation: "Property Owner" },
-  { name: "Rachel Fundaro", role: "Board Member", affiliation: "Paralegal at Thompson Law, PLLC", photoSrc: "/photos/businesses/thomson-law-pllc.svg" },
-  { name: "Andrea S. Morse, Esq.", role: "Board Member", affiliation: "Owner of Law Office of Andrea Morse" },
-  { name: "Eddie Donovan", role: "Board Member", affiliation: "Owner of Duffy's", photoSrc: "/photos/businesses/duffys.svg" },
-  { name: "Christina Saez", role: "Board Member", affiliation: "Manager of Panini Grill", photoSrc: "/photos/businesses/panini-grill.svg" },
+  { name: "Donald Bentson", role: "Board Member", affiliation: "Owner of Bentson & Company", photoSrc: "/photos/legacy/donald-bentson.jpg" },
+  { name: "Jean Daggan", role: "Board Member", affiliation: "Property Owner", photoSrc: "/photos/legacy/jean-daggan.png" },
+  { name: "Rachel Fundaro", role: "Board Member", affiliation: "Paralegal at Thompson Law, PLLC", photoSrc: "/photos/legacy/thomson-law.png" },
+  { name: "Andrea S. Morse, Esq.", role: "Board Member", affiliation: "Owner of Law Office of Andrea Morse", photoSrc: "/photos/legacy/andrea-morse.jpg" },
+  { name: "Eddie Donovan", role: "Board Member", affiliation: "Owner of Duffy's", photoSrc: "/photos/legacy/duffys.png" },
+  { name: "Christina Saez", role: "Board Member", affiliation: "Manager of Panini Grill", photoSrc: "/photos/legacy/panini-grill.png" },
   // Emeritus
-  { name: "Vincent D'Antuono", role: "Board Member Emeritus", affiliation: "Owner of Pastosa Ravioli & Cheese Inc.", photoSrc: "/photos/businesses/pastosa-ravioli.svg", isEmeritus: true },
+  { name: "Vincent D'Antuono", role: "Board Member Emeritus", affiliation: "Owner of Pastosa Ravioli & Cheese Inc.", photoSrc: "/photos/legacy/pastosa.jpg", isEmeritus: true },
   // Public officials
   { name: "Vito Fossella", role: "Borough President", affiliation: "Borough President of Staten Island", photoSrc: "/logos/gov/staten-island-borough-president.svg", isPublicOfficial: true },
   { name: "Kamilliah Hanks", role: "Councilwoman", affiliation: "Councilwoman", photoSrc: "/logos/gov/nyc-council.svg", isPublicOfficial: true },
@@ -50,7 +50,7 @@ const boardMembers: BoardMember[] = [
 
 // Source: forestavenuebid.com/team/
 const staffMembers = [
-  { name: "Nina Flores", title: "Executive Director", photoSrc: imageManifest.teamMemberFallback },
+  { name: "Nina Flores", title: "Executive Director", photoSrc: "/photos/legacy/nina-flores.jpg" },
 ];
 
 function initials(name: string) {
