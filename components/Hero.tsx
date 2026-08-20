@@ -38,6 +38,9 @@ export default function Hero({
   hexDecor = true,
   size = "inner",
 }: HeroProps) {
+  const effectiveOverlayStrength = backgroundImageUrl
+    ? Math.max(overlayStrength, size === "home" ? 0.34 : 0.36)
+    : overlayStrength;
   const bgStyle = woodTexture
     ? {
         backgroundColor: "var(--evergreen-900)",
@@ -74,7 +77,15 @@ export default function Hero({
       {!woodTexture && backgroundImageUrl && (
         <div
           className="absolute inset-0 pointer-events-none"
-          style={{ background: `rgba(0,0,0,${overlayStrength})` }}
+          style={{
+            background: `linear-gradient(90deg, rgba(0,0,0,${Math.min(
+              effectiveOverlayStrength + 0.16,
+              0.62
+            )}) 0%, rgba(0,0,0,${effectiveOverlayStrength}) 46%, rgba(0,0,0,${Math.max(
+              effectiveOverlayStrength - 0.08,
+              0.22
+            )}) 100%)`,
+          }}
           aria-hidden="true"
         />
       )}
